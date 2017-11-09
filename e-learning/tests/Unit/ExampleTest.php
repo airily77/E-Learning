@@ -13,8 +13,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        $manager = ManagerData::getManager(1);
-        echo($manager->account);
+        ManagerData::login('pekka','pekka');
         $this->assertTrue(true);
     }
 }
