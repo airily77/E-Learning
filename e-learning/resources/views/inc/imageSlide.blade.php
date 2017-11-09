@@ -1,10 +1,8 @@
 <div id="sliderFrame">
     <div id="slider">
-
-        <img src="{{URL::asset('img/imageSlide_red.jpg')}}>
-        <img src="{{URL::asset('img/imageSlide_blue.jpg')}}>
-        <img src="{{URL::asset('img/imageSlide_green.jpg')}}>
-
+        @foreach($images as $image)
+            <img src="data:{{$image->img_type}};base64,{{base64_encode($image->image)}}">
+        @endforeach
     </div>
 
 </div>
