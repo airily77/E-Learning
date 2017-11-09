@@ -16,3 +16,7 @@ Route::get('/', function () {
     $managers = ManagerData::getManagers();
     return view('home', ['managers' => $managers]);
 });
+
+Route::get('/home', function () {
+    return view('home');
+});
