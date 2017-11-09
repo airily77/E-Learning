@@ -6,6 +6,7 @@ use Illuminate\Support\Manager;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use database\connectors\ManagerData;
+use database\connectors\UserData;
 class ExampleTest extends TestCase
 {
     /**
@@ -14,6 +15,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        $this->assertTrue(0,true);
+        UserData::insertUser('pekka','pekka',2,'127.0.0.1');
+        $this->assertTrue(true);
     }
 }

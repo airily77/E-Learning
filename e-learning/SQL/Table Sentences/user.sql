@@ -5,13 +5,12 @@ create table user (
   username VARCHAR(50) NULL,
   department VARCHAR(50) null,
   position VARCHAR(50) NULL,
-  ukey VARCHAR(6) not null,
   status tinyint not null,
-  lastlogintime int not null,
+  lastlogintime datetime not null,
   lastloginip VARCHAR(20) not null,
   loginnum int not null,
-  createtime int not null,
-  updatetime int not null
+  createtime datetime not null,
+  updatetime datetime not null
 );
 
 insert into user (account,password,username,ukey,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)

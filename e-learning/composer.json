@@ -18,6 +18,12 @@
     },
     "autoload": {
         "classmap": [
+            "database/"
+        ],
+        "files": [
+            "database/connectors/ManagerData.php",
+            "database/connectors/ScrollimageData.php",
+            "database/connectors/UserData.php"
         ],
         "psr-4": {
             "App\\": "app/"
