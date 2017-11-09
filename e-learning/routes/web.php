@@ -10,9 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use database\connectors\ManagerData;
 
 Route::get('/', function () {
-    return view('welcome');
+    $managers = ManagerData::getManagers();
+    return view('home', ['managers' => $managers]);
 });
 
 Route::get('/home', function () {
