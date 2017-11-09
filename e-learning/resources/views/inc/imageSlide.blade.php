@@ -1,9 +1,9 @@
 <div id="sliderFrame">
     <div id="slider">
 
-        <img src="{{URL::asset('img/imageSlide_red.jpg')}}>
-        <img src="{{URL::asset('img/imageSlide_blue.jpg')}}>
-        <img src="{{URL::asset('img/imageSlide_green.jpg')}}>
+        <img src="{{URL::asset('img/imageSlide_red.jpg')}}">
+        <img src="{{URL::asset('img/imageSlide_blue.jpg')}}">
+        <img src="{{URL::asset('img/imageSlide_green.jpg')}}">
 
     </div>
 
