@@ -8,14 +8,19 @@
 namespace database\connectors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mockery\Exception;
 
 class ManagerData{
     /**
      * @return mixed returns list of all managers. When you have a manager you can get his data by refering the variable '$manager->account' this returns the managers name.
      */
     public static function getManagers(){
-        $managers = DB::select('select * from manager;');
-        return $managers;
+        try{
+            $managers = DB::select('select * from manager;');
+            return $managers;
+        }catch (\Exception $ex){
+            return null;
+        }
     }
 
     /**
@@ -26,19 +31,29 @@ class ManagerData{
      * @param $creationip CreationIp of the manager you want to create.
      */
     public static function insertManager($account,$password,$status,$creationip){
-        DB::statement('set @disable_update_logintime  = 1');
-        $hashed = Hash::make($password); //delete this line when hashing has been in somewhere else.
-        DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
-        values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$hashed,$status,$creationip,$creationip]);
-        DB::statement('set @disable_update_logintime  = null');
+        DB::beginTransaction();
+        try{
+            DB::statement('set @disable_update_logintime  = 1');
+            DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
+            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$hashed,$status,$creationip,$creationip]);
+            DB::statement('set @disable_update_logintime  = null');
+            DB::commit();
+        }catch (\Exception $ex) {
+            DB::rollBack();
+        }
     }
 
     /**
      * @param $id managerid which you are looking from the manager which data you are looking for.
-     * @return mixed returns variable which contains all the data from manager column in database
+     * @return mixed returns variable which contains all tdelhe data from manager column in database
      */
     public static function getManager($id){
-        return DB::select('select * from manager where managerid = ?',[$id])[0];
+        try{
+            $result = DB::select('select * from manager where managerid = ?',[$id])[0];
+            return $result;
+        }catch (\Exception $ex){
+            return null;
+        }
     }
 
     /**
@@ -47,9 +62,13 @@ class ManagerData{
      *
      */
     public static function getManagerRole($id){
-        $roleid = DB::select('select roleid from manager_role where managerid = ?',[$id])[0]->roleid;
-        $role = DB::select('select * from role where roleid = ?',[$roleid]);
-        return $role[0];
+        try{
+            $roleid = DB::select('select roleid from manager_role where managerid = ?',[$id])[0]->roleid;
+            $role = DB::select('select * from role where roleid = ?',[$roleid]);
+            return $role[0];
+        }catch (\Exception $ex){
+            return null;
+        }
     }
 
     /**
@@ -58,8 +77,17 @@ class ManagerData{
      * @param $newpassword New password you were about to create.
      */
     public static function updatePassword($id,$password,$newpassword){
-        if(self::checkPassword($id,$password)){
-            DB::update('update manager set password =? where managerid = ?',[$newpassword,$id]);
+        DB::beginTransaction();
+        try{
+            if(self::checkPassword($id,$password)){
+                $hashed = Hash::make($newpassword);
+                DB::update('update manager set password =? where managerid = ?',[$hashed,$id]);
+            }
+            DB::commit();
+            return true;
+        }catch (\Exception $ex){
+            DB::rollBack();
+            return false;
         }
     }
 
@@ -68,12 +96,15 @@ class ManagerData{
      * @param $password Unhashed password for checking if its right.
      * @return bool Returns true if the password was right returns false if the password was wrong.
      */
-    public static function checkPassword($id,$password){
-        $hashed = DB::select('select password from manager where managerid = ?',[$id])[0]->password;
-        if(Hash::check($password,$hashed)){
-            return true;
+    private static function checkPassword($id,$password){
+        try{
+            $hashed = DB::select('select password from manager where managerid = ?',[$id])[0]->password;
+            if(Hash::check($password,$hashed)){
+                return true;
+            }else return false;
+        }catch (\Exception $ex){
+            return false;
         }
-        return false;
     }
 
     /**
@@ -81,29 +112,59 @@ class ManagerData{
      * @param $password
      */
     public static function deleteManager($id,$password){
-        if(self::checkPassword($id,$password)){
-
+        DB::beginTransaction();
+        try {
+            if (self::checkPassword($id, $password)) {
+                DB::delete('delete from manager where managerid = ?', [$id]);
+                DB::commit();
+            }
+        }catch(\Exception $ex){
+            DB::rollBack();
         }
     }
+
+    /**
+     * Tries the managers alleged name and the managers alleged password to login.
+     * @param $manageraccount Accounts name.
+     * @param $triedpassword Managers alleged password.
+     * @return bool Returns whether login was successful or not.
+     */
     public static function login($manageraccount, $triedpassword){
-        $result=DB::select('select password,managerid from manager where account = ?',[$manageraccount])[0];
-        $hashed = $result->password;
-        if(Hash::check($triedpassword,$hashed)) {
-            self::insertLoginLog($result->managerid,'99.1.2.3',true);
-            return true;
-        } else {
-            self::insertLoginLog($result->managerid,'99.1.2.3',false); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
+        try{
+            $result=DB::select('select password,managerid from manager where account = ?',[$manageraccount])[0];
+            $hashed = $result->password;
+            if(Hash::check($triedpassword,$hashed)) {
+                self::insertLoginLog($result->managerid,'99.1.2.3',true);
+                return true;
+            } else {
+                self::insertLoginLog($result->managerid,'99.1.2.3',false); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
+                return false;
+            }
+        }catch (\Exception $ex){
             return false;
         }
     }
     //TODO change the ip. atm i dont know how to get the ip because im testing locally not running the server.
+    //TODO Possible error incoming when trying to insert chinese characters into database.
+    /**
+     * When manager tries to login to his account, he triggers this method and sends data about the login to the server.
+     * @param $id Who tried logging in.
+     * @param $ip  Where did he try to login.
+     * @param $result Whether he was successful or not.
+     */
     public static function insertLoginLog($id,$ip,$result){
-        if($result){
-            DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
-        }else{
-            DB::statement('set @disable_update_logintime = 1');
-            DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
-            DB::statement('set @disable_update_logintime = null');
+        DB::beginTransaction();
+        try{
+            if($result){
+                DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
+            }else{
+                DB::statement('set @disable_update_logintime = 1');
+                DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
+                DB::statement('set @disable_update_logintime = null');
+            }
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
         }
     }
 }

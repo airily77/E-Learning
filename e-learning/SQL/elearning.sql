@@ -1,8 +1,9 @@
 --
 -- Database: `elearning`
 --
-CREATE DATABASE IF NOT EXISTS `elearning` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `elearning` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `elearning`;
+ALTER DATABASE elearning DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
@@ -36,7 +37,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `manager`;
 CREATE TABLE IF NOT EXISTS `manager` (
   `managerid` int(11) NOT NULL AUTO_INCREMENT,
-  `account` varchar(50) NOT NULL UNIQUE,
+  `account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL UNIQUE,
   `password` varchar(500) NOT NULL,
   `status` tinyint(4) NOT NULL,
   `creationtime` datetime NOT NULL,
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `manager` (
   `lastloginip` varchar(20) DEFAULT NULL,
   `loginnum` int(11) NOT NULL,
   PRIMARY KEY (`managerid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 --
 
@@ -75,9 +76,9 @@ CREATE TABLE IF NOT EXISTS `manager_loginlog` (
   `logintime` datetime NOT NULL,
   `loginip` varchar(20) DEFAULT NULL,
   result boolean null,
-  `browser` varchar(500) DEFAULT NULL,
+  `browser` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`logid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `manager_loginlog`
@@ -104,7 +105,7 @@ DROP TABLE IF EXISTS `manager_role`;
 CREATE TABLE IF NOT EXISTS `manager_role` (
   `managerid` int(11) NOT NULL,
   `roleid` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `manager_role`
@@ -119,18 +120,20 @@ CREATE TABLE IF NOT EXISTS `manager_role` (
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `roleid` int(11) NOT NULL AUTO_INCREMENT,
-  `rolename` varchar(50) NOT NULL,
+  `rolename` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`roleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `role`
 --
 
-INSERT INTO `role` (`roleid`, `rolename`, `creationtime`, `updatetime`) VALUES
-(1, 'testrole', '2017-11-09 07:56:02', '2017-11-09 07:56:02');
+INSERT INTO `role` (`rolename`, `creationtime`, `updatetime`) VALUES
+('测试管理员', '2017-11-09 07:56:02', '2017-11-09 07:56:02');
+INSERT INTO `role` (`rolename`, `creationtime`, `updatetime`) VALUES
+('综合管理员', '2017-11-09 10:26:03','2017-11-09 10:26:03');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
