@@ -33,9 +33,13 @@ class ScrollimageData{
         }
     }
     public static function getImage($title){
-        return DB::select('select * from scrollimage where title = ?',[$title])[0];
+        try{
+            return DB::select('select * from scrollimage where title = ?',[$title])[0];
+        }catch(\Exceptio $exception) {}
     }
     public static function getCurrentImages(){
-        return DB::select('select * from scrollimage where isshow = 1');
+        try{
+            return DB::select('select * from scrollimage where isshow = 1');
+        }catch(\Exception $exception){}
     }
 }

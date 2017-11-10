@@ -2,10 +2,12 @@
 
 namespace Tests\Unit;
 
+use database\connectors\CourseData;
 use Illuminate\Support\Manager;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use database\connectors\ManagerData;
+use database\connectors\UserData;
 class ExampleTest extends TestCase
 {
     /**
@@ -14,6 +16,8 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        $this->assertTrue(0,true);
+        //ManagerData::insertManagerHash('pekka','pekka',1,'12.0.01.1.');
+        ManagerData::deleteManager(2,'tobias');
+        $this->assertTrue(true);
     }
 }
