@@ -14,8 +14,6 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        $result = ManagerData::deleteManager(1,'mem');
-        echo($result);
-        $this->assertTrue(true);
+        $this->assertTrue(0,true);
     }
 }
