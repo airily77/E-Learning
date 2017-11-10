@@ -30,10 +30,24 @@ class ManagerData{
      * @param $status Status of the manager you want to create.
      * @param $creationip CreationIp of the manager you want to create.
      */
+    //TODO Remeber to hash the password in the creation form. Because its a security risk to hash here.
     public static function insertManager($account,$password,$status,$creationip){
         DB::beginTransaction();
         try{
             DB::statement('set @disable_update_logintime  = 1');
+            DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
+            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$password,$status,$creationip,$creationip]);
+            DB::statement('set @disable_update_logintime  = null');
+            DB::commit();
+        }catch (\Exception $ex) {
+            DB::rollBack();
+        }
+    }
+    public static function insertManagerHash($account,$password,$status,$creationip){
+        DB::beginTransaction();
+        try{
+            DB::statement('set @disable_update_logintime  = 1');
+            $hashed = Hash::make($password);
             DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
             values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$hashed,$status,$creationip,$creationip]);
             DB::statement('set @disable_update_logintime  = null');
@@ -42,7 +56,14 @@ class ManagerData{
             DB::rollBack();
         }
     }
-
+    public static function checkManagerAccoutName($account){
+        $result=DB::select('select * from manager where account = ?',[$account]);
+        try{
+            if(!(is_null($result[0]))) {
+                return true;
+            }else return false;
+        }catch (\Exception $exception){}
+    }
     /**
      * @param $id managerid which you are looking from the manager which data you are looking for.
      * @return mixed returns variable which contains all tdelhe data from manager column in database
@@ -103,6 +124,8 @@ class ManagerData{
                 return true;
             }else return false;
         }catch (\Exception $ex){
+            echo('checkpassword failed'
+            );
             return false;
         }
     }
@@ -115,10 +138,13 @@ class ManagerData{
         DB::beginTransaction();
         try {
             if (self::checkPassword($id, $password)) {
+                DB::delete('delete from manager_loginlog where managerid = ?',[$id]);
                 DB::delete('delete from manager where managerid = ?', [$id]);
                 DB::commit();
-            }
+            }else echo('password was incorrect ');
         }catch(\Exception $ex){
+            echo('deleteManager is not working');
+            echo($ex);
             DB::rollBack();
         }
     }

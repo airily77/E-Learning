@@ -7,7 +7,7 @@ create table course(
 	videotime int not null,
 	showimg varchar(100) not null,
 	classid int not null references course_class(classid),
-	viewnum int not null,
+	viewnum int not null, -- Remember to do this when the page is completed. 
 	learnnum int not null,
 	istesting boolean not null,
 	isshow boolean not null,
