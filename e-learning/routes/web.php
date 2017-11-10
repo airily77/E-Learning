@@ -13,10 +13,11 @@
 use database\connectors\ManagerData;
 
 Route::get('/', function () {
-    $managers = ManagerData::getManagers();
-    return view('home', ['managers' => $managers]);
+    $results = \database\connectors\ScrollimageData::getCurrentImages();
+    return view('home', ['images'=>$results]);
 });
 
 Route::get('/home', function () {
-    return view('home');
+    $results = \database\connectors\ScrollimageData::getCurrentImages();
+    return view('home', ['images'=>$results]);
 });
