@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use database\connectors\CourseData;
 use Illuminate\Support\Manager;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +16,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        UserData::insertUser('pekka','pekka',2,'127.0.0.1');
+        CourseData::updateLearnnum('CS2');
         $this->assertTrue(true);
     }
 }

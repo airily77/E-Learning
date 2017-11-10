@@ -23,7 +23,8 @@
         "files": [
             "database/connectors/ManagerData.php",
             "database/connectors/ScrollimageData.php",
-            "database/connectors/UserData.php"
+            "database/connectors/UserData.php",
+            "database/connectors/CourseData.php"
         ],
         "psr-4": {
             "App\\": "app/"

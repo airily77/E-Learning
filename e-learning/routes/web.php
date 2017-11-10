@@ -18,5 +18,6 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('home');
+    $results = \database\connectors\ScrollimageData::getCurrentImages();
+    return view('home', ['images'=>$results]);
 });

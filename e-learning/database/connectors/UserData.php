@@ -15,4 +15,9 @@ class UserData{
             DB::rollBack();
         }
     }
+    public static function getUser($id){
+        try{
+            return DB::select('select * from user where userid = ?',[$id])[0];
+        }catch (\Exception $exception){}
+    }
 }

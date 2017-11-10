@@ -1,6 +1,6 @@
 create table user (
   userid int PRIMARY KEY AUTO_INCREMENT not null,
-  account VARCHAR(50) not null,
+  account VARCHAR(50) not null unique ,
   password varchar(50) not null,
   username VARCHAR(50) NULL,
   department VARCHAR(50) null,
