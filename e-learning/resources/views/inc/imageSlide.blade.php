@@ -6,11 +6,6 @@
     </div>
 
 </div>
-
-
-
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         #sliderFrame, #sliderFrame div {
@@ -23,7 +18,7 @@
         }
 
         #slider, #slider .sliderInner {
-            width:700px;height:306px;/* Must be the same size as the slider images */
+            width:630px;height:300px;/* Must be the same size as the slider images */
             border-radius:3px;
         }
 
@@ -52,7 +47,7 @@
             position:absolute;
             width:100%;
             height:auto;
-            padding:10px 0;/* 10px will increase the height.*/
+            padding:10px 0;
             left:0px;
             bottom:0px;top:auto;
             overflow:hidden;
@@ -67,30 +62,6 @@
         #slider .mc-caption a:hover {
             color:#DA0;
         }
-
-
-        /* ------ built-in navigation bullets wrapper ------*/
-        #slider .navBulletsWrapper  {
-            top:320px;
-            text-align:center;
-            background:none;
-            position:relative;
-            z-index:3;
-        }
-
-        /* each bullet */
-        #slider .navBulletsWrapper div
-        {
-            width:11px; height:11px;
-            font-size:0;color:White;/*hide the index number in the bullet element*/
-            background:transparent url(bullet.png) no-repeat 0 0;
-            display:inline-block; *display:inline; zoom:1;
-            overflow:hidden;cursor:pointer;
-            margin:0 6px;/* set distance between each bullet*/
-        }
-
-        #slider .navBulletsWrapper .active {background-position:0 -11px;}
-
 
         /* --------- Others ------- */
 
@@ -111,11 +82,7 @@
 
 <br>
 
-<div style="text-align:center">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-</div>
+
 
 <script>
     var sliderOptions=
