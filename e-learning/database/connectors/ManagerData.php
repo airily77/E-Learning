@@ -139,11 +139,11 @@ class ManagerData{
         try {
             if (self::checkPassword($id, $password)) {
                 DB::delete('delete from manager_loginlog where managerid = ?',[$id]);
+                DB::delete('delete from manager_role where managerid = ?',[$id]);
                 DB::delete('delete from manager where managerid = ?', [$id]);
                 DB::commit();
-            }else echo('password was incorrect ');
+            }
         }catch(\Exception $ex){
-            echo('deleteManager is not working');
             echo($ex);
             DB::rollBack();
         }

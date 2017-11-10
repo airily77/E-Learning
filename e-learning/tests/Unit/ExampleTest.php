@@ -17,7 +17,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest(){
         //ManagerData::insertManagerHash('pekka','pekka',1,'12.0.01.1.');
-        ManagerData::deleteManager(4,'pekka');
+        ManagerData::deleteManager(2,'tobias');
         $this->assertTrue(true);
     }
 }
