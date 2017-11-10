@@ -59,7 +59,7 @@ class CourseData{
     }
     public static function updateLearnnum($title){
         DB::beginTransaction();
-        try{    
+        try{
             DB::update('update course set learnnum= learnnum + 1 where title = ?',[$title]);
             DB::commit();
         }catch (\Exception $exception){ DB::rollBack();}

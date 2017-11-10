@@ -124,6 +124,8 @@ class ManagerData{
                 return true;
             }else return false;
         }catch (\Exception $ex){
+            echo('checkpassword failed'
+            );
             return false;
         }
     }
@@ -136,11 +138,13 @@ class ManagerData{
         DB::beginTransaction();
         try {
             if (self::checkPassword($id, $password)) {
+                DB::delete('delete from manager_loginlog where managerid = ?',[$id]);
                 DB::delete('delete from manager where managerid = ?', [$id]);
-                DB::delete('delete from manager_loginlog where mangerid = ?',[$id]);
                 DB::commit();
-            }
+            }else echo('password was incorrect ');
         }catch(\Exception $ex){
+            echo('deleteManager is not working');
+            echo($ex);
             DB::rollBack();
         }
     }
