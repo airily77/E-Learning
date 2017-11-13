@@ -18,7 +18,7 @@ class CourseData{
         DB::beginTransaction();
         try{
             $classid = self::getClassid($classname);
-            DB::insert('insert into course (title,description,videoimg,videopath,videotime,showimg,classid,viewnum,learnnum,istesting,isshow,creationtime,updatetime)
+            DB::insert('insert into course (title,description,videoimg,videopath,videotime,showimg,class_id,viewnum,learnnum,istesting,isshow,creationtime,updatetime)
             values (?,?,?,?,?,?,?,1,1,?,?,now(),now())',[$title,$description,$videoimg,$videopath,$videotime,$showimg,$classid,$istesting,$isshow]);
             DB::commit();
         }catch (\Exception $exception){
@@ -37,7 +37,7 @@ class CourseData{
      */
     public static function getClassid($classname){
         try{
-            return DB::select('select * from course_class where classname = ?',[$classname])[0]->classid;
+            return DB::select('select classid from course_class where classname = ?',[$classname])[0]->classid;
         }catch (\Exception $exception){}
     }
     public static function insertClass($classname,$status){
