@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `course`
+-- Table structure for table `course`
 --
 
 DROP TABLE IF EXISTS `course`;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   `videopath` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `videotime` int(11) NOT NULL,
   `showimg` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `classid` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
   `viewnum` int(11) NOT NULL,
   `learnnum` int(11) NOT NULL,
   `istesting` tinyint(1) NOT NULL,
@@ -43,20 +43,21 @@ CREATE TABLE IF NOT EXISTS `course` (
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`courseid`),
-  UNIQUE KEY `title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `class_ind` (`class_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `course`
+-- Dumping data for table `course`
 --
 
-INSERT INTO `course` (`courseid`, `title`, `description`, `videoimg`, `videopath`, `videotime`, `showimg`, `classid`, `viewnum`, `learnnum`, `istesting`, `isshow`, `creationtime`, `updatetime`) VALUES
-(1, 'CS1', 'basic of programming part 1. Object orianted programming', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02');
+INSERT INTO `course` (`courseid`, `title`, `description`, `videoimg`, `videopath`, `videotime`, `showimg`, `class_id`, `viewnum`, `learnnum`, `istesting`, `isshow`, `creationtime`, `updatetime`) VALUES
+(1, 'CS1', 'basic of programming part 1. Object orianted programming', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02'),
+(2, 'history', 'history of china', '', '', 12, '0', 4, 1, 1, 1, 1, '2017-11-13 17:40:46', '2017-11-13 17:40:46');
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `course_class`
+-- Table structure for table `course_class`
 --
 
 DROP TABLE IF EXISTS `course_class`;
@@ -68,21 +69,22 @@ CREATE TABLE IF NOT EXISTS `course_class` (
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`classid`),
   UNIQUE KEY `classname` (`classname`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `course_class`
+-- Dumping data for table `course_class`
 --
 
 INSERT INTO `course_class` (`classid`, `classname`, `status`, `creationtime`, `updatetime`) VALUES
 (1, 'mathematics', 2, '2017-11-10 13:57:15', '2017-11-10 13:57:15'),
 (2, 'english', 3, '2017-11-10 13:57:35', '2017-11-10 13:57:35'),
-(3, 'programming', 3, '2017-11-10 13:57:48', '2017-11-10 13:57:48');
+(3, 'programming', 3, '2017-11-10 13:57:48', '2017-11-10 13:57:48'),
+(4, 'history', 0, '2017-11-13 17:40:46', '2017-11-13 17:40:46');
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `manager`
+-- Table structure for table `manager`
 --
 
 DROP TABLE IF EXISTS `manager`;
@@ -99,16 +101,24 @@ CREATE TABLE IF NOT EXISTS `manager` (
   `loginnum` int(11) NOT NULL,
   PRIMARY KEY (`managerid`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Herättimet `manager`
+-- Dumping data for table `manager`
 --
-DROP TRIGGER IF EXISTS `ins_after_manager`;
+
+INSERT INTO `manager` (`managerid`, `account`, `password`, `status`, `creationtime`, `updatetime`, `creationip`, `lastlogintime`, `lastloginip`, `loginnum`) VALUES
+(1, 'pekka', '$2y$10$wjvFICg2wUSVUWIzhYPj7uqFWayMlZb5dB5fCS2s1bfR9d.EgNlpG', 2, '2017-11-13 17:18:49', '2017-11-13 17:18:49', '21', '2017-11-13 17:18:49', '21', 1),
+(2, 'peke', '$2y$10$qJwbjrZgz1XzQMfjCCFp4uf1jV6cKFiGaWrFlBB4hWYspqHL4pVA.', 2, '2017-11-13 17:30:05', '2017-11-13 17:30:05', '21', '2017-11-13 17:30:05', '21', 1);
+
+--
+-- Triggers `manager`
+--
+DROP TRIGGER IF EXISTS `ins_loginlog`;
 DELIMITER $$
-CREATE TRIGGER `ins_after_manager` AFTER INSERT ON `manager` FOR EACH ROW begin
-  insert into manager_loginlog (managerid,logintime,loginip) values (NEW.managerid,now(),new.creationip);
-  insert into manager_role (managerid,roleid) values (new.managerid,1);
+CREATE TRIGGER `ins_loginlog` AFTER INSERT ON `manager` FOR EACH ROW begin
+  insert into manager_loginlog (manager_id,logintime,loginip) values (NEW.managerid,now(),new.creationip);
+insert into manager_role (manager_id,role_id) values (new.managerid,1); 
 END
 $$
 DELIMITER ;
@@ -116,47 +126,53 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `manager_loginlog`
+-- Table structure for table `manager_loginlog`
 --
 
 DROP TABLE IF EXISTS `manager_loginlog`;
 CREATE TABLE IF NOT EXISTS `manager_loginlog` (
   `logid` int(11) NOT NULL AUTO_INCREMENT,
-  `managerid` int(11) NOT NULL,
+  `manager_id` int(11) NOT NULL,
   `logintime` datetime NOT NULL,
   `loginip` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `result` tinyint(1) DEFAULT NULL,
   `browser` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`logid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`logid`),
+  KEY `manager_ind` (`manager_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Herättimet `manager_loginlog`
+-- Dumping data for table `manager_loginlog`
 --
-DROP TRIGGER IF EXISTS `update_logintime`;
-DELIMITER $$
-CREATE TRIGGER `update_logintime` AFTER INSERT ON `manager_loginlog` FOR EACH ROW IF @disable_update_logintime IS NULL THEN
-  update manager set lastlogintime = NEW.logintime,lastloginip = new.loginip, loginnum = loginnum + 1 where managerid = new.managerid;
-END IF
-$$
-DELIMITER ;
+
+INSERT INTO `manager_loginlog` (`logid`, `manager_id`, `logintime`, `loginip`, `result`, `browser`) VALUES
+(1, 11, '2017-11-13 17:30:05', '21', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `manager_role`
+-- Table structure for table `manager_role`
 --
 
 DROP TABLE IF EXISTS `manager_role`;
 CREATE TABLE IF NOT EXISTS `manager_role` (
-  `managerid` int(11) NOT NULL,
-  `roleid` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `manager_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  KEY `manager_ind` (`manager_id`),
+  KEY `role_ind` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `manager_role`
+--
+
+INSERT INTO `manager_role` (`manager_id`, `role_id`) VALUES
+(11, 1);
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `role`
+-- Table structure for table `role`
 --
 
 DROP TABLE IF EXISTS `role`;
@@ -166,20 +182,19 @@ CREATE TABLE IF NOT EXISTS `role` (
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`roleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `role`
+-- Dumping data for table `role`
 --
 
 INSERT INTO `role` (`roleid`, `rolename`, `creationtime`, `updatetime`) VALUES
-(1, '测试管理员', '2017-11-09 07:56:02', '2017-11-09 07:56:02'),
-(2, '综合管理员', '2017-11-09 10:26:03', '2017-11-09 10:26:03');
+(1, 'admin', '2017-11-13 17:20:13', '2017-11-13 17:20:13');
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `scrollimage`
+-- Table structure for table `scrollimage`
 --
 
 DROP TABLE IF EXISTS `scrollimage`;
@@ -197,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `scrollimage` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `scrollimage`
+-- Dumping data for table `scrollimage`
 --
 
 INSERT INTO `scrollimage` (`simgid`, `image`, `img_name`, `img_type`, `img_size`, `title`, `isshow`, `creationtime`, `updatetime`) VALUES
@@ -208,7 +223,7 @@ INSERT INTO `scrollimage` (`simgid`, `image`, `img_name`, `img_type`, `img_size`
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `user`
+-- Table structure for table `user`
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -230,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userid`, `account`, `password`, `username`, `department`, `position`, `status`, `lastlogintime`, `lastloginip`, `loginnum`, `createtime`, `updatetime`) VALUES
@@ -240,7 +255,7 @@ INSERT INTO `user` (`userid`, `account`, `password`, `username`, `department`, `
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `user_loginlog`
+-- Table structure for table `user_loginlog`
 --
 
 DROP TABLE IF EXISTS `user_loginlog`;
@@ -253,18 +268,41 @@ CREATE TABLE IF NOT EXISTS `user_loginlog` (
   `result` tinyint(1) NOT NULL,
   PRIMARY KEY (`logid`),
   KEY `user_ind` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vedos taulusta `user_loginlog`
+-- Dumping data for table `user_loginlog`
+--
+
+INSERT INTO `user_loginlog` (`logid`, `user_id`, `logintime`, `loginip`, `browser`, `result`) VALUES
+(24, 4, '2017-11-13 16:09:43', '1221', 'nem', 1),
+(26, 4, '2017-11-13 16:10:11', '1221', 'nem', 1);
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Rajoitteet vedostauluille
+-- Constraints for table `course`
 --
+ALTER TABLE `course`
+  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `course_class` (`classid`) ON DELETE CASCADE;
 
 --
--- Rajoitteet taululle `user_loginlog`
+-- Constraints for table `manager_loginlog`
+--
+ALTER TABLE `manager_loginlog`
+  ADD CONSTRAINT `manager_loginlog_ibfk_1` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`managerid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `manager_role`
+--
+ALTER TABLE `manager_role`
+  ADD CONSTRAINT `manager_role_ibfk_1` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`managerid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `manager_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`roleid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `user_loginlog`
 --
 ALTER TABLE `user_loginlog`
   ADD CONSTRAINT `user_loginlog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userid`) ON DELETE CASCADE;

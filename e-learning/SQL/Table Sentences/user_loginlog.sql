@@ -18,3 +18,6 @@ CREATE TRIGGER `update_logintime_user` AFTER INSERT ON `user_loginlog` FOR EACH 
   END IF
 $$
 DELIMITER;
+
+--insert into user_loginlog (user_id, logintime, loginip, result,browser) values 
+	--(1,now(),'12',0,'firefox');
