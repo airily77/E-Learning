@@ -19,7 +19,6 @@ class ScrollimageData{
             values (?,?,?,?,?,?,now(),now())',[$imageData,$imageSize[3],$filetype,$filename,$title,$isshow]);
             DB::commit();
         }catch (\Exception $exception){
-            echo($exception);
             DB::rollBack();
         }
     }

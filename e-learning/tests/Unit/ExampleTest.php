@@ -2,7 +2,10 @@
 
 namespace Tests\Unit;
 
+
+use App\User;
 use database\connectors\CourseData;
+use database\connectors\ScrollimageData;
 use Illuminate\Support\Manager;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +19,8 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        //ManagerData::insertManagerHash('pekka','pekka',1,'12.0.01.1.');
-        ManagerData::deleteManager(2,'tobias');
+        CourseData::insertClass('history',0);
+        CourseData::insertCourse('history','history of china','','',12,0,'history',1,1);
         $this->assertTrue(true);
     }
 }

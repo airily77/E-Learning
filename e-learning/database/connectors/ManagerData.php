@@ -84,7 +84,7 @@ class ManagerData{
      */
     public static function getManagerRole($id){
         try{
-            $roleid = DB::select('select roleid from manager_role where managerid = ?',[$id])[0]->roleid;
+            $roleid = DB::select('select * from manager_role where manager_id = ?',[$id])[0]->role_id;
             $role = DB::select('select * from role where roleid = ?',[$roleid]);
             return $role[0];
         }catch (\Exception $ex){
@@ -138,8 +138,8 @@ class ManagerData{
         DB::beginTransaction();
         try {
             if (self::checkPassword($id, $password)) {
-                DB::delete('delete from manager_loginlog where managerid = ?',[$id]);
-                DB::delete('delete from manager_role where managerid = ?',[$id]);
+                DB::delete('delete from manager_loginlog where manager_id = ?',[$id]);
+                DB::delete('delete from manager_role where manage_rid = ?',[$id]);
                 DB::delete('delete from manager where managerid = ?', [$id]);
                 DB::commit();
             }
@@ -155,15 +155,15 @@ class ManagerData{
      * @param $triedpassword Managers alleged password.
      * @return bool Returns whether login was successful or not.
      */
-    public static function login($manageraccount, $triedpassword){
+    public static function login($manageraccount, $triedpassword,$ip,$browser){
         try{
             $result=DB::select('select password,managerid from manager where account = ?',[$manageraccount])[0];
             $hashed = $result->password;
             if(Hash::check($triedpassword,$hashed)) {
-                self::insertLoginLog($result->managerid,'99.1.2.3',true);
+                self::insertLoginLog($result->managerid,$ip,true,$browser);
                 return true;
             } else {
-                self::insertLoginLog($result->managerid,'99.1.2.3',false); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
+                self::insertLoginLog($result->managerid,$ip,false,$browser); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
                 return false;
             }
         }catch (\Exception $ex){
@@ -178,14 +178,14 @@ class ManagerData{
      * @param $ip  Where did he try to login.
      * @param $result Whether he was successful or not.
      */
-    public static function insertLoginLog($id,$ip,$result){
+    private static function insertLoginLog($id,$ip,$result,$browser){
         DB::beginTransaction();
         try{
             if($result){
-                DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
+                DB::insert('insert into manager_loginlog (manager_id, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
             }else{
                 DB::statement('set @disable_update_logintime = 1');
-                DB::insert('insert into manager_loginlog (managerid, logintime, loginip, result) values (?,now(),?,?)',[$id,$ip,$result]);
+                DB::insert('insert into manager_loginlog (manager_id, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
                 DB::statement('set @disable_update_logintime = null');
             }
             DB::commit();
