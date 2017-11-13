@@ -17,6 +17,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
+        UserData::updatePassword(1,'pekka','pekka98');
         $this->assertTrue(true);
     }
 }

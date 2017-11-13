@@ -178,7 +178,7 @@ class ManagerData{
      * @param $ip  Where did he try to login.
      * @param $result Whether he was successful or not.
      */
-    public static function insertLoginLog($id,$ip,$result){
+    private static function insertLoginLog($id,$ip,$result){
         DB::beginTransaction();
         try{
             if($result){
