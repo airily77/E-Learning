@@ -4,14 +4,6 @@
 CREATE DATABASE IF NOT EXISTS `elearning` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `elearning`;
 ALTER DATABASE elearning DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
--- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1:3308
--- Generation Time: Nov 13, 2017 at 03:08 AM
--- Server version: 5.7.19
--- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Rakenne taululle `course`
 --
 
 DROP TABLE IF EXISTS `course`;
@@ -55,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `course` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `course`
+-- Vedos taulusta `course`
 --
 
 INSERT INTO `course` (`courseid`, `title`, `description`, `videoimg`, `videopath`, `videotime`, `showimg`, `classid`, `viewnum`, `learnnum`, `istesting`, `isshow`, `creationtime`, `updatetime`) VALUES
@@ -64,7 +56,7 @@ INSERT INTO `course` (`courseid`, `title`, `description`, `videoimg`, `videopath
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_class`
+-- Rakenne taululle `course_class`
 --
 
 DROP TABLE IF EXISTS `course_class`;
@@ -79,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `course_class` (
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `course_class`
+-- Vedos taulusta `course_class`
 --
 
 INSERT INTO `course_class` (`classid`, `classname`, `status`, `creationtime`, `updatetime`) VALUES
@@ -90,7 +82,7 @@ INSERT INTO `course_class` (`classid`, `classname`, `status`, `creationtime`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manager`
+-- Rakenne taululle `manager`
 --
 
 DROP TABLE IF EXISTS `manager`;
@@ -110,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `manager` (
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Triggers `manager`
+-- Herättimet `manager`
 --
 DROP TRIGGER IF EXISTS `ins_after_manager`;
 DELIMITER $$
@@ -124,7 +116,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manager_loginlog`
+-- Rakenne taululle `manager_loginlog`
 --
 
 DROP TABLE IF EXISTS `manager_loginlog`;
@@ -139,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `manager_loginlog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Triggers `manager_loginlog`
+-- Herättimet `manager_loginlog`
 --
 DROP TRIGGER IF EXISTS `update_logintime`;
 DELIMITER $$
@@ -152,7 +144,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manager_role`
+-- Rakenne taululle `manager_role`
 --
 
 DROP TABLE IF EXISTS `manager_role`;
@@ -164,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `manager_role` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Rakenne taululle `role`
 --
 
 DROP TABLE IF EXISTS `role`;
@@ -177,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `role` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `role`
+-- Vedos taulusta `role`
 --
 
 INSERT INTO `role` (`roleid`, `rolename`, `creationtime`, `updatetime`) VALUES
@@ -187,7 +179,7 @@ INSERT INTO `role` (`roleid`, `rolename`, `creationtime`, `updatetime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `scrollimage`
+-- Rakenne taululle `scrollimage`
 --
 
 DROP TABLE IF EXISTS `scrollimage`;
@@ -205,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `scrollimage` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `scrollimage`
+-- Vedos taulusta `scrollimage`
 --
 
 INSERT INTO `scrollimage` (`simgid`, `image`, `img_name`, `img_type`, `img_size`, `title`, `isshow`, `creationtime`, `updatetime`) VALUES
@@ -216,7 +208,7 @@ INSERT INTO `scrollimage` (`simgid`, `image`, `img_name`, `img_type`, `img_size`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Rakenne taululle `user`
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -235,45 +227,47 @@ CREATE TABLE IF NOT EXISTS `user` (
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user`
+-- Vedos taulusta `user`
 --
 
 INSERT INTO `user` (`userid`, `account`, `password`, `username`, `department`, `position`, `status`, `lastlogintime`, `lastloginip`, `loginnum`, `createtime`, `updatetime`) VALUES
-(1, 'pekka', '$2y$10$XaQgurGIh4lQLZT.UzkCcebS6c6QukdgjLE7bSm4pfVzlIkaVvqqS', NULL, NULL, NULL, 2, '2017-11-13 10:54:12', '127.0.0.1', 3, '2017-11-13 10:50:28', '2017-11-13 10:50:28');
+(1, 'pekka', 'pekka', NULL, NULL, NULL, 12, '2017-11-13 15:57:30', '12', 1, '2017-11-13 15:57:30', '2017-11-13 15:57:30'),
+(2, 'peke', '$2y$10$HpZ9a0N0monBZkpWH2y4M.SSSNrYnJprUJaX82.Gh13ZDvvHQbKQq', NULL, NULL, NULL, 12, '2017-11-13 15:58:52', '12', 1, '2017-11-13 15:58:52', '2017-11-13 15:58:52');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_loginlog`
+-- Rakenne taululle `user_loginlog`
 --
 
 DROP TABLE IF EXISTS `user_loginlog`;
 CREATE TABLE IF NOT EXISTS `user_loginlog` (
   `logid` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `logintime` datetime NOT NULL,
   `loginip` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `result` tinyint(1) DEFAULT NULL,
   `browser` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`logid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `result` tinyint(1) NOT NULL,
+  PRIMARY KEY (`logid`),
+  KEY `user_ind` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user_loginlog`
+-- Vedos taulusta `user_loginlog`
 --
+
 --
--- Triggers `user_loginlog`
+-- Rajoitteet vedostauluille
 --
-DROP TRIGGER IF EXISTS `update_logintime_user`;
-DELIMITER $$
-CREATE TRIGGER `update_logintime_user` AFTER INSERT ON `user_loginlog` FOR EACH ROW IF @disable_update_logintime_user IS NULL THEN
-    update user set lastlogintime = NEW.logintime,lastloginip = new.loginip, loginnum = loginnum + 1 where userid = new.userid;
-  END IF
-$$
-DELIMITER ;
+
+--
+-- Rajoitteet taululle `user_loginlog`
+--
+ALTER TABLE `user_loginlog`
+  ADD CONSTRAINT `user_loginlog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`userid`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

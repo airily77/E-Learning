@@ -1,6 +1,6 @@
 create table user (
-  userid int PRIMARY KEY AUTO_INCREMENT not null,
-  account VARCHAR(50) not null unique ,
+  userid INT NOT NULL,
+  account VARCHAR(50) not null unique,
   password varchar(500) not null,
   username VARCHAR(50) NULL,
   department VARCHAR(50) null,
@@ -10,7 +10,8 @@ create table user (
   lastloginip VARCHAR(20) not null,
   loginnum int not null,
   createtime datetime not null,
-  updatetime datetime not NULL
+  updatetime datetime not NULL,
+  primary key (userid)
 );
 
 DELIMITER |

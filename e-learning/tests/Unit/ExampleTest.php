@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 
+use App\User;
 use database\connectors\ScrollimageData;
 use Illuminate\Support\Manager;
 use Tests\TestCase;
@@ -17,7 +18,8 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        UserData::updatePassword(1,'pekka','pekka98');
+        UserData::login('peke','peke','1221','nem');
+        UserData::login('tobias','tobias','1221','nem');
         $this->assertTrue(true);
     }
 }

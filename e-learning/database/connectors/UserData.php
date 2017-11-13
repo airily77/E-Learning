@@ -42,19 +42,16 @@ class UserData{
         }catch (\Exception $exception){}
     }
     public static function login($accountname,$password,$ip,$browser){
-        DB::beginTransaction();
         try{
             $id = self::getUserId($accountname);
             if(self::checkPassword($id,$password)){
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id,$ip,true,$browser);
+                self::insertLoginLog($id,$ip,1,$browser);
             }else{
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id,'127.0.0.1',false,$browser);
+                self::insertLoginLog($id,$ip,1,$browser);
             }
-        }catch(\Exception $exception){
-            DB::rollBack();
-        }
+        }catch(\Exception $exception){}
     }
     public static function getUserId($accountname){
         try{
@@ -65,15 +62,15 @@ class UserData{
         DB::beginTransaction();
         try{
             if($result){
-                DB::insert('insert into user_loginlog (userid, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
+                DB::insert('insert into user_loginlog (user_id, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
             }else{
                 DB::statement('set @disable_update_logintime_user = 1');
-                DB::insert('insert into user_loginlog (userid, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
+                DB::insert('insert into user_loginlog (user_id, logintime, loginip, result,browser) values (?,now(),?,?,?)',[$id,$ip,$result,$browser]);
                 DB::statement('set @disable_update_logintime_user = null');
             }
             DB::commit();
         }catch (\Exception $exception){
-            DB::rollBack();
+            echo($exception);
         }
     }
     public static function getAccount($id){
@@ -92,5 +89,15 @@ class UserData{
         }catch (\Exception $exception){
             DB::rollBack();
         }
+    }
+
+    /**
+     * @param $id Id of the user.
+     * @return mixed Gets every login from the selected id. The data which has been returned is a list of map data. You can call something from this list example "$result[0]->logintime" this returns the first logintime.
+     */
+    public static function getLogins($id){
+        try{
+            return DB::select('select logintime,loginip,result,browser from user_loginlog where userid = ?',[$id]);
+        }catch (\Exception $exception){}
     }
 }
