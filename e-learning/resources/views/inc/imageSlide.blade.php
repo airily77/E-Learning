@@ -1,7 +1,9 @@
 <div id="sliderFrame">
     <div id="slider">
         @foreach($images as $image)
+            <div id="images">
             <img src="data:{{$image->img_type}};base64,{{base64_encode($image->image)}}">
+                </div>
         @endforeach
     </div>
 
@@ -13,12 +15,17 @@
         }
         #sliderFrame
         {
-            width:700px;
-            margin:0 auto; /*center-aligned*/
+            width: 630px;
+            margin:0 0;
+        }
+
+        img {
+            max-width:100%;
+            height:auto;
         }
 
         #slider, #slider .sliderInner {
-            width:630px;height:300px;/* Must be the same size as the slider images */
+            width:750px;height:340px;/* Must be the same size as the slider images */
             border-radius:3px;
         }
 
@@ -97,7 +104,6 @@
             boxes: 3,
             hoverPause: 1,
             autoAdvance: true,
-            thumbnailsWrapperId: "thumbs",
             m: false,
             license: "mylicense"
         };
