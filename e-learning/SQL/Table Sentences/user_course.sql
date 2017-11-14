@@ -1,5 +1,5 @@
 create table user_course(
-	usercourseid int primary key not null auto_increment,
+	usercourseid int not null auto_increment,
 	user_id INT NOT NULL,
 	course_id INT NOT NULL,
 	status boolean not null,
@@ -13,5 +13,17 @@ create table user_course(
     INDEX course_id (course_id),
     FOREIGN KEY (course_id)
         REFERENCES course(courseid)
-        ON DELETE CASCADE    
+        ON 	DELETE CASCADE    
 )ENGINE=INNODB;
+
+DELIMITER $
+create trigger check_duplicate_user_course before insert on user_course FOR EACH ROW
+  begin
+  declare currentcourseid int(11);
+  SELECT course_id into currentcourseid from user_course where user_id = new.user_id and course_id = new.course_id;
+  if currentcourseid is not null
+  THEN
+      SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate entry';
+  END IF;
+  END;
+DELIMITER ;

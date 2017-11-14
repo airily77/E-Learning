@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Integer;
 
 //TODO When someone inserts a course define classid by classname. Ask the manager to give name of the class to which it will be used to get the right classid.
-
+//TODO You could add a column for attendees, and or dropouts, fails in the table course.
 class CourseData{
     public static function insertCourse($title,$description,$videoimg,$videopath,$videotime,$showimg,$classname,$istesting,$isshow){
         DB::beginTransaction();

@@ -19,7 +19,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        UserData::dropUserFromCourse(3,2);
+        UserData::addUserToCourse(1,1,0,'asd');
         $this->assertTrue(true);
     }
 }
