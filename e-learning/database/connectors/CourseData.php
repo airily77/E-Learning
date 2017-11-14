@@ -25,10 +25,15 @@ class CourseData{
             DB::rollBack();
         }
     }
+    public static function getCourseId($title){
+        try{
+            return DB::select('select courseid from course where title = ?',[$title])[0]->courseid;
+        }catch (\Exception $exception){}
+    }
     public static function getCourse($idortitle){
         try{
             if(is_numeric($idortitle)) return DB::select('select * from course where courseid = ?',[$idortitle])[0];
-            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle]);
+            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle][0]);
         }catch(\Exception $exception){}
     }
     /**

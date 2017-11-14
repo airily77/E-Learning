@@ -19,8 +19,7 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest(){
-        CourseData::insertClass('history',0);
-        CourseData::insertCourse('history','history of china','','',12,0,'history',1,1);
+        UserData::dropUserFromCourse(3,2);
         $this->assertTrue(true);
     }
 }

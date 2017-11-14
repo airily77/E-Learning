@@ -100,4 +100,57 @@ class UserData{
             return DB::select('select logintime,loginip,result,browser from user_loginlog where userid = ?',[$id]);
         }catch (\Exception $exception){}
     }
+    public static function deleteUser($id,$password){
+        DB::beginTransaction();
+        try{
+            if(self::checkPassword($id,$password)){
+                DB::delete('delete from user where userid = ?',[$id]);
+                DB::commit();
+            }
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    public static function addUserToCourse($userid,$coursetitleorid,$status,$completetime){
+        try{
+            if(is_numeric($coursetitleorid)) self::insertUserCourse($userid,$coursetitleorid,$status,$completetime);
+            if(is_string($coursetitleorid)){
+                $courseid = CourseData::getCourseId($coursetitleorid);
+                self::insertUserCourse($userid,$courseid,$status,$completetime);
+            }
+        }catch(\Exception $exception){
+            echo($exception);
+        }
+    }
+    public static function insertUserCourse($userid,$courseid,$status,$completetime){
+        DB::beginTransaction();
+        try{
+            DB::insert('insert into user_course (user_id,course_id,status,begintime,completetime) values (?,?,?,now(),?)',[$userid,$courseid,$status,$completetime]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo($exception);
+            DB::rollBack();
+        }
+    }
+    //TODO Bug found, the same person can be twice on the same course. It shoulnd't be like that.
+    public static function dropUserFromCourse($userid,$courseid){
+        DB::beginTransaction();
+        try{
+            DB::delete('delete from user_course where user_id = ? and course_id = ?',[$userid
+            ,$courseid]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    /**
+     * @param $userid
+     * @return mixed Returns all the courses that user has been in.
+     *  You should use the data like this. "$results["column number" 0]->"information you want from the column"course_id
+     */
+    public static function getUserCourses($userid){
+        try{
+            return DB::select('select * from user_course where user_id = ?',[$userid]);
+        }catch (\Exception $exception){}
+    }
 }
