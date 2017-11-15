@@ -16,7 +16,7 @@ create table user_course(
         ON 	DELETE CASCADE    
 )ENGINE=INNODB;
 
-DELIMITER $
+DELIMITER $	
 create trigger check_duplicate_user_course before insert on user_course FOR EACH ROW
   begin
   declare currentcourseid int(11);

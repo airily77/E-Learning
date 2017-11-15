@@ -163,7 +163,7 @@ class UserData
      * @param $courseid course which you want to check
      * @return bool Returns true if the person is not in the course. Returns fales if the person is already in the course.
      */
-    //TODO You have to update this method when you have sql data about finished courses. So the person cannot go on the course if the has finnished it.
+    //TODO You have to update this method when you have sql data about finished courses. So the person cannot go on the course if the person has finnished it.
     public static function checkDuplicateCourseEntry($userid, $courseid){
         try {
             $ids = DB::select('SELECT user_id,course_id FROM user_course');
@@ -178,10 +178,7 @@ class UserData
             return true;
         }
     }
-
-    //TODO Bug found, the same person can be twice on the same course. It shoulnd't be like that.
-    public static function dropUserFromCourse($userid, $courseid)
-    {
+    public static function dropUserFromCourse($userid, $courseid){
         DB::beginTransaction();
         try {
             DB::delete('DELETE FROM user_course WHERE user_id = ? AND course_id = ?', [$userid
@@ -198,8 +195,7 @@ class UserData
      * @return mixed Returns all the courses that user has been in.
      *  You should use the data like this. "$results["column number" 0]->"information you want from the column"course_id
      */
-    public static function getUserCourses($userid)
-    {
+    public static function getUserCourses($userid){
         try {
             return DB::select('SELECT * FROM user_course WHERE user_id = ?', [$userid]);
         } catch (\Exception $exception) {
