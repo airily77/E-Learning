@@ -1,6 +1,5 @@
 <style>
 
-    { background: #eee; }
 
     .banner {
         left: 0%;
