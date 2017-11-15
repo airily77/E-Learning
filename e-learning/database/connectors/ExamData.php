@@ -17,8 +17,8 @@ class ExamData{
         if(is_null($generated))return;
         DB::beginTransaction();
         try{
-            DB::insert('insert into exam (course_id, testing_id, class_id, title, questions, options, correctanwsers, creationtime, updatetime) 
-            VALUES (?,?,?,?,?,?,?,now(),now())',[$courseid,$testingid,$classid,$title,$generated->question,$generated->options,$generated->correctanwser]);
+            DB::insert('insert into exam (course_id, testing_id, class_id, title, questions, options, correctanwsers, creationtime, updatetime,donenum) 
+            VALUES (?,?,?,?,?,?,?,now(),now(),0)',[$courseid,$testingid,$classid,$title,$generated->question,$generated->options,$generated->correctanwser]);
             DB::commit();
         }catch (\Exception $exception){
             echo($exception);
@@ -72,6 +72,40 @@ class ExamData{
                 self::decodeJsonIn($result);
             }
             return $results;
+        }catch (\Exception $exception){}
+    }
+
+    /**
+     * @param $examidortitle
+     * @param $useranwsers
+     * @return int returns how many questions were correctly anwsered
+     */
+    public static function checkExamForPoints($examidortitle, $useranwsers){
+        //TODO Check if the variable is a string or an int.
+        return sizeof(self::checkExamForCorrectAnwsers($examidortitle,$useranwsers));
+    }
+    public static function checkExamForCorrectAnwsers($examidortitle, $useranwsers){
+        //TODO Check if the variable is a string or an int.
+        $examid = $examidortitle;
+        try{
+            $correctanwsers = json_decode(DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers);
+            $usercorrectanwsers = array();
+            for( $i = 0; $i< sizeof($correctanwsers); $i++ ) {
+                if($correctanwsers[$i]==$useranwsers[$i]) {
+                    array_push($usercorrectanwsers,$i);
+                }
+            }
+            return $usercorrectanwsers;
+        }catch (\Exception $exception){}
+    }
+    public static function getTestingId($examid){
+        try{
+            return DB::select('select testing_id from exam where examid = ?',[$examid])[0]->testing_id;
+        }catch (\Exception $exception){}
+    }
+    public static function getClassId($examid){
+        try{
+            return DB::select('select class_id from exam where examid = ?',[$examid])[0]->testing_id;
         }catch (\Exception $exception){}
     }
 }

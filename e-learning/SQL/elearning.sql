@@ -7,7 +7,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Nov 15, 2017 at 05:54 AM
+-- Generation Time: Nov 15, 2017 at 09:23 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   PRIMARY KEY (`courseid`),
   UNIQUE KEY `title` (`title`),
   KEY `course_ibfk_1` (`class_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `course`
@@ -117,11 +117,32 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `correctanwsers` json NOT NULL,
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
+  `medianscore` double DEFAULT NULL,
+  `donenum` int(11) NOT NULL,
   PRIMARY KEY (`examid`),
   KEY `course_ind` (`course_id`),
   KEY `testing_id` (`testing_id`),
   KEY `class_ind` (`class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `exam`
+--
+
+INSERT INTO `exam` (`examid`, `course_id`, `testing_id`, `class_id`, `title`, `questions`, `options`, `correctanwsers`, `creationtime`, `updatetime`, `medianscore`, `donenum`) VALUES
+(1, 1, 1, 3, 'nuudelit', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"A\", \"B\", \"A\", \"B\"]', '2017-11-15 15:30:43', '2017-11-15 15:30:43', NULL, 0),
+(2, 1, 1, 3, 'nuudelit', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"A\", \"B\", \"A\", \"B\"]', '2017-11-15 15:32:31', '2017-11-15 15:32:31', NULL, 0);
+
+--
+-- Triggers `exam`
+--
+DROP TRIGGER IF EXISTS `ins_exam`;
+DELIMITER $$
+CREATE TRIGGER `ins_exam` AFTER INSERT ON `exam` FOR EACH ROW BEGIN
+  update testing set examnum = examnum + 1 where testingid = new.testing_id;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -145,6 +166,18 @@ CREATE TABLE IF NOT EXISTS `manager` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Triggers `manager`
+--
+DROP TRIGGER IF EXISTS `ins_loginlog`;
+DELIMITER $$
+CREATE TRIGGER `ins_loginlog` AFTER INSERT ON `manager` FOR EACH ROW begin
+    insert into manager_loginlog (manager_id,logintime,loginip) values (NEW.managerid,now(),new.creationip);
+    insert into manager_role (manager_id,role_id) values (new.managerid,1); -- chanage 1 to something else 
+  END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +195,19 @@ CREATE TABLE IF NOT EXISTS `manager_loginlog` (
   PRIMARY KEY (`logid`),
   KEY `manager_ind` (`manager_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Triggers `manager_loginlog`
+--
+DROP TRIGGER IF EXISTS `update_logintime`;
+DELIMITER $$
+CREATE TRIGGER `update_logintime` AFTER INSERT ON `manager_loginlog` FOR EACH ROW BEGIN
+  IF @disable_update_logintime IS NULL THEN
+  update manager set lastlogintime = NEW.logintime,lastloginip = new.loginip, loginnum = loginnum + 1 where managerid = new.manager_id;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -241,11 +287,21 @@ CREATE TABLE IF NOT EXISTS `testing` (
   `course_id` int(11) NOT NULL,
   `donenum` int(11) NOT NULL,
   `examnum` int(11) NOT NULL,
+  medianpoints double null,
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`testingid`),
   KEY `course_ind` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `testing`
+--
+
+INSERT INTO `testing` (`testingid`, `course_id`, `donenum`, `examnum`, `creationtime`, `updatetime`) VALUES
+(1, 1, 0, 2, '2017-11-15 15:24:35', '2017-11-15 15:24:35'),
+(2, 2, 0, 0, '2017-11-15 15:24:35', '2017-11-15 15:24:35'),
+(3, 3, 0, 0, '2017-11-15 15:24:35', '2017-11-15 15:24:35');
 
 -- --------------------------------------------------------
 
@@ -269,14 +325,25 @@ CREATE TABLE IF NOT EXISTS `user` (
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userid`, `account`, `password`, `username`, `department`, `position`, `status`, `lastlogintime`, `lastloginip`, `loginnum`, `createtime`, `updatetime`) VALUES
-(1, 'pekka', 'pekka', NULL, NULL, NULL, 3, '2017-11-10 13:35:40', '9.9.91.2.3', 1, '2017-11-10 13:35:40', '2017-11-10 13:35:40');
+(3, 'pekka', '$2y$10$tOwgruYuPzWAhIN.btAWFO3zjIo0517VFEGf7fMC9/7zBeikCDnKK', NULL, NULL, NULL, 1, '2017-11-15 16:34:28', '98.0.1.1', 1, '2017-11-15 16:34:28', '2017-11-15 16:34:28');
+
+--
+-- Triggers `user`
+--
+DROP TRIGGER IF EXISTS `ins_loginlog_user`;
+DELIMITER $$
+CREATE TRIGGER `ins_loginlog_user` AFTER INSERT ON `user` FOR EACH ROW begin
+    insert into user_loginlog (user_id,logintime,loginip,result) values (NEW.userid,now(),new.lastloginip,true);
+  END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -295,14 +362,14 @@ CREATE TABLE IF NOT EXISTS `user_course` (
   PRIMARY KEY (`usercourseid`),
   KEY `user_ind` (`user_id`),
   KEY `course_id` (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_course`
 --
 
 INSERT INTO `user_course` (`usercourseid`, `user_id`, `course_id`, `status`, `begintime`, `completetime`) VALUES
-(2, 1, 1, 0, '2017-11-14 16:21:15', 'asd');
+(7, 3, 1, 0, '2017-11-15 16:50:03', '2017/12/12');
 
 --
 -- Triggers `user_course`
@@ -311,12 +378,14 @@ DROP TRIGGER IF EXISTS `check_duplicate_user_course`;
 DELIMITER $$
 CREATE TRIGGER `check_duplicate_user_course` BEFORE INSERT ON `user_course` FOR EACH ROW begin
     declare currentcourseid int(11);
-    SELECT course_id into currentcourseid from user_course where user_id = new.user_id and course_id = new.course_id;
-    if currentcourseid is not null
-    THEN
+    if @disable_check_duplicate is not null THEN
+      SELECT course_id into currentcourseid from user_course where user_id = new.user_id and course_id = new.course_id;
+      if currentcourseid is not null
+      THEN
         SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate entry';
+      END IF;
     END IF;
-    END
+  END
 $$
 DELIMITER ;
 
@@ -336,7 +405,14 @@ CREATE TABLE IF NOT EXISTS `user_loginlog` (
   `result` tinyint(1) NOT NULL,
   PRIMARY KEY (`logid`),
   KEY `user_ind` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_loginlog`
+--
+
+INSERT INTO `user_loginlog` (`logid`, `user_id`, `logintime`, `loginip`, `browser`, `result`) VALUES
+(1, 3, '2017-11-15 16:34:28', '98.0.1.1', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -361,6 +437,36 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
   KEY `testing_ind` (`testing_id`),
   KEY `exam_ind` (`exam_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Triggers `user_testing`
+--
+DROP TRIGGER IF EXISTS `ins_user_testing`;
+DELIMITER $$
+CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW BEGIN
+  declare exammedian int(11);
+  DECLARE testingmedian int(11);
+  if new.result=1 THEN
+    update testing set donenum = donenum + 1 where testingid = new.testing_id;
+    update exam set donenum = donenum + 1 where examid = new.exam_id;
+
+    select exam.medianscore into exammedian from exam where examid = new.exam_id;
+    if exammedian>0 THEN
+      update exam set exam.medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
+    ELSE
+      update exam set exam.medianscore = new.score where examid = new.exam_id;
+    END IF;
+
+    select testing.medianpoints into testingmedian from testing where testingid = new.testing_id;
+    if testingmedian>0 THEN
+      update testing set testing.medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
+    ELSE
+      update testing set testing.medianpoints = new.score where testingid = new.testing_id;
+    END IF;
+  END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Constraints for dumped tables

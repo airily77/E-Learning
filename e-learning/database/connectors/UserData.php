@@ -201,4 +201,23 @@ class UserData
         } catch (\Exception $exception) {
         }
     }
+    //TODO Only one same exam per user
+    public static function insertUserTesting($userid,$examid,$useranwsers,$started){
+        if(is_null(self::getUserCourses($userid))) return;
+        DB::beginTransaction();
+        try{
+            $correctanwsers = json_encode(ExamData::checkExamForCorrectAnwsers($examid,$useranwsers));
+            $useranwsersjson = json_encode($useranwsers);
+            $score = ExamData::checkExamForPoints($examid,$useranwsers);
+            $testingid = ExamData::getTestingId($examid);
+            $result = ($score>sizeof($correctanwsers)/60);
+            DB::insert('insert into user_testing (user_id, testing_id, exam_id, useranswers, correctanwsers, score, started, completed, result) 
+            VALUES (?,?,?,?,?,?,?,now(),?)',[$userid,$testingid,$examid,$useranwsersjson,$correctanwsers,$score,$started,$result]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo($exception);
+            DB::rollBack();
+        }
+    }
+
 }

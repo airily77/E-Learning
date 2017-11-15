@@ -3,12 +3,13 @@ create table exam(
 	course_id int not null,
 	testing_id int not null,
 	class_id int not null,
-	title varchar(100) not null,
+	title varchar(100) not null unique,
 	questions json not null,
 	options json not null, -- Question 1 Option A = 'test option' Option B = 'this is option b' Option C = 'this is option c', Question 2 Option A = 'plah' etc
 	correctanwsers json not null, -- Question 1 = A, Question 2 = C etc
 	creationtime datetime not null,
 	updatetime datetime not null,
+	donenum int not null,
 	medianscore double null,
 	PRIMARY KEY (examid),
 	INDEX course_ind (course_id),
