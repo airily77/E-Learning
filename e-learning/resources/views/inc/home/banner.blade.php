@@ -1,7 +1,3 @@
-<div class="banner">
-    <h1 class="banner">Example banner</h1>
-
-
 <style>
 
     { background: #eee; }
@@ -17,8 +13,5 @@
         color: black;
         background: red;
     }
-
-
-
 </style>
-</div>
+    <h1 class="banner">Example banner</h1>

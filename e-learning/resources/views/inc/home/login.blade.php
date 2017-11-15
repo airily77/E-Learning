@@ -12,7 +12,7 @@
         background-color: #6b9dbb;
         color: white;
         padding: 5px;
-        margin: 8px o;
+        margin: 8px 0;
         border: none;
         cursor: pointer;
         width: 30%;
