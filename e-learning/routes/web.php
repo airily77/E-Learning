@@ -21,3 +21,8 @@ Route::get('/home', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('home', ['images'=>$results]);
 });
+
+Route::get('/course', function () {
+    $results = \database\connectors\ScrollimageData::getCurrentImages();
+    return view('course', ['images'=>$results]);
+});
