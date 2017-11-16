@@ -210,7 +210,7 @@ class UserData
     //TODO Only one same exam per user. We should correct this error at front-end. We shoulnd't even give him the option to do the exam or even see the exam.
     public static function insertUserTesting($userid,$examid,$useranwsers,$started){
         if(is_null(self::getUserCourses($userid))) return;
-        if(self::checkDuplicateExamEntry($userid,$examid)) return;
+        //if(self::checkDuplicateExamEntry($userid,$examid)) return;
         DB::beginTransaction();
         try{
             $correctanwsers = json_encode(ExamData::checkExamForCorrectAnwsers($examid,$useranwsers));

@@ -409,14 +409,16 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
 
 --
 -- Triggers `user_testing`
---
-DROP TRIGGER IF EXISTS `ins_user_testing`;
+--DROP TRIGGER IF EXISTS `ins_user_testing`;
 DELIMITER $$
 CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW BEGIN
   declare exammedian int(11);
   DECLARE testingmedian int(11);
   DECLARE notfirsttime int(11);
   select user_id into notfirsttime from user_testing where user_testing.user_id = new.user_id and user_testing.exam_id = new.exam_id;
+  if notfirsttime is not null THEN
+    SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate exam entry for current user';
+  END IF;
   if new.result=1 and notfirsttime is null THEN
     update testing set donenum = donenum + 1 where testingid = new.testing_id;
     update exam set donenum = donenum + 1 where examid = new.exam_id;
