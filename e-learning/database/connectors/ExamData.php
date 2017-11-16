@@ -74,6 +74,11 @@ class ExamData{
             return $results;
         }catch (\Exception $exception){}
     }
+    public static function getExamId($title){
+        try{
+            return DB::select('select examid from exam where title = ?',[$title])[0]->examid;
+        }catch(\Exception $exception){}
+    }
 
     /**
      * @param $examidortitle
@@ -81,12 +86,14 @@ class ExamData{
      * @return int returns how many questions were correctly anwsered
      */
     public static function checkExamForPoints($examidortitle, $useranwsers){
-        //TODO Check if the variable is a string or an int.
         return sizeof(self::checkExamForCorrectAnwsers($examidortitle,$useranwsers));
     }
     public static function checkExamForCorrectAnwsers($examidortitle, $useranwsers){
-        //TODO Check if the variable is a string or an int.
-        $examid = $examidortitle;
+        if(is_string($examidortitle)){
+            $examid = self::getExamId($examidortitle);
+        }else if(is_numeric($examidortitle)){
+            $examid = $examidortitle;
+        }
         try{
             $correctanwsers = json_decode(DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers);
             $usercorrectanwsers = array();

@@ -24,27 +24,31 @@ create table user_testing(
     	ON DELETE CASCADE
 )ENGINE=INNODB;
 
-DELIMITER $
-create trigger ins_user_testing before insert on user_testing FOR EACH ROW BEGIN
+DROP TRIGGER IF EXISTS `ins_user_testing`;
+DELIMITER $$
+CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW BEGIN
   declare exammedian int(11);
   DECLARE testingmedian int(11);
-  if new.result=1 THEN
+  DECLARE notfirsttime int(11);
+  select user_id into notfirsttime from user_testing where user_testing.user_id = new.user_id and user_testing.exam_id = new.exam_id;
+  if new.result=1 and notfirsttime is null THEN
     update testing set donenum = donenum + 1 where testingid = new.testing_id;
-    update exam set donenum = donedum + 1 where examid = new.exam_id;
+    update exam set donenum = donenum + 1 where examid = new.exam_id;
 
-    select medianscore into exammedian from exam where examid = new.exam_id;
-    if medianscore>0 THEN
-      update exam set medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
+    select exam.medianscore into exammedian from exam where examid = new.exam_id;
+    if exammedian>0 THEN
+      update exam set exam.medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
     ELSE
-      update exam set medianscore = new.score where examid = new.exam_id;
+      update exam set exam.medianscore = new.score where examid = new.exam_id;
     END IF;
 
-    select medianpoints into testingmedian from testing where testingid = new.testing_id;
+    select testing.medianpoints into testingmedian from testing where testingid = new.testing_id;
     if testingmedian>0 THEN
-      update testing set medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
+      update testing set testing.medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
     ELSE
-      update testing set medianpoints = new.score where testingid = new.testing_id;
+      update testing set testing.medianpoints = new.score where testingid = new.testing_id;
     END IF;
   END IF;
-END$
+END
+$$
 DELIMITER ;

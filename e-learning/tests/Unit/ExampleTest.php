@@ -19,16 +19,17 @@ class ExampleTest extends TestCase{
      *
      * @return void
      */
-    //TODO Update exam title to be unique because you can't find an exam by the name if the names are the same.
-    //TODO Split sql to two different sql queryes one implements sql structure. The other file implements data.
+    //        $datetime = date_create()->format('Y-m-d H:i:s');
     public function testBasicTest(){
         $questions = array('onko nuudelit hyvia','onko tama meemi','oletko meemi','tobias');
         $option = array('on','ei');
         $options = array($option,$option,$option,$option);
         $correctanwser = array('A','B','A','B');
         $datetime = date_create()->format('Y-m-d H:i:s');
-        echo($datetime);
-        UserData::insertUserTesting(3,2,$correctanwser,$datetime);
+        $result = UserData::checkDuplicateExamEntry(1,1);
+        echo('result is ? ');
+        echo($result);
+        UserData::insertUserTesting(1,1,$correctanwser,$datetime);
         $this->assertTrue(true);
     }
 }
