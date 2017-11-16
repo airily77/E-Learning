@@ -18,7 +18,7 @@ DELIMITER |
 create trigger ins_loginlog_user after insert on user
 for EACH ROW
   begin
-    insert into user_loginlog (userid,logintime,loginip) values (NEW.userid,now(),new.lastloginip); 
+    insert into user_loginlog (user_id,logintime,loginip) values (NEW.userid,now(),new.lastloginip); 
   END|
 DELIMITER;
 --insert into user (account,password,username,ukey,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)

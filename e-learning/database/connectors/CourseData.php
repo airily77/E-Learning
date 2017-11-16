@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Integer;
 
 //TODO When someone inserts a course define classid by classname. Ask the manager to give name of the class to which it will be used to get the right classid.
-
+//TODO You could add a column for attendees, and or dropouts, fails in the table course.
+//TODO You should add a column for the teachers name and contact info, you should create first and lastname into the manager table.
 class CourseData{
     public static function insertCourse($title,$description,$videoimg,$videopath,$videotime,$showimg,$classname,$istesting,$isshow){
         DB::beginTransaction();
@@ -25,10 +26,15 @@ class CourseData{
             DB::rollBack();
         }
     }
+    public static function getCourseId($title){
+        try{
+            return DB::select('select courseid from course where title = ?',[$title])[0]->courseid;
+        }catch (\Exception $exception){}
+    }
     public static function getCourse($idortitle){
         try{
             if(is_numeric($idortitle)) return DB::select('select * from course where courseid = ?',[$idortitle])[0];
-            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle]);
+            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle][0]);
         }catch(\Exception $exception){}
     }
     /**
