@@ -16,14 +16,16 @@ create table user_course(
         ON 	DELETE CASCADE    
 )ENGINE=INNODB;
 
-DELIMITER $
+DELIMITER $	
 create trigger check_duplicate_user_course before insert on user_course FOR EACH ROW
   begin
-  declare currentcourseid int(11);
-  SELECT course_id into currentcourseid from user_course where user_id = new.user_id and course_id = new.course_id;
-  if currentcourseid is not null
-  THEN
-      SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate entry';
-  END IF;
-  END;
+    declare currentcourseid int(11);
+    if @disable_check_duplicate is not null THEN
+      SELECT course_id into currentcourseid from user_course where user_id = new.user_id and course_id = new.course_id;
+      if currentcourseid is not null
+      THEN
+          SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate entry';
+      END IF;
+    END IF;
+  END
 DELIMITER ;

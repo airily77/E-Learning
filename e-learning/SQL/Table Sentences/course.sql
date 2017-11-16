@@ -1,6 +1,6 @@
 create table course(
   courseid INT NOT NULL auto_increment,
-  title varchar(100) not null,
+  title varchar(100) not null unique,
   description varchar(500) null,
   videoimg varchar(100) not null,
   videopath varchar(100) not null,
@@ -15,3 +15,7 @@ create table course(
   updatetime datetime not null,
   PRIMARY KEY (courseid)
 )ENGINE=INNODB;
+
+create trigger ins_testing after insert on course for EACH ROW BEGIN
+  insert into testing (course_id, donenum, examnum ,creationtime, updatetime) VALUES (new.courseid,0,0,now(),now());
+END;

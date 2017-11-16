@@ -24,7 +24,9 @@
             "database/connectors/ManagerData.php",
             "database/connectors/ScrollimageData.php",
             "database/connectors/UserData.php",
-            "database/connectors/CourseData.php"
+            "database/connectors/CourseData.php",
+            "database/connectors/ExamData.php",
+            "database/connectors/Question.php"
         ],
         "psr-4": {
             "App\\": "app/"

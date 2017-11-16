@@ -163,7 +163,7 @@ class UserData
      * @param $courseid course which you want to check
      * @return bool Returns true if the person is not in the course. Returns fales if the person is already in the course.
      */
-    //TODO You have to update this method when you have sql data about finished courses. So the person cannot go on the course if the has finnished it.
+    //TODO You have to update this method when you have sql data about finished courses. So the person cannot go on the course if the person has finnished it.
     public static function checkDuplicateCourseEntry($userid, $courseid){
         try {
             $ids = DB::select('SELECT user_id,course_id FROM user_course');
@@ -178,10 +178,7 @@ class UserData
             return true;
         }
     }
-
-    //TODO Bug found, the same person can be twice on the same course. It shoulnd't be like that.
-    public static function dropUserFromCourse($userid, $courseid)
-    {
+    public static function dropUserFromCourse($userid, $courseid){
         DB::beginTransaction();
         try {
             DB::delete('DELETE FROM user_course WHERE user_id = ? AND course_id = ?', [$userid
@@ -198,11 +195,36 @@ class UserData
      * @return mixed Returns all the courses that user has been in.
      *  You should use the data like this. "$results["column number" 0]->"information you want from the column"course_id
      */
-    public static function getUserCourses($userid)
-    {
+    public static function getUserCourses($userid){
         try {
             return DB::select('SELECT * FROM user_course WHERE user_id = ?', [$userid]);
         } catch (\Exception $exception) {
         }
     }
+    public static function checkDuplicateExamEntry($userid,$examid){
+        try{
+            if(is_null(DB::select('select user_id from user_testing where user_id = ? and exam_id = ?',[$userid,$examid])[0]->user_id)) return false;
+            else return true;
+        }catch (\Exception $exception){}
+    }
+    //TODO Only one same exam per user. We should correct this error at front-end. We shoulnd't even give him the option to do the exam or even see the exam.
+    public static function insertUserTesting($userid,$examid,$useranwsers,$started){
+        if(is_null(self::getUserCourses($userid))) return;
+        //if(self::checkDuplicateExamEntry($userid,$examid)) return;
+        DB::beginTransaction();
+        try{
+            $correctanwsers = json_encode(ExamData::checkExamForCorrectAnwsers($examid,$useranwsers));
+            $useranwsersjson = json_encode($useranwsers);
+            $score = ExamData::checkExamForPoints($examid,$useranwsers);
+            $testingid = ExamData::getTestingId($examid);
+            $result = ($score>sizeof($correctanwsers)/60);
+            DB::insert('insert into user_testing (user_id, testing_id, exam_id, useranswers, correctanwsers, score, started, completed, result) 
+            VALUES (?,?,?,?,?,?,?,now(),?)',[$userid,$testingid,$examid,$useranwsersjson,$correctanwsers,$score,$started,$result]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo($exception);
+            DB::rollBack();
+        }
+    }
+
 }
