@@ -12,17 +12,9 @@
 */
 use database\connectors\ManagerData;
 
-Route::get('/', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('home', ['images'=>$results]);
-});
-
-Route::get('/home', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('home', ['images'=>$results]);
-});
-
+Route::get('/','HomeController@index')->name('home');
 Route::get('/course', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('course', ['images'=>$results]);
 });
+Auth::routes();

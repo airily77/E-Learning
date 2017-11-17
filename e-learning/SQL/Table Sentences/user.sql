@@ -1,6 +1,7 @@
 CREATE TABLE  user (
     userid INT NOT NULL AUTO_INCREMENT,
     account varchar(50) not null unique,
+    -- remember me token would be good in this column. Because if they choose to remember me it would be best to have remember me token.
     password varchar(500) not null,
     username VARCHAR(50) NULL,
     department VARCHAR(50) null,

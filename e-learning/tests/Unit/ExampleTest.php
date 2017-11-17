@@ -3,10 +3,13 @@
 namespace Tests\Unit;
 
 
+use App\Http\Controllers\Session\BrowserStorage;
+use App\Http\Controllers\Session\SessionStorage;
 use App\User;
 use database\connectors\CourseData;
 use database\connectors\Question;
 use database\connectors\ScrollimageData;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Manager;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,8 +26,12 @@ class ExampleTest extends TestCase{
      */
     //        $datetime = date_create()->format('Y-m-d H:i:s');
     //TODO When you are start the exam you have run this line $datetime = date_create()->format('Y-m-d H:i:s'). And when you are done you have to inserUserTesting(usreid,examid,anwsers,$datetime);
-    public function testBasicTest(){
-        $this->assertTrue(true);
+    public function testApplication(){
+        $response = $this->withSession(["browser"=>"firefox","history"=>"nulli","geolocation"=>"china","platform"=>"dontknow","language"=>"english"]
+        )->get('/');
+        $sessionStorage = new SessionStorage(request());
+        echo('browser ');
+        echo(request()->session()->pull('browser'));
     }
     public static function TestTesting(){
         $questions = array('onko nuudelit hyvia','onko tama meemi','oletko meemi','tobias');
