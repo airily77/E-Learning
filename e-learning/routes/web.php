@@ -13,6 +13,7 @@
 use database\connectors\ManagerData;
 
 Route::get('/','HomeController@index')->name('home');
+Route::post('/login','LoginController@login')->name('login');
 Route::get('/course', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('course', ['images'=>$results]);

@@ -33,19 +33,12 @@
 
 
     <div class="col-lg-10">
-
+        <form action="{{route('login')}}" method="post">
         <label><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
-
-
-
-
-
+        <input type="text" placeholder="Enter Username" name="account" required>
 
         <label><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="pw" required>
-
-
 
 
         <div>
@@ -59,6 +52,7 @@
         <div>
         <span class="psw"><a href="#">Reset password</a></span>
         </div>
+        </form>
 </div>
 </div>
 </div>
