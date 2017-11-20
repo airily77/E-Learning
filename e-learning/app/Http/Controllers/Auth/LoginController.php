@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Extensions\UserDataProvider;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Extensions\Manager;
 use database\connectors\UserData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,20 +42,25 @@ class LoginController extends Controller{
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
         $account = $request['account'];
-        $password= $request['pw'];
-        $userdata = ['account'=>$account,'password'=>$password];
-        if(Auth::validate($userdata)){
-            $user = new User;
-            $user->account= $account;
-            $user->password = $password;
-            Auth::login($user,true);
-            if(Auth::check()){
-                return redirect()->intended('/course');
-            }else{
-                //TODO create a popup that something went wrong try again.
+        if(!is_null(UserData::getUserId($account))) {
+            $password = $request['pw'];
+            $userdata = ['account' => $account, 'password' => $password];
+            if (Auth::validate($userdata)) {
+                $user = new User;
+                $user->account = $account;
+                $user->password = $password;
+                Auth::login($user, true);
+                if (Auth::check()) {
+                    return redirect()->intended('/course');
+                } else {
+                    //TODO create a popup that something went wrong try again.
+                }
+            } else {
+                //TODO create another popup that something went wrong try again.
             }
-        }else {
-            //TODO create another popup that something went wrong try again.
+        }else if (!is_null(($manager=ManagerData::getManagerByAccount($account)))){
+            $allegedPw = $request['pw'];
+
         }
     }
 

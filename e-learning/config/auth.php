@@ -39,11 +39,13 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'provider' => 'manager'
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            'provider' => 'managers'
         ],
     ],
 
@@ -73,6 +75,9 @@ return [
         'users' => [
             'driver' => 'user'
         ],
+        'managers'=>[
+            'driver' => 'manager'
+        ]
     ],
 
     /*

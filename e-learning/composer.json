@@ -31,7 +31,11 @@
             "app/Http/Controllers/Session/SessionController.php",
             "app/Http/Controllers/HomeController.php",
             "app/Extensions/UserDataProvider.php",
-            "app/Extensions/UserGuard.php"
+            "app/Extensions/UserGuard.php",
+            "app/Extensions/ManagerGuard.php",
+            "app/Extensions/ManagerDataProvider.php",
+            "app/Extensions/Manager.php"
+
         ],
         "psr-4": {
             "App\\": "app/"

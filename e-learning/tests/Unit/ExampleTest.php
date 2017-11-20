@@ -35,8 +35,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        $loginController = new LoginController;
-        $loginController->tryToLogin('tobias','tobias');
+        $managerlogin = new LoginController();
     }
 
     public static function TestTesting(){

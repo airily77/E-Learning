@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Extensions\ManagerGuard;
 use App\Extensions\UserDataProvider;
 use database\connectors\UserData;
 use App\User;
@@ -35,6 +36,17 @@ class AuthServiceProvider extends ServiceProvider
         });
         Auth::extend('userguard', function ($app, $name, array $config) {
             return new UserGuard(Auth::createUserProvider($config['provider']));
+        });
+        $this->app->bind('App\Extensions\Manager',function($app){
+           return new User;
+        });
+
+        Auth::provider('manager', function ($app, array $config) {
+            return new ManagerDataProvider($app->make('App\Extensions\Manager'));
+        });
+
+        Auth::extend('managerguard', function ($app, $name, array $config) {
+            return new ManagerGuard(Auth::createManagerProvider($config['provider']));
         });
     }
 }
