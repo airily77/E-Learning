@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use database\connectors\UserData;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
+
 
 class LoginController extends Controller{
     /*
@@ -33,5 +39,18 @@ class LoginController extends Controller{
      */
     public function __construct(){
         $this->middleware('guest')->except('logout');
+    }
+    //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
+    public function tryToLogin($account,$password){
+        $userdata = ['account'=>$account,'password'=>$password];
+        if(Auth::validate($userdata)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function username(){
+        return 'account';
     }
 }

@@ -20,8 +20,4 @@ class HomeController extends Controller{
         $results = \database\connectors\ScrollimageData::getCurrentImages();
         return view('home', ['images'=>$results]);
     }
-    public function homePage(){
-        $results = \database\connectors\ScrollimageData::getCurrentImages();
-        return view('home', ['images'=>$results]);
-    }
 }

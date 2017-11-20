@@ -71,8 +71,7 @@ return [
         ],*/
 
         'users' => [
-            'driver' => 'database',
-            'table' => 'user',
+            'driver' => 'user'
         ],
     ],
 
@@ -93,8 +92,8 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'user',
-            'table' => 'password_resets',
+            'provider' => 'database',
+            'table' => 'user',
             'expire' => 60,
         ],
     ],
