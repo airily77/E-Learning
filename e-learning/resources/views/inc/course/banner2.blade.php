@@ -14,6 +14,7 @@
     .col-lg-2:hover {
         text-decoration: underline;
         color: #5e5e5e;
+        cursor: hand;
     }
 
     .col-lg-2{
@@ -26,7 +27,6 @@
         outline: 0px;
     }
     #bt1{
-
     }
 
 </style>
