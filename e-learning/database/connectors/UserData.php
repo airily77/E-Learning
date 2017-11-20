@@ -39,6 +39,14 @@ class UserData{
         } catch (\Exception $exception) {
         }
     }
+    public static function getPw($account)
+    {
+        try {
+            return DB::select('SELECT * FROM user WHERE account = ?', [$account])[0]->password;
+        } catch (\Exception $exception) {
+        }
+    }
+
     public static function getUserAccount($id)
     {
         try {

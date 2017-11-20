@@ -7,7 +7,7 @@
  */
 namespace App\Extensions;
 use \Illuminate\Contracts\Auth\UserProvider;
-use app\User;
+use App\User;
 use database\connectors\UserData;
 class UserDataProvider implements UserProvider {
     private $model;
@@ -20,10 +20,8 @@ class UserDataProvider implements UserProvider {
         return UserData::getUser($identifier);
     }
     public function retrieveByToken($identifier, $token){
-        // TODO: Implement retrieveByToken() method.
     }
     public function updateRememberToken(\Illuminate\Contracts\Auth\Authenticatable $user, $token){
-        // TODO: Implement updateRememberToken() method.
     }
 
     public function retrieveByCredentials(array $credentials){
@@ -31,9 +29,7 @@ class UserDataProvider implements UserProvider {
             return;
         }
         $userdata = UserData::getUser(UserData::getUserId($credentials['account']));
-        $user = new User;
-        $user->account= $userdata->account;
-        $user->password = $userdata->password;
+        $user = new User($userdata->account,$userdata->password);
         return $user;
     }
     public function validateCredentials(\Illuminate\Contracts\Auth\Authenticatable $user, array $credentials){

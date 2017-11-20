@@ -3,7 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class RedirectIfAuthenticated
 {
@@ -16,15 +19,12 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null){
-        if (Auth::guard($guard)->check()) {
-            return redirect()->intended('/');
+        if (Auth::guard()->check()) {
+            return redirect($request->path());
         }
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('/'); // the url they are sent to if they're not logged in and try to access a protected route
-            }
+        if (Auth::guest() && $request->path().equalTo('login')){
+            return $next($request);
         }
+        return $next($request);
     }
 }

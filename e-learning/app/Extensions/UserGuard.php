@@ -6,6 +6,7 @@
  * Time: 13.39
  */
 namespace App\Extensions;
+use App\User;
 use \Illuminate\Contracts\Auth\Guard;
 class UserGuard implements Guard{
     protected $provider;
