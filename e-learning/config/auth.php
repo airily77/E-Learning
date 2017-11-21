@@ -14,8 +14,10 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'users',
+        'guard' => 'managers',
         'passwords' => 'users',
+        'passwords' => 'managers',
     ],
 
     /*
@@ -36,17 +38,14 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'users' => [
             'driver' => 'session',
             'provider' => 'users',
-            'provider' => 'manager'
         ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'provider' => 'managers'
-        ],
+        'managers' => [
+            'driver' => 'session',
+            'provider' => 'managers',
+        ]
     ],
 
     /*
@@ -100,6 +99,11 @@ return [
             'provider' => 'database',
             'table' => 'user',
             'expire' => 60,
+        ],
+        'managers' =>[
+          'provider' => 'database',
+          'table' => 'manager',
+          'expire' => 60,
         ],
     ],
 

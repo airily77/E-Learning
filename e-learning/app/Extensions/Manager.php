@@ -7,6 +7,7 @@
  */
 
 namespace App\Extensions;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 class Manager implements AuthenticatableContract{
