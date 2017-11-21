@@ -42,13 +42,21 @@ class LoginController extends Controller{
     }
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
+        $device= $request->header('User-Agent');
+        dD($device);
         $account = $request['account'];
         $password = $request['pw'];
-        if(!is_null(UserData::getUserId($account))) {
+        if($this->checkUser($account)) {
             $this->loginUser($account,$password);
-        }else if (!is_null(($manager=ManagerData::getManagerByAccount($account)))){
+        }else if ($this->checkManager($account)){
             $this->loginManager($account,$password);
         }
+    }
+    private function checkUser($account){
+        return !is_null(UserData::getUserId($account));
+    }
+    private function checkManager($account){
+        return !is_null(($manager=ManagerData::getManagerByAccount($account)));
     }
     private function loginUser($account,$password){
         $userdata = ['account' => $account, 'password' => $password];
@@ -75,7 +83,6 @@ class LoginController extends Controller{
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
                 //TODO redirect to manager course page that differences from normal course page.
-                dd('toimii :)))');
             }
         } else {
             //TODO create a popup that something went wrong try again.

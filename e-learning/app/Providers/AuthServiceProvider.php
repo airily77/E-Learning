@@ -9,6 +9,8 @@ use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Extensions\UserGuard;
+use App\Extensions\ManagerDataProvider;
+use App\Extensions\Manager;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -38,7 +40,7 @@ class AuthServiceProvider extends ServiceProvider
             return new UserGuard(Auth::createUserProvider($config['provider']));
         });
         $this->app->bind('App\Extensions\Manager',function($app){
-           return new User;
+           return new Manager;
         });
 
         Auth::provider('manager', function ($app, array $config) {
