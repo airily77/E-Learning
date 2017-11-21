@@ -42,14 +42,12 @@ class LoginController extends Controller{
     }
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
-        $device= $request->header('User-Agent');
-        dD($device);
         $account = $request['account'];
         $password = $request['pw'];
         if($this->checkUser($account)) {
-            $this->loginUser($account,$password);
+            return $this->loginUser($account,$password);
         }else if ($this->checkManager($account)){
-            $this->loginManager($account,$password);
+            return $this->loginManager($account,$password);
         }
     }
     private function checkUser($account){
