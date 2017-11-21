@@ -10,15 +10,10 @@ namespace App\Http\Controllers\Session;
 
 
 class SessionController{
-    public static function createNewUserSession($request,$useraccountname){
+    public static function createNewUserSession($request){
         $ip = $request->ip();
         $datetime = date_create()->format('Y-m-d H:i:s');
-        $request->session()->put($ip,$useraccountname);
         $request->session()->put($ip,$datetime);
-    }
-    public static function checkExisitingSessions($request){
-        $ip = $request->ip();
-        if(!($request->session()->pull($ip)==NULL)) return true;
     }
     public static function pullFromSession($request){
         $ip = $request->ip();

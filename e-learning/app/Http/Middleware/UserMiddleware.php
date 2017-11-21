@@ -1,24 +1,25 @@
 <?php
+
 namespace App\Http\Middleware;
+
 use Closure;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Illuminate\Support\Facades\Hash;
-class RedirectIfAuthenticated{
+
+class UserMiddleware
+{
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null){
-        if (Auth::guest() && $request->path().equalTo('login')){
+    public function handle($request, Closure $next){
+        if(Auth::guard('users')->check()){
             return $next($request);
         }else{
-            return redirect()->intended('/');
+            dd(Auth::guard('users')->check(),Auth::guard('managers')->check(),Auth::guard('users')->id());
         }
     }
 }

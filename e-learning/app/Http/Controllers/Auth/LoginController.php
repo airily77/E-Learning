@@ -80,6 +80,7 @@ class LoginController extends Controller{
             $manager->password = $allegedPw;
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
+                return redirect()->intended('/');
                 //TODO redirect to manager course page that differences from normal course page.
             }
         } else {

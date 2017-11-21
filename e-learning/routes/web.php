@@ -10,12 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use database\connectors\ManagerData;
 
 Route::get('/','HomeController@index')->name('home');
 Route::post('/login','LoginController@login')->name('login');
-Route::get('/course', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('course', ['images'=>$results]);
-});
+Route::get('/course','CourseController@course')->middleware('user');
 Auth::routes();

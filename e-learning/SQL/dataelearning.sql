@@ -5,7 +5,7 @@
 
 
 INSERT INTO `course` (`title`, `description`, `videoimg`, `videopath`, `videotime`, `showimg`, `class_id`, `viewnum`, `learnnum`, `istesting`, `isshow`, `creationtime`, `updatetime`) VALUES
-('CS1', 'basic of programming part 1. Object orianted programming', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02'),
+('CS1', 'Basics of programming part 1. Object orianted programming', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02'),
 ('MA1', 'Mathematics 101', '', '', 12, '0', 1, 1, 1, 0, 1, '2017-11-14 13:21:15', '2017-11-14 13:21:15'),
 ('CS2', 'Object oriented', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-15 10:00:33', '2017-11-15 10:00:33');
  
