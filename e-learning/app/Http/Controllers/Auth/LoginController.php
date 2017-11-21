@@ -48,6 +48,9 @@ class LoginController extends Controller{
             return $this->loginUser($account,$password);
         }else if ($this->checkManager($account)){
             return $this->loginManager($account,$password);
+        }else{
+            return redirect()->intended('/#popup2');
+
         }
     }
     private function checkUser($account){
@@ -66,10 +69,10 @@ class LoginController extends Controller{
             if (Auth::guard('users')->check()) {
                 return redirect()->intended('/course');
             } else {
-                //TODO create a popup that something went wrong try again.
+                return redirect()->intended('/#popup1');
             }
         } else {
-            //TODO create another popup that something went wrong try again.
+            return redirect()->intended('/#popup2');
         }
     }
     private function loginManager($account,$allegedPw){
@@ -83,7 +86,7 @@ class LoginController extends Controller{
                 //TODO redirect to manager course page that differences from normal course page.
             }
         } else {
-            //TODO create a popup that something went wrong try again.
+            return redirect()->intended('/#popup3');
         }
     }
 

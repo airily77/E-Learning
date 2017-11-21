@@ -7,7 +7,6 @@
 <div class="container">
 @include('inc.course.courselist')
 
-
 </div>
 
 <style>

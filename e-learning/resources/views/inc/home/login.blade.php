@@ -45,7 +45,6 @@
 
         <button type="submit">Login</button>
         </div>
-        <input type="checkbox" checked="checked"> Remember me
 
         <div><h1></h1></div>
 
