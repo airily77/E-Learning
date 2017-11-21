@@ -10,7 +10,7 @@
         font: normal 45px/90px 'Verdana';
         text-align: center;
         color: black;
-        background: red;
+        background: #50b066;
     }
 </style>
     <h1 class="banner">Example banner</h1>

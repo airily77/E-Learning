@@ -7,6 +7,11 @@
 
     }
 
+    #name:hover{
+        text-decoration: underline;
+        cursor: hand;
+    }
+
 
 </style>
 
@@ -17,21 +22,20 @@
 
 
         <div class="well">
-            <h3>Math</h3>
+            <div id="name"><h3>Math</h3></div>
             <div id="passed">@include('inc.course.passed')</div>
-
             </div>
 
         <div class="well">
 
-            <h3>Physics</h3>
+            <div id="name"><h3>Physics</h3></div>
             <div id="passed">@include('inc.course.passed')</div>
 
         </div>
 
         <div class="well">
 
-            <h3>Science</h3>
+            <div id="name"><h3>Science</h3></div>
             <div id="passed">@include('inc.course.passed')</div>
 
         </div>

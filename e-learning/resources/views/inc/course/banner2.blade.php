@@ -8,7 +8,7 @@
         font: normal 20px/40px 'Verdana';
         text-align: center;
         color: black;
-        background: red;
+        background: #50b066;
     }
 
     .col-lg-2:hover {
@@ -22,7 +22,8 @@
     }
 
     button{
-        background-color: red;
+        background-color: #50b066;
+    ;
         border: 0px;
         outline: 0px;
     }
