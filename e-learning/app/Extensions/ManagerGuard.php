@@ -6,12 +6,11 @@
  * Time: 13.39
  */
 namespace App\Extensions;
-use App\User;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Extensions\Manager;
 use \Illuminate\Contracts\Auth\Guard;
-class UserGuard implements Guard{
+class ManagerGuard implements Guard{
     protected $provider;
-    protected $user;
+    protected $manager;
     /**
      * Determine if the current user is authenticated.
      *
@@ -47,7 +46,7 @@ class UserGuard implements Guard{
      * @return int|null
      */
     public function id(){
-        if($this->user=$this->user()){
+        if($this->manager=$this->user()){
             return $this->user()->getAuthIdentifier();
         }
 
@@ -62,8 +61,8 @@ class UserGuard implements Guard{
     public function validate(array $credentials=[]){
         if(empty($credentials['account'])&&empty($credentials['password']))return false;
         if($this->provider->validateCredentials($this->user(),$credentials)){
-            $user = $this->provider->retrieveByCredentials($credentials);
-            $this->setUser($user);
+            $manager = $this->provider->retrieveByCredentials($credentials);
+            $this->setManager($manager);
             return true;
         }else
             return false;
@@ -72,25 +71,16 @@ class UserGuard implements Guard{
     /**
      * Set the current user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $manager
      * @return void
      */
-    public function setUser(\Illuminate\Contracts\Auth\Authenticatable $user){
-        $this->user = $user;
+    public function setManager(\Illuminate\Contracts\Auth\Authenticatable $manager){
+        $this->manager = $manager;
         return $this;
     }
 
-    public function __construct(UserDataProvider $provider){
+    public function __construct(ManagerDataProvider $provider){
         $this->provider = $provider;
-        $this->user=null;
-    }
-
-    /**
-     * Set the current user.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @return void
-     */
-    public function setManager(Authenticatable $user){
+        $this->manager=null;
     }
 }

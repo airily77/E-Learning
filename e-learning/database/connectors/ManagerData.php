@@ -193,4 +193,20 @@ class ManagerData{
             DB::rollBack();
         }
     }
+    public static function getManagerByAccount($account){
+        try{
+            $result = DB::select('select * from manager where account = ?',[$account])[0];
+            return $result;
+        }catch (\Exception $ex){
+            return null;
+        }
+    }
+    public static function getManagerId($account){
+        try{
+            $result = DB::select('select managerid from manager where account = ?',[$account])[0]->managerid;
+            return $result;
+        }catch (\Exception $ex){
+            return null;
+        }
+    }
 }

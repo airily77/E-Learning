@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Extensions\UserDataProvider;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Extensions\Manager;
 use database\connectors\UserData;
+use database\connectors\ManagerData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -41,20 +43,42 @@ class LoginController extends Controller{
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
         $account = $request['account'];
-        $password= $request['pw'];
-        $userdata = ['account'=>$account,'password'=>$password];
-        if(Auth::validate($userdata)){
+        $password = $request['pw'];
+        if(!is_null(UserData::getUserId($account))) {
+            $this->loginUser($account,$password);
+        }else if (!is_null(($manager=ManagerData::getManagerByAccount($account)))){
+            $this->loginManager($account,$password);
+        }
+    }
+    private function loginUser($account,$password){
+        $userdata = ['account' => $account, 'password' => $password];
+        if (Auth::guard('users')->validate($userdata)) {
             $user = new User;
-            $user->account= $account;
+            $user->account = $account;
             $user->password = $password;
-            Auth::login($user,true);
-            if(Auth::check()){
+            Auth::guard('users')->login($user, true);
+            if (Auth::guard('users')->check()) {
                 return redirect()->intended('/course');
-            }else{
+            } else {
                 //TODO create a popup that something went wrong try again.
             }
-        }else {
+        } else {
             //TODO create another popup that something went wrong try again.
+        }
+    }
+    private function loginManager($account,$allegedPw){
+        $userdata = ['account' => $account, 'password' => $allegedPw];
+        if (Auth::guard('managers')->validate($userdata)) {
+            $manager = new Manager;
+            $manager->account = $account;
+            $manager->password = $allegedPw;
+            Auth::guard('managers')->login($manager, true);
+            if (Auth::guard('managers')->check()) {
+                //TODO redirect to manager course page that differences from normal course page.
+                dd('toimii :)))');
+            }
+        } else {
+            //TODO create a popup that something went wrong try again.
         }
     }
 
