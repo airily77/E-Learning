@@ -23,23 +23,35 @@
 
 
     #home:active{
-        <?php
-        ?>
+        color: red;
     }
 
+    .link:hover{
+        text-decoration: underline;
+        color: #5e5e5e;
+        cursor: hand;
+    }
+
+    .link
+    {
+        color:black;
+        text-decoration: none;
+        background-color: none;
+    }
 </style>
 
 <div id="banner2">
 
-    <div id="bt1"><div class="col-lg-2"><p id="home">Home</p></div></div>
 
-    <div class="col-lg-2">Course Center </div>
+    <div class="col-lg-2"><a href="/"><div class="link">Home</div></a></div>
 
-    <div class="col-lg-2">Example </div>
+    <div class="col-lg-2"><a href="/course"><div class="link">Course Center</div></a></div>
 
-    <div class="col-lg-2">Example</div>
+    <div class="col-lg-2"><a href="/video"><div class="link">Video</div></a></div>
 
-    <div class="col-lg-2">Example</div>
+    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
+
+    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
 
 </div>
 
