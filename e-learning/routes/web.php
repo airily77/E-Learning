@@ -17,12 +17,12 @@ Route::get('/', function () {
     return view('home', ['images'=>$results]);
 });
 
-Route::get('/home', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('home', ['images'=>$results]);
-});
-
 Route::get('/course', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('course', ['images'=>$results]);
+});
+
+Route::get('/video', function () {
+    $results = \database\connectors\ScrollimageData::getCurrentImages();
+    return view('video', ['images'=>$results]);
 });

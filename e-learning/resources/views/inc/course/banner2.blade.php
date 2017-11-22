@@ -21,28 +21,25 @@
         margin:25px 20px;
     }
 
-    button{
-        background-color: #50b066;
-    ;
-        border: 0px;
-        outline: 0px;
-    }
-    #bt1{
+
+    #home:active{
+        <?php
+        ?>
     }
 
 </style>
 
 <div id="banner2">
 
-    <div id="bt1"><div class="col-lg-2">Home<button type="button"> </div></div>
+    <div id="bt1"><div class="col-lg-2"><p id="home">Home</p></div></div>
 
-    <div class="col-lg-2">Course Center<button type="button"> </div>
+    <div class="col-lg-2">Course Center </div>
 
-    <div class="col-lg-2">Example<button type="button"> </div>
+    <div class="col-lg-2">Example </div>
 
-    <div class="col-lg-2">Example<button type="button"></div>
+    <div class="col-lg-2">Example</div>
 
-    <div class="col-lg-2">Example<button type="button"></div>
+    <div class="col-lg-2">Example</div>
 
 </div>
 
