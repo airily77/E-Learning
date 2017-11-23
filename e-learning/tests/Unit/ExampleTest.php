@@ -18,6 +18,7 @@ use database\connectors\ManagerData;
 use database\connectors\UserData;
 use database\connectors\ExamData;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ExampleTest extends TestCase{
     /**
@@ -35,7 +36,6 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        $managerlogin = new LoginController();
     }
 
     public static function TestTesting(){

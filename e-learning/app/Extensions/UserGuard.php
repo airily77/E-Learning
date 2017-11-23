@@ -36,8 +36,8 @@ class UserGuard implements Guard{
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function user(){
-        if(!(is_null($this->user()))){
-            return $this->user();
+        if(!(is_null($this->user))){
+            return $this->user;
         }
     }
 

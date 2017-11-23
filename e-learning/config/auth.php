@@ -16,8 +16,6 @@ return [
     'defaults' => [
         'guard' => 'users',
         'guard' => 'managers',
-        'passwords' => 'users',
-        'passwords' => 'managers',
     ],
 
     /*
@@ -40,11 +38,11 @@ return [
     'guards' => [
         'users' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'userprovider',
         ],
         'managers' => [
             'driver' => 'session',
-            'provider' => 'managers',
+            'provider' => 'managerprovider',
         ]
     ],
 
@@ -71,11 +69,13 @@ return [
             'model' => App\User::class,
         ],*/
 
-        'users' => [
-            'driver' => 'user'
+        'userprovider' => [
+            'driver' => 'userprovider',
+            'model' => App\User::class,
         ],
-        'managers'=>[
-            'driver' => 'manager'
+        'managerprovider'=>[
+            'driver' => 'managerprovider',
+            'model' => App\Extensions\Manager::class,
         ]
     ],
 
@@ -94,17 +94,5 @@ return [
     |
     */
 
-    'passwords' => [
-        'users' => [
-            'provider' => 'database',
-            'table' => 'user',
-            'expire' => 60,
-        ],
-        'managers' =>[
-          'provider' => 'database',
-          'table' => 'manager',
-          'expire' => 60,
-        ],
-    ],
 
 ];
