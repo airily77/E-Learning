@@ -7,7 +7,7 @@ use \database\connectors\UserData;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller{
-        public function course(){
+    public function course(){
         $account = Auth::guard('users')->id();
         $usercoursedata = UserData::getUserCourses(UserData::getUserId($account));
         $coursedata = $this->gatherCourseData($usercoursedata);
@@ -21,4 +21,5 @@ class CourseController extends Controller{
         }
         return $coursedata;
     }
+
 }

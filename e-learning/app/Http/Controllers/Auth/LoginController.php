@@ -39,6 +39,8 @@ class LoginController extends Controller{
      * @return void
      */
     public function __construct(){
+        $this->middleware('web');
+        $this->middleware('userdata');
     }
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
@@ -58,12 +60,14 @@ class LoginController extends Controller{
     }
     private function loginUser($account,$password){
         $userdata = ['account' => $account, 'password' => $password];
-        if (Auth::guard('users')->validate($userdata)) {
+        if (Auth::guard('users')->attempt($userdata)) {
             $user = new User;
             $user->account = $account;
             $user->password = $password;
-            Auth::guard('users')->login($user, true);
+            Auth::guard('users')->login($user);
+            Auth::guard('users')->authenticate();
             if (Auth::guard('users')->check()) {
+                session()->put('pekka',$password);
                 return redirect()->intended('/course');
             } else {
                 //TODO create a popup that something went wrong try again.
@@ -80,7 +84,7 @@ class LoginController extends Controller{
             $manager->password = $allegedPw;
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
-                return redirect()->intended('/');
+                return redirect()->intended('/course');
                 //TODO redirect to manager course page that differences from normal course page.
             }
         } else {

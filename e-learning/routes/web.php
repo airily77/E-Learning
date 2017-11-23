@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/','HomeController@index')->name('home');
-Route::post('/login','LoginController@login')->name('login');
-Route::get('/course','CourseController@course')->middleware('user');
+Route::group(['middleware' =>[ 'web']], function () {
+    Route::get('/', 'HomeController@index');
+    Route::post('/login','Auth\LoginController@Login');
+});
+
+Route::group(['middleware' => ['web','userdata']], function () {
+    Route::get('/course','CourseController@course');
+});
 Auth::routes();

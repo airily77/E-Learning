@@ -33,21 +33,21 @@ class AuthServiceProvider extends ServiceProvider
             return new User;
         });
 
-        Auth::provider('user', function ($app, array $config) {
+        Auth::provider('userprovider', function ($app, array $config) {
             return new UserDataProvider($app->make('App\User'));
         });
-        Auth::extend('userguard', function ($app, $name, array $config) {
+        Auth::extend('user', function ($app, $name, array $config) {
             return new UserGuard(Auth::createUserProvider($config['provider']));
         });
         $this->app->bind('App\Extensions\Manager',function($app){
            return new Manager;
         });
 
-        Auth::provider('manager', function ($app, array $config) {
+        Auth::provider('managerprovider', function ($app, array $config) {
             return new ManagerDataProvider($app->make('App\Extensions\Manager'));
         });
 
-        Auth::extend('managerguard', function ($app, $name, array $config) {
+        Auth::extend('manager', function ($app, $name, array $config) {
             return new ManagerGuard(Auth::createManagerProvider($config['provider']));
         });
     }

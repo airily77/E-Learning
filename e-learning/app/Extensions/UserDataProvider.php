@@ -10,14 +10,18 @@ use \Illuminate\Contracts\Auth\UserProvider;
 use App\User;
 use database\connectors\UserData;
 class UserDataProvider implements UserProvider {
-    private $model;
+    public $model;
 
     public function __construct(\App\User $usermodel){
         $this->model=$usermodel;
     }
 
     public function retrieveById($identifier){
-        return UserData::getUser($identifier);
+        $pw = UserData::getPw($identifier);
+        $user = new User;
+        $user->account = $identifier;
+        $user->password = $pw;
+        return $user;
     }
     public function retrieveByToken($identifier, $token){
     }

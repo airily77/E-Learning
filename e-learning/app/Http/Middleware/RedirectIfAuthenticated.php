@@ -15,10 +15,9 @@ class RedirectIfAuthenticated{
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null){
-        if (Auth::guest() && $request->path().equalTo('login')){
-            return $next($request);
-        }else{
-            return redirect()->intended('/');
+        if (Auth::guard($guard)->check()) {
+            return redirect('/');
         }
+        return $next($request);
     }
 }
