@@ -8,7 +8,8 @@
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "hisorange/browser-detect": "2.*"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -18,7 +19,8 @@
     },
     "autoload": {
         "classmap": [
-            "database/"
+            "database/",
+            "app/Extensions"
         ],
         "files": [
             "database/connectors/ManagerData.php",
@@ -26,7 +28,16 @@
             "database/connectors/UserData.php",
             "database/connectors/CourseData.php",
             "database/connectors/ExamData.php",
-            "database/connectors/Question.php"
+            "database/connectors/Question.php",
+            "app/Http/Controllers/Session/SessionController.php",
+            "app/Http/Controllers/HomeController.php",
+            "app/Http/Controllers/CourseController.php",
+            "app/Extensions/UserDataProvider.php",
+            "app/Extensions/UserGuard.php",
+            "app/Extensions/ManagerGuard.php",
+            "app/Extensions/ManagerDataProvider.php",
+            "app/Extensions/Manager.php",
+            "app/Http/Middleware/UserMiddleware.php"
         ],
         "psr-4": {
             "App\\": "app/"

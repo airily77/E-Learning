@@ -25,7 +25,6 @@
             <div id="name"><h3>Math</h3></div>
             <div id="passed">@include('inc.course.passed')</div>
             </div>
-
         <div class="well">
 
             <div id="name"><h3>Physics</h3></div>

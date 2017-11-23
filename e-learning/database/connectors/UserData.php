@@ -5,10 +5,8 @@ namespace database\connectors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserData
-{
-    public static function insertUserHash($account, $password, $status, $ip)
-    {
+class UserData{
+    public static function insertUserHash($account, $password, $status, $ip){
         DB::beginTransaction();
         try {
             $hashed = Hash::make($password);
@@ -41,6 +39,21 @@ class UserData
         } catch (\Exception $exception) {
         }
     }
+    public static function getPw($account)
+    {
+        try {
+            return DB::select('SELECT * FROM user WHERE account = ?', [$account])[0]->password;
+        } catch (\Exception $exception) {
+        }
+    }
+
+    public static function getUserAccount($id)
+    {
+        try {
+            return DB::select('SELECT * FROM user WHERE userid = ?', [$id])[0]->account;
+        } catch (\Exception $exception) {
+        }
+    }
 
     private static function checkPassword($id, $password)
     {
@@ -53,16 +66,17 @@ class UserData
         }
     }
 
-    public static function login($accountname, $password, $ip, $browser)
-    {
+    public static function login($accountname, $password, $ip, $browser){
         try {
             $id = self::getUserId($accountname);
             if (self::checkPassword($id, $password)) {
                 $id = self::getUserId($accountname);
                 self::insertLoginLog($id, $ip, 1, $browser);
+                return $id;
             } else {
                 $id = self::getUserId($accountname);
                 self::insertLoginLog($id, $ip, 1, $browser);
+                return false;
             }
         } catch (\Exception $exception) {
         }
@@ -226,5 +240,4 @@ class UserData
             DB::rollBack();
         }
     }
-
 }

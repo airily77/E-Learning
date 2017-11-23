@@ -1,18 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: s1500631
+ * Date: 20.11.2017
+ * Time: 18.09
+ */
 
-namespace App;
-
+namespace App\Extensions;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User implements AuthenticatableContract{
+class Manager implements AuthenticatableContract{
     use Notifiable;
     public $account;
     public $password;
-    public function setPw($pw){
-        $this->password=$pw;
-    }
-
     public function __construct2($account,$password){
         if(is_string($account) && is_string($password)){
             $this->account=$account;

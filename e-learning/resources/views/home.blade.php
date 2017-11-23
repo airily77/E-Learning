@@ -3,6 +3,7 @@
 <title>Home</title>
 @include('inc.home.banner')
 
+
 <div class="container">
 
 
@@ -10,12 +11,13 @@
                 @include('inc.home.imageSlide')
                 @include('inc.home.news')
 
+
             </div>
 
             <div class="col-md-1 col-lg-4">
 
                 @include('inc.home.login')
-
+                @include('inc.home.popup')
             </div>
 
 

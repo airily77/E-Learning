@@ -10,11 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use database\connectors\ManagerData;
 
-Route::get('/', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('home', ['images'=>$results]);
+Route::group(['middleware' =>[ 'web']], function () {
+    Route::get('/', 'HomeController@index');
+    Route::post('/login','Auth\LoginController@Login');
 });
 
 Route::get('/course', function () {
@@ -30,4 +29,8 @@ Route::get('/video', function () {
 Route::get('/quiz', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('quiz', ['images'=>$results]);
+  
+Route::group(['middleware' => ['web','userdata']], function () {
+    Route::get('/course','CourseController@course');
 });
+Auth::routes();
