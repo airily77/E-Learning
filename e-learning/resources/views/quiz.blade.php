@@ -14,6 +14,8 @@
     }
 
 
+
+
 </style>
 
 
@@ -22,14 +24,17 @@
 
 <div class="container">
     <h1 id="header">Course name</h1>
+    <div class="well">
     <div id="cont" class="container">
-       
         <form action="" id="singleanswer">
         <h4><strong>Where is Finland located?</strong></h4>
             <input type="radio" name="answer" value="Answer1"> North America <br>
             <input type="radio" name="answer" value="Answer2"> Asia <br>
             <input type="radio" name="answer" value="Answer3"> Antarctica <br>
             <input type="radio" name="answer" value="Answer4"> Europe <br>
+
+
+
         </form>
 
         <form action="" id="multianswer">
@@ -42,7 +47,7 @@
             
         </form>
 
-
+    </div>
 
     </div>
 
