@@ -8,7 +8,7 @@
         font: normal 20px/40px 'Verdana';
         text-align: center;
         color: black;
-        background: red;
+        background: #50b066;
     }
 
     .col-lg-2:hover {
@@ -21,27 +21,37 @@
         margin:25px 20px;
     }
 
-    button{
-        background-color: red;
-        border: 0px;
-        outline: 0px;
-    }
-    #bt1{
+
+    #home:active{
+        color: red;
     }
 
+    .link:hover{
+        text-decoration: underline;
+        color: #5e5e5e;
+        cursor: hand;
+    }
+
+    .link
+    {
+        color:black;
+        text-decoration: none;
+        background-color: none;
+    }
 </style>
 
 <div id="banner2">
 
-    <div id="bt1"><div class="col-lg-2">Home<button type="button"> </div></div>
 
-    <div class="col-lg-2">Course Center<button type="button"> </div>
+    <div class="col-lg-2"><a href="/"><div class="link">Home</div></a></div>
 
-    <div class="col-lg-2">Example<button type="button"> </div>
+    <div class="col-lg-2"><a href="/course"><div class="link">Course Center</div></a></div>
 
-    <div class="col-lg-2">Example<button type="button"></div>
+    <div class="col-lg-2"><a href="/video"><div class="link">Video</div></a></div>
 
-    <div class="col-lg-2">Example<button type="button"></div>
+    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
+
+    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
 
 </div>
 

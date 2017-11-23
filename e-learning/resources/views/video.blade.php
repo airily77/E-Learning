@@ -1,10 +1,9 @@
 <!-- Extends HTML structure from layouts/app.blade -->
 @extends('layouts.app')
-<title>Course center</title>
+<title>Video Course</title>
 @include('inc.course.banner2')
 
-
 <div class="container">
-@include('inc.course.courselist')
+    @include('inc.video.videoplayer')
 
 </div>

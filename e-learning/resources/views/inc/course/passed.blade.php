@@ -21,6 +21,6 @@
 </style>
 
 
-<div id="passed"><p>Exam Passed!</p></div>
+<div id="passed"><p>Course Passed!</p></div>
 
 
