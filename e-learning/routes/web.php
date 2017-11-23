@@ -15,21 +15,14 @@ Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index');
     Route::post('/login','Auth\LoginController@Login');
 });
-
-Route::get('/course', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('course', ['images'=>$results]);
-});
-
 Route::get('/video', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('video', ['images'=>$results]);
 });
-
 Route::get('/quiz', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('quiz', ['images'=>$results]);
-  
+    return view('quiz', ['images' => $results]);
+});
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course');
 });
