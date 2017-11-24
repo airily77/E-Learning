@@ -1,6 +1,6 @@
 <!-- Extends HTML structure from layouts/app.blade -->
 @extends('layouts.app')
-<title>Course <!-- todo pull Course name from DB --></title>
+<title>{{$coursedata->title}}</title>
 
 <style>
 
@@ -21,8 +21,7 @@
 <div class="container">
     <div class="well">
 
-        @include('inc.specific-course.Videopreview')
-
-
-    </div>
+<div class="container">
+    <p>you are in {{$coursedata->title}}</p>
+    <!-- //TODO Create a button or a div which you can start your exam from. -->
 </div>
