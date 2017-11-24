@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' =>[ 'web']], function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::post('/login','Auth\LoginController@Login');
 });
 Route::get('/video', function () {
@@ -22,6 +22,6 @@ Route::get('/video', function () {
 Route::get('/quiz','QuizController@index')->name('quiz');
 
 Route::group(['middleware' => ['web','userdata']], function () {
-    Route::get('/course','CourseController@course');
+    Route::get('/course','CourseController@course')->name('course');
 });
 Auth::routes();
