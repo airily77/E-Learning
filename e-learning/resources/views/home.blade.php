@@ -16,7 +16,12 @@
 
             <div class="col-md-1 col-lg-4">
 
-                @include('inc.home.login')
+                @if(!auth()->guard('users')->check())
+                    @include('inc.home.login')
+                @elseif (auth()->guard('users')->check())
+                    <p>{{auth()->guard('users')->id()}}</p> <!-- //TODO Vaiha tähän uus logged in include -->
+                    <button onlick</button>
+                @endif
                 @include('inc.home.popup')
             </div>
 

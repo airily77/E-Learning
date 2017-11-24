@@ -26,6 +26,8 @@
                     @foreach($usercoursedata as $usercoursedatum)
                         @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
                             @include('inc.course.passed')
+                        @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
+                            <!--@ include('inc.course.progress')-->
                         @endif
                     @endforeach
                 </div>

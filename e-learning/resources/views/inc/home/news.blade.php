@@ -41,7 +41,7 @@
 <div id="news">
     <div class="well">
 
-        <div id="newsheader"><h2>{{\Illuminate\Support\Facades\Auth::guard('users')->id()}}</h2></div>
+        <div id="newsheader"><h2>news</h2></div>
 
 
         <span class="news0">
