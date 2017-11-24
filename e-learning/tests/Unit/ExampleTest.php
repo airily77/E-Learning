@@ -36,6 +36,8 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
+        var_dump(ExamData::getExamsFromCourse('MA1'));
+        var_dump(UserData::getUserExamsFromCourse('MA1',1));
     }
 
     public static function TestTesting(){

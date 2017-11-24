@@ -18,30 +18,21 @@ class ExamController extends Controller {
 
     public function index($coursetitle,$examtitle){
         if($this->qualifyForExam($coursetitle,$examtitle)){
-            $examdata = null;
+            $examdata = ExamData::getExam(ExamData::getExamId($examtitle));
             return view('exam',['examdata'=>$examdata]);
         }else{
             //TODO popup you have completed this exam or you dont have the premission to do this exam. This
         }
     }
     private function qualifyForExam($coursetitle,$examtitle){
-    $userincourse = $this->findUserFromCourse($coursetitle);
-    $examid = ExamData::getExamId($examtitle);
-    $userid = UserData::getUserId(auth()->guard('users')->id());
-    $userduplicateexam = UserData::checkDuplicateExamEntry($userid,$examid);
-    if($userincourse && $userduplicateexam) {
-        return true;
-    }else {
-        return false;
-    }
-    }
-    private function findUserFromCourse($coursetitle){
-        $userid=UserData::getUserId(auth()->guard('users')->id());
-        $usercourses=UserData::getUserCourses($userid);
-        $courseid = CourseData::getCourseId($coursetitle);
-        foreach ($usercourses as $course){
-            if($course->course_id==$courseid) return true;
+        $userid = UserData::getUserId(auth()->guard('users')->id());
+        $userincourse = CourseData::findUserFromCourse($coursetitle,$userid);
+        $examid = ExamData::getExamId($examtitle);
+        $userduplicateexam = UserData::checkDuplicateExamEntry($userid,$examid);
+        if($userincourse && $userduplicateexam) {
+            return true;
+        }else {
+            return false;
         }
-        return false;
     }
 }

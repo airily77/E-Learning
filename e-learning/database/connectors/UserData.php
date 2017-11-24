@@ -240,4 +240,17 @@ class UserData{
             DB::rollBack();
         }
     }
+    public static function getUserExamsFromCourse($courseidortitle,$userid){
+        $exams = CourseData::examidsCourseIsConnectedTo($courseidortitle);
+        $results = array();
+        foreach($exams as $exam){
+            array_push($results,self::getScoreAndResultFromExam($exam->examid,$userid));
+        }
+        return $results;
+    }
+    public static function getScoreAndResultFromExam($examid,$userid){
+        try{
+            if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result;
+        }catch (\Exception $exception){}
+    }
 }

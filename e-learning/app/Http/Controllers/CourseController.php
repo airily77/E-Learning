@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use database\connectors\CourseData;
+use database\connectors\ExamData;
 use \database\connectors\UserData;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,4 +25,15 @@ class CourseController extends Controller{
         return $coursedata;
     }
     //TODO user_course status should be changed to failed when the completation time is up.
+    public function specificCourse($coursetitle){
+        $coursedata = null;
+        $userid = UserData::getUserId(auth()->guard('users')->id());
+        $userincourse = CourseData::findUserFromCourse($coursetitle,$userid);
+        if($userincourse){
+            $coursedata  = CourseData::getCourse($coursetitle);
+            $exams = ExamData::getExamsFromCourse($coursetitle);
+            $userexamresults = UserData::getUserExamsFromCourse( $coursetitle,$userid);
+            return view('specific-course',['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults]);
+        }
+    }
 }

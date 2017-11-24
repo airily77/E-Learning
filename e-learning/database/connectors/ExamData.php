@@ -64,7 +64,9 @@ class ExamData{
         }
     }
     public static function getExamsFromCourse($courseidortitle){
-        if(is_string($courseidortitle)) $id = CourseData::getCourseId($courseidortitle);
+        if(is_string($courseidortitle)) {
+            $id = CourseData::getCourseId($courseidortitle);
+        }
         else $id = $courseidortitle;
         try{
             $results = DB::select('select * from exam where course_id = ?',[$id]);

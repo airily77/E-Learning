@@ -26,6 +26,7 @@ Route::get('/video', function () {
 
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course')->name('course');
+    Route::get('/course/{coursetitle}','CourseController@specificCourse')->name('specific.course');
     Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
 });
 Auth::routes();
