@@ -20,4 +20,8 @@ class HomeController extends Controller{
         $results = \database\connectors\ScrollimageData::getCurrentImages();
         return view('home', ['images'=>$results]);
     }
+
+    public function __construct(){
+        $this->middleware('web');
+    }
 }
