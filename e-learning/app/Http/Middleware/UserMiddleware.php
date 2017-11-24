@@ -16,6 +16,7 @@ class UserMiddleware{
      */
     public function handle($request, Closure $next,$guard = null){
         if( ! Auth::guard('users')->check()){
+            dd(auth()->guard('users'),auth()->guard('users')->id());
             return redirect()->intended('/');
         }else{
             return $next($request);
