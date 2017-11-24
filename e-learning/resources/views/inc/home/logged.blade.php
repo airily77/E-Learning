@@ -33,25 +33,11 @@
 
 
         <div class="col-lg-10">
-            <form action="{{route('login')}}" method="post">
-                <label><b>---LOGGED IN---</b></label>
-                <input type="text" placeholder="Enter Username" name="account" required>
-
-                <label><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="pw" required>
-
-
-                <div>
-
-                    <button type="submit">Login</button>
-                </div>
-
-                <div><h1></h1></div>
-
-                <div>
-                    <span class="psw"><a href="#">Reset password</a></span>
-                </div>
-            </form>
+            <p>{{auth()->guard('users')->id()}}</p>
+            <button onclick="window.location='{{ route("course") }}'"> course </button>
+            <button onclick=@php
+                auth()->guard('users')->logout();
+            @endphp window.location.reload()>   Logout</button>
         </div>
     </div>
 </div>

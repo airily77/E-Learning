@@ -69,8 +69,7 @@ class LoginController extends Controller{
             Auth::guard('users')->login($user);
             Auth::guard('users')->authenticate();
             if (Auth::guard('users')->check()) {
-                session()->put('pekka',$password);
-                return redirect()->intended('/course');
+                return redirect()->intended('/');
             } else {
                 return redirect()->intended('/#popup1');
             }
