@@ -12,16 +12,20 @@
 */
 
 Route::group(['middleware' =>[ 'web']], function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::post('/login','Auth\LoginController@Login');
+    Route::post('/logout','Auth\LoginController@Logout');
+});
+Route::group(['middleware' => ['web','userdata']], function () {
+    Route::get('/course','CourseController@course')->name('course');
 });
 Route::get('/video', function () {
     $results = \database\connectors\ScrollimageData::getCurrentImages();
     return view('video', ['images'=>$results]);
 });
-Route::get('/quiz','QuizController@index')->name('quiz');
 
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course')->name('course');
+    Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
 });
 Auth::routes();

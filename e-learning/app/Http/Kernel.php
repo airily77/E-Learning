@@ -39,6 +39,9 @@ class Kernel extends HttpKernel
         'userdata' => [
             'user',
         ],
+        'examdata' =>[
+          'exam',
+        ],
 
         'api' => [
             'throttle:60,1',
@@ -62,5 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'user' => \App\Http\Middleware\UserMiddleware::class,
         'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+        'exam' => \App\Http\Middleware\ExamMiddleware::class,
     ];
 }

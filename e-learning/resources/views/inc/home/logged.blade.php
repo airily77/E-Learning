@@ -35,9 +35,9 @@
         <div class="col-lg-10">
             <p>{{auth()->guard('users')->id()}}</p>
             <button onclick="window.location='{{ route("course") }}'"> course </button>
-            <button onclick=@php
-                auth()->guard('users')->logout();
-            @endphp window.location.reload()>   Logout</button>
+            <form action="{{route('logout')}}" method="post">
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
 </div>

@@ -23,5 +23,4 @@ class CourseController extends Controller{
         return $coursedata;
     }
     //TODO user_course status should be changed to failed when the completation time is up.
-
 }

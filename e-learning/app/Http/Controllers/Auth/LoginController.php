@@ -38,9 +38,6 @@ class LoginController extends Controller{
      *
      * @return void
      */
-    public function __construct(){
-        $this->middleware('web');
-    }
     //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
         $account = $request['account'];
@@ -92,5 +89,8 @@ class LoginController extends Controller{
             return redirect()->intended('/#popup3');
         }
     }
-
+    public function logout(Request $request){
+        auth()->guard('users')->logout();
+        return redirect()->intended('/');
+    }
 }
