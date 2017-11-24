@@ -19,7 +19,7 @@
                 @if(!auth()->guard('users')->check())
                     @include('inc.home.login')
                 @elseif (auth()->guard('users')->check())
-                    
+                    @include('inc.home.logged')
                 @endif
                 @include('inc.home.popup')
             </div>
