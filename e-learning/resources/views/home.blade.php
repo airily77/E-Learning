@@ -19,8 +19,7 @@
                 @if(!auth()->guard('users')->check())
                     @include('inc.home.login')
                 @elseif (auth()->guard('users')->check())
-                    <p>{{auth()->guard('users')->id()}}</p> <!-- //TODO Vaiha tähän uus logged in include -->
-                    <button onlick</button>
+                  @include('inc.home.logged')
                 @endif
                 @include('inc.home.popup')
             </div>
