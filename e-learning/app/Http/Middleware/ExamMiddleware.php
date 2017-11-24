@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-use App\User;
 
-class UserMiddleware{
+class ExamMiddleware{
     /**
      * Handle an incoming request.
      *
@@ -14,11 +13,11 @@ class UserMiddleware{
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next,$guard = null){
+    public function handle($request, Closure $next){
         if( ! Auth::guard('users')->check()){
-            dd(auth()->guard('users'),auth()->guard('users')->id());
             return redirect()->intended('/');
-        }else{
+        }else if (Auth::guard('users')->check()){
+            dd($request->input('coursetitle'),$request->input('examtitle'));
             return $next($request);
         }
     }

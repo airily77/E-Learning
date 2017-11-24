@@ -19,25 +19,20 @@
 
 
     <div class="col-md-10 col-lg-8">
-
-
-        <div class="well">
-            <div id="name"><h3>Math</h3></div>
-            <div id="passed">@include('inc.course.passed')</div>
+        @foreach($coursedata as $coursedatum)
+            <div class="well">
+                <div id="name">{{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
+                <div id="passed">
+                    @foreach($usercoursedata as $usercoursedatum)
+                        @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
+                            @include('inc.course.passed')
+                        @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
+                            <!--@ include('inc.course.progress')-->
+                        @endif
+                    @endforeach
+                </div>
             </div>
-        <div class="well">
-
-            <div id="name"><h3>Physics</h3></div>
-            <div id="passed">@include('inc.course.passed')</div>
-
-        </div>
-
-        <div class="well">
-
-            <div id="name"><h3>Science</h3></div>
-            <div id="passed">@include('inc.course.passed')</div>
-
-        </div>
+        @endforeach
 
     </div>
 </div>

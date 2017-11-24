@@ -37,6 +37,10 @@ class CourseData{
             else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle][0]);
         }catch(\Exception $exception){}
     }
+    public static function getClass($idortitle){
+        if(is_numeric($idortitle)) return DB::select('select * from course_class where classid= ?',[$idortitle])[0];
+        else if(is_string($idortitle)) return DB::select('select * from course_class where classname= ?',[$idortitle][0]);
+    }
     /**
      * @param $classname Name of the class.
      * @return mixed returns the classid as an int
