@@ -4,10 +4,22 @@
 
 <style>
 
-#header{
+
+    .col-lg-5{
+        text-align: center;
+        align-content: 
+    }
+
+
+    #header{
     text-align: center;
     color: black;
 }
+
+ #exams:hover{
+     text-decoration-line: underline;
+ }
+
 
 
 
@@ -15,13 +27,35 @@
 
 
 @include('inc.course.banner2')
-<h1 id="header">Course name <!--  //TODO course name from DB  --></h1>
-<h4 id="header">Course description <!-- //TODO Description from DB  --> </h4>
+<h1 id="header">{{$coursedata->title}}</h1>
+<h4 id="header">{{$coursedata->description}}</h4>
 
 <div class="container">
-    <div class="well">
-
+<div class="well">
 <div class="container">
-    <p>you are in {{$coursedata->title}}</p>
-    <!-- //TODO Create a button or a div which you can start your exam from. -->
+
+
+
+        <div class="col-lg-3">
+
+        <h3>Course Exams</h3>
+            @foreach($exams as $exam)
+            <h4 id="exams">{{($exam->title)}}</h4>
+                @if(($userexamresults)==0)
+                    @include('inc.course.progress')
+                @else
+                    @include('inc.course.passed')
+                @endif
+                    @endforeach
+        </div>
+
+
+    <div id="video" class="col-lg-5">
+        <h3>Course Video</h3>
+        <a href="/video"><div class="link"></div><img src="/img/imageSlide_green.jpg" width="500" height="auto" style="border:3px solid black"></a>
+
+
+    </div>
+    </div>
+</div>
 </div>
