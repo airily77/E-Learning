@@ -31,6 +31,86 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `course`
 --
+DELIMITER $$
+--
+-- Procedures
+--
+DROP PROCEDURE IF EXISTS `calculateExamMedian`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculateExamMedian` (IN `examid` INT, OUT `median` DOUBLE, IN `newscore` INT)  begin
+    DECLARE plussedScores int;
+    declare numberoftests int;
+    declare numberof int;
+    declare plus int;
+    CALL plusScores(plussedScores,examid);
+    select COUNT(score) into numberoftests from user_testing where exam_id = examid;
+    set plus = plussedScores+newscore;
+    set numberof = numberoftests +1;
+    set median = plus/numberof;
+  END$$
+
+DROP PROCEDURE IF EXISTS `calculateTestingMedian`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculateTestingMedian` (IN `testingid` INT, OUT `median` DOUBLE, IN `newscore` INT)  begin
+    DECLARE plussedScores int;
+    declare numberoftests int;
+    declare numberof int;
+    declare plus int;
+    CALL plusScoresTesting(plussedScores,testingid);
+    select COUNT(score) into numberoftests from user_testing where testing_id= testingid;
+    set plus = plussedScores+newscore;
+    set numberof = numberoftests +1;
+    set median = plus/numberof;
+  END$$
+
+DROP PROCEDURE IF EXISTS `plusScores`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `plusScores` (OUT `totalscore` INT, IN `id` INT)  BEGIN
+    DECLARE currentScore int;
+    declare count int;
+    DECLARE i, totalscorehere INT DEFAULT 0;
+    DECLARE cur1 CURSOR FOR SELECT score
+                            FROM user_testing
+                            WHERE exam_id = id;
+    SELECT count(*)
+    INTO count
+    FROM user_testing
+    WHERE exam_id = 3;
+
+    OPEN cur1;
+    WHILE count > i DO
+      FETCH cur1
+      INTO currentScore;
+      SET totalscorehere = totalscorehere + currentScore;
+      SET i = 1 + i;
+    END WHILE;
+    SET totalscore = totalscorehere;
+    CLOSE cur1;
+  END$$
+
+DROP PROCEDURE IF EXISTS `plusScoresTesting`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `plusScoresTesting` (OUT `totalscore` INT, IN `id` INT)  BEGIN
+    DECLARE currentScore int;
+    declare count int;
+    DECLARE i, totalscorehere INT DEFAULT 0;
+    DECLARE cur1 CURSOR FOR SELECT score
+                            FROM user_testing
+                            WHERE testing_id = id;
+    SELECT count(*)
+    INTO count
+    FROM user_testing
+    WHERE testing_id = id;
+
+    OPEN cur1;
+    WHILE count > i DO
+      FETCH cur1
+      INTO currentScore;
+      SET totalscorehere = totalscorehere + currentScore;
+      SET i = 1 + i;
+    END WHILE;
+    SET totalscore = totalscorehere;
+    CLOSE cur1;
+  END$$
+
+DELIMITER ;
+
 
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
@@ -407,9 +487,8 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
   KEY `exam_ind` (`exam_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Triggers `user_testing`
---DROP TRIGGER IF EXISTS `ins_user_testing`;
+
+DROP TRIGGER IF EXISTS `ins_user_testing`;
 DELIMITER $$
 CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW BEGIN
   declare exammedian int(11);
@@ -503,3 +582,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
