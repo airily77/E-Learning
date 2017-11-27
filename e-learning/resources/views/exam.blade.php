@@ -14,6 +14,8 @@
     }
 
 
+
+
 </style>
 
 
@@ -32,12 +34,12 @@
             @endfor
             <button type="submit">Submit Exam</button> <!--- //TODO create a better looking button here -->
         </form>
-
     </div>
 
 
 
 </div>
+
 
 <script type="text/javascript">
     var radios = document.getElementsByTagName('input');
@@ -48,4 +50,6 @@
 
         }
     }
+<script>
+
 </script>
