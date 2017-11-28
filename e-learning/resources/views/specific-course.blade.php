@@ -54,7 +54,7 @@
 
     <div id="video" class="col-lg-5">
         <h3>Course Video</h3>
-        <a href="/video"><div class="link"></div><img src="/img/imageSlide_green.jpg" width="500" height="auto" style="border:3px solid black"></a>
+        <a onclick="window.location='{{route('video',$coursedata->title)}}'"><div class="link"></div><img src="{{$coursedata->videoimg}}" width="500" height="auto" style="border:3px solid black"></a>
 
 
     </div>

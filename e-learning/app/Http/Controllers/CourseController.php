@@ -35,4 +35,9 @@ class CourseController extends Controller{
             return view('specific-course',['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults]);
         }
     }
+    public function video($coursetitle){
+        $videopath = CourseData::getVideopath($coursetitle);
+        $imagepath = CourseData::getCourseImagePath($coursetitle);
+        return view('video',['videopath'=>$videopath,'imagepath'=>$imagepath]);
+    }
 }

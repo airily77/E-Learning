@@ -91,4 +91,16 @@ class CourseData{
             return DB::select('select examid from exam where course_id = ?',[$id]);
         }catch (\Exception $exception){}
     }
+    public static function getVideopath($title){
+        try{
+            $course = self::getCourse($title);
+            return $course->videopath;
+        }catch (\Exception $exception){}
+    }
+    public static function getCourseImagePath($title){
+        try{
+            $course = self::getCourse($title);
+            return $course->videoimg;
+        }catch (\Exception $exception){}
+    }
 }

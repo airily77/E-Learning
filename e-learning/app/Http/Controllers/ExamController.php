@@ -52,5 +52,6 @@ class ExamController extends Controller {
         $exam = ExamData::getExam($examid);
         $coursetitle = CourseData::getCourse($exam->course_id)->title;
         return redirect()->intended(route('specific.course',[$coursetitle]));
+
     }
 }

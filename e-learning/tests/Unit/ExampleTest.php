@@ -37,6 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
+        UserData::addUserToCourse(1,3,1,date_create()->format('Y-m-d H:i:s'));
     }
 
     public static function TestTesting(){
@@ -47,7 +48,7 @@ class ExampleTest extends TestCase{
         $option4 = array('static','functional','object-oriented','markup');
         $options = array($option1,$option2,$option3,$option4);
         $correctanwser = array('A','A','C','C');
-        ExamData::insertExam(1,1,3,'CS1Exam',$questions,$options,$correctanwser);
+        ExamData::insertExam(3,1,3,'CS2Exam',$questions,$options,$correctanwser);
         //$datetime = date_create()->format('Y-m-d H:i:s');
         //$result = UserData::checkDuplicateExamEntry(1,1);
         //UserData::insertUserTesting(2,1,$correctanwser,$datetime);
