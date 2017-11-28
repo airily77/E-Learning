@@ -37,7 +37,6 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        ArticleData::insertArticleAttachments('Homework is good for you!','test','school','testfilenamne',1234,'ext');
     }
 
     public static function TestTesting(){
