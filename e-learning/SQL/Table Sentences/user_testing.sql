@@ -37,14 +37,16 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
 
     select exam.medianscore into exammedian from exam where examid = new.exam_id;
     if exammedian>0 THEN
-      update exam set exam.medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
+      call calculateExamMedian(new.exam_id,@median,new.score);
+      update exam set exam.medianscore = @median where examid = new.exam_id;
     ELSE
       update exam set exam.medianscore = new.score where examid = new.exam_id;
     END IF;
 
     select testing.medianpoints into testingmedian from testing where testingid = new.testing_id;
     if testingmedian>0 THEN
-      update testing set testing.medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
+      call calculateTestingMedian(new.testing_id,@mediantesting,new.score);
+      update testing set testing.medianpoints = @mediantesting where testingid = new.testing_id;
     ELSE
       update testing set testing.medianpoints = new.score where testingid = new.testing_id;
     END IF;
@@ -52,3 +54,75 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
 END
 $$
 DELIMITER ;
+
+create PROCEDURE calculateExamMedian(IN examid INT,OUT median double,in newscore int)
+  begin
+    DECLARE plussedScores int;
+    declare numberoftests int;
+    declare numberof int;
+    declare plus int;
+    CALL plusScores(plussedScores,examid);
+    select COUNT(score) into numberoftests from user_testing where exam_id = examid;
+    set plus = plussedScores+newscore;
+    set numberof = numberoftests +1;
+    set median = plus/numberof;
+  END;
+CREATE PROCEDURE plusScores(OUT totalscore INT,in id int)
+  BEGIN
+    DECLARE currentScore int;
+    declare count int;
+    DECLARE i, totalscorehere INT DEFAULT 0;
+    DECLARE cur1 CURSOR FOR SELECT score
+                            FROM user_testing
+                            WHERE exam_id = id;
+    SELECT count(*)
+    INTO count
+    FROM user_testing
+    WHERE exam_id = id;
+
+    OPEN cur1;
+    WHILE count > i DO
+      FETCH cur1
+      INTO currentScore;
+      SET totalscorehere = totalscorehere + currentScore;
+      SET i = 1 + i;
+    END WHILE;
+    SET totalscore = totalscorehere;
+    CLOSE cur1;
+  END;
+
+create PROCEDURE calculateTestingMedian(IN testingid INT,OUT median double,in newscore int)
+  begin
+    DECLARE plussedScores int;
+    declare numberoftests int;
+    declare numberof int;
+    declare plus int;
+    CALL plusScoresTesting(plussedScores,testingid);
+    select COUNT(score) into numberoftests from user_testing where testing_id= testingid;
+    set plus = plussedScores+newscore;
+    set numberof = numberoftests +1;
+    set median = plus/numberof;
+  END;
+CREATE PROCEDURE plusScoresTesting(OUT totalscore INT,in id int)
+  BEGIN
+    DECLARE currentScore int;
+    declare count int;
+    DECLARE i, totalscorehere INT DEFAULT 0;
+    DECLARE cur1 CURSOR FOR SELECT score
+                            FROM user_testing
+                            WHERE testing_id = id;
+    SELECT count(*)
+    INTO count
+    FROM user_testing
+    WHERE testing_id = 3;
+
+    OPEN cur1;
+    WHILE count > i DO
+      FETCH cur1
+      INTO currentScore;
+      SET totalscorehere = totalscorehere + currentScore;
+      SET i = 1 + i;
+    END WHILE;
+    SET totalscore = totalscorehere;
+    CLOSE cur1;
+  END;

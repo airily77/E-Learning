@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use database\connectors\ArticleData;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller{
@@ -18,6 +19,11 @@ class HomeController extends Controller{
         */
     public function index(){
         $results = \database\connectors\ScrollimageData::getCurrentImages();
-        return view('home', ['images'=>$results]);
+        $news  = ArticleData::getActiveArticles();
+        return view('home', ['images'=>$results,'news'=>$news]);
+    }
+
+    public function __construct(){
+        $this->middleware('web');
     }
 }

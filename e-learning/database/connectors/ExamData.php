@@ -97,7 +97,8 @@ class ExamData{
             $examid = $examidortitle;
         }
         try{
-            $correctanwsers = json_decode(DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers);
+            $correctanwser = DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers;
+            $correctanwsers = json_decode($correctanwser);
             $usercorrectanwsers = array();
             for( $i = 0; $i< sizeof($correctanwsers); $i++ ) {
                 if($correctanwsers[$i]==$useranwsers[$i]) {
@@ -105,7 +106,9 @@ class ExamData{
                 }
             }
             return $usercorrectanwsers;
-        }catch (\Exception $exception){}
+        }catch (\Exception $exception){
+            dd($exception);
+        }
     }
     public static function getTestingId($examid){
         try{
