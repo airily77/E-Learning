@@ -112,6 +112,51 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `plusScoresTesting` (OUT `totalscore
 DELIMITER ;
 
 
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
+  `articleid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `article_class` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thumbimage` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keyword` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tags` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `clicknum` int(11) NOT NULL,
+  `creationtime` datetime NOT NULL,
+  `updatetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`articleid`),
+  UNIQUE KEY `title` (`title`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `article_attach`
+--
+
+DROP TABLE IF EXISTS `article_attach`;
+CREATE TABLE IF NOT EXISTS `article_attach` (
+  `attachid` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL,
+  `savepath` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `savename` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `filename` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `filesize` double NOT NULL,
+  `ext` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `downloadnum` int(11) NOT NULL,
+  `creationtime` datetime NOT NULL,
+  `updatetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`attachid`),
+  KEY `article_ind` (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course`
+--
+
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `courseid` int(11) NOT NULL AUTO_INCREMENT,
@@ -132,10 +177,6 @@ CREATE TABLE IF NOT EXISTS `course` (
   UNIQUE KEY `title` (`title`),
   KEY `course_ibfk_1` (`class_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `course`
---
 
 --
 -- Triggers `course`
@@ -165,9 +206,6 @@ CREATE TABLE IF NOT EXISTS `course_class` (
   UNIQUE KEY `classname` (`classname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `course_class`
---
 -- --------------------------------------------------------
 
 --
@@ -180,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `course_id` int(11) NOT NULL,
   `testing_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
-  `title` varchar(100) UNIQUE COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `questions` json NOT NULL,
   `options` json NOT NULL,
   `correctanwsers` json NOT NULL,
@@ -189,15 +227,11 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `medianscore` double DEFAULT NULL,
   `donenum` int(11) NOT NULL,
   PRIMARY KEY (`examid`),
+  UNIQUE KEY `title` (`title`),
   KEY `course_ind` (`course_id`),
   KEY `testing_id` (`testing_id`),
   KEY `class_ind` (`class_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `exam`
---
-
 
 --
 -- Triggers `exam`
@@ -239,7 +273,7 @@ DROP TRIGGER IF EXISTS `ins_loginlog`;
 DELIMITER $$
 CREATE TRIGGER `ins_loginlog` AFTER INSERT ON `manager` FOR EACH ROW begin
     insert into manager_loginlog (manager_id,logintime,loginip) values (NEW.managerid,now(),new.creationip);
-    insert into manager_role (manager_id,role_id) values (new.managerid,1); -- chanage 1 to something else 
+    insert into manager_role (manager_id,role_id) values (new.managerid,1); 
   END
 $$
 DELIMITER ;
@@ -304,11 +338,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`roleid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `role`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -329,11 +358,6 @@ CREATE TABLE IF NOT EXISTS `scrollimage` (
   PRIMARY KEY (`simgid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `scrollimage`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -346,18 +370,12 @@ CREATE TABLE IF NOT EXISTS `testing` (
   `course_id` int(11) NOT NULL,
   `donenum` int(11) NOT NULL,
   `examnum` int(11) NOT NULL,
-  medianpoints double null,
+  `medianpoints` double DEFAULT NULL,
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`testingid`),
   KEY `course_ind` (`course_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `testing`
---
-
-
 
 -- --------------------------------------------------------
 
@@ -382,11 +400,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`userid`),
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `user`
---
-
 
 --
 -- Triggers `user`
@@ -417,11 +430,6 @@ CREATE TABLE IF NOT EXISTS `user_course` (
   KEY `user_ind` (`user_id`),
   KEY `course_id` (`course_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `user_course`
---
-
 
 --
 -- Triggers `user_course`
@@ -459,10 +467,6 @@ CREATE TABLE IF NOT EXISTS `user_loginlog` (
   KEY `user_ind` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `user_loginlog`
---
-
 -- --------------------------------------------------------
 
 --
@@ -485,9 +489,11 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
   KEY `user_ind` (`user_id`),
   KEY `testing_ind` (`testing_id`),
   KEY `exam_ind` (`exam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
+--
+-- Triggers `user_testing`
+--
 DROP TRIGGER IF EXISTS `ins_user_testing`;
 DELIMITER $$
 CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW BEGIN
@@ -523,6 +529,12 @@ DELIMITER ;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `article_attach`
+--
+ALTER TABLE `article_attach`
+  ADD CONSTRAINT `article_attach_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`articleid`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `course`
@@ -582,5 +594,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
