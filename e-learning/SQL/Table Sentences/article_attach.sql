@@ -10,8 +10,8 @@ create table article_attach(
 	creationtime datetime not null,
 	updatetime datetime null,
 	primary key (attachid),
-	INDEX article_ind (arc_id),
+	INDEX article_ind (article_id),
     FOREIGN KEY (article_id)
-        REFERENCES article(article_id)
+        REFERENCES article(articleid)
         ON DELETE CASCADE
-);
+)ENGINE=INNODB;

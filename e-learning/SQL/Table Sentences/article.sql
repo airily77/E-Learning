@@ -1,6 +1,6 @@
 create table article(
 	articleid int not null auto_increment,
-	title varchar(100) not null,
+	title varchar(100) not null unique,
 	content longtext not null,
 	article_class varchar(50) null,
 	thumbimage varchar(100) null,
@@ -10,6 +10,6 @@ create table article(
 	status boolean not null,
 	clicknum int not null,
 	creationtime datetime not null,
-	updatetime null,
+	updatetime datetime null,
 	primary key(articleid)
-);
+)ENGINE=INNODB;

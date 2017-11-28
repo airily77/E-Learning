@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Session\BrowserStorage;
 use App\Http\Controllers\Session\SessionStorage;
 use App\User;
+use database\connectors\ArticleData;
 use database\connectors\CourseData;
 use database\connectors\Question;
 use database\connectors\ScrollimageData;
@@ -36,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        UserData::addUserToCourse(1,2,1,date_create()->format('Y-m-d H:i:s'));
+        ArticleData::insertArticleAttachments('Homework is good for you!','test','school','testfilenamne',1234,'ext');
     }
 
     public static function TestTesting(){
