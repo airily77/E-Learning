@@ -24,8 +24,8 @@ class ExamController extends Controller {
             date_default_timezone_set('Asia/Shanghai');
             return view('exam',['examdata'=>$examdata,'started'=>date("Y-m-d H:i:s")]);
         }else{
-            dd('didnt qualify for the exam');
-            //TODO popup you have completed this exam or you dont have the premission to do this exam. This
+            //TODO popup you didn't qualify for this exam because (reason)
+            return redirect()->intended(route('specific.course',[$coursetitle]));
         }
     }
     private function qualifyForExam($coursetitle,$examtitle){
@@ -41,13 +41,16 @@ class ExamController extends Controller {
     }
     public function postExam(Request $request){
         $started = $request->get('started');
-        $examdata = $request->get('examdata');
+        $questions = $request->get('questions');
+        $examid = $request->get('examid');
         $anwsers = [];
-        for($i = 0; $i < sizeof($examdata['questions']); $i++){
+        for($i = 0; $i < sizeof($questions); $i++){
             array_push($anwsers,$request->input($i));
         }
-        UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()),$examdata['examid'],$anwsers,$started);
+        UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()),$examid,$anwsers,$started);
         //TODO popup paljon pisteitä sai
-        return redirect()->intended('/course');
+        $exam = ExamData::getExam($examid);
+        $coursetitle = CourseData::getCourse($exam->course_id)->title;
+        return redirect()->intended(route('specific.course',[$coursetitle]));
     }
 }

@@ -40,13 +40,15 @@
 
         <h3>Course Exams</h3>
             @foreach($exams as $exam)
-            <h4 id="exams">{{($exam->title)}}</h4>
-                @if(($userexamresults)==0)
-                    @include('inc.course.progress')
-                @else
-                    @include('inc.course.passed')
-                @endif
-                    @endforeach
+                <div id="exam" onclick="window.location='{{route('exam',[$coursedata->title,$exam->title])}}'">
+                    <h4 id="exams">{{($exam->title)}}</h4>
+                    @if(($userexamresults)==0)
+                        @include('inc.course.progress')
+                    @else
+                        @include('inc.course.passed')
+                    @endif
+                </div>
+            @endforeach
         </div>
 
 

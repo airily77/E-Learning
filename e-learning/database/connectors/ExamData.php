@@ -81,7 +81,6 @@ class ExamData{
             return DB::select('select examid from exam where title = ?',[$title])[0]->examid;
         }catch(\Exception $exception){}
     }
-
     /**
      * @param $examidortitle
      * @param $useranwsers
