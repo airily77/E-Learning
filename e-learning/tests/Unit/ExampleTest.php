@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        UserData::addUserToCourse(1,3,1,date_create()->format('Y-m-d H:i:s'));
+        UserData::insertUserHash('this','this',1,request()->ip());
     }
 
     public static function TestTesting(){

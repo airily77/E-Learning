@@ -40,18 +40,23 @@ class ExamController extends Controller {
         }
     }
     public function postExam(Request $request){
-        $started = $request->get('started');
-        $questions = $request->get('questions');
         $examid = $request->get('examid');
-        $anwsers = [];
-        for($i = 0; $i < sizeof($questions); $i++){
-            array_push($anwsers,$request->input($i));
-        }
-        UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()),$examid,$anwsers,$started);
-        //TODO popup paljon pisteitä sai
         $exam = ExamData::getExam($examid);
         $coursetitle = CourseData::getCourse($exam->course_id)->title;
-        return redirect()->intended(route('specific.course',[$coursetitle]));
+        if($this->qualifyForExam($coursetitle,$exam->title)) {
+            $started = $request->get('started');
+            $questions = $request->get('questions');
+            $anwsers = [];
+            for ($i = 0; $i < sizeof($questions); $i++) {
+                array_push($anwsers, $request->input($i));
+            }
+            UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()), $examid, $anwsers, $started);
+            //TODO popup paljon pisteitä sai
 
+            return redirect()->intended(route('specific.course', [$coursetitle]));
+        }else{
+            //TODO pop up (denied access)
+            dd('what are you doing my dude');
+        }
     }
 }
