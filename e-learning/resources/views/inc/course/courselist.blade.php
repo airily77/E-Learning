@@ -3,7 +3,7 @@
          padding: 15px;
      }
 
-    #passed{
+    #name{
 
     }
 
@@ -20,14 +20,14 @@
 
     <div class="col-md-10 col-lg-8">
         @foreach($coursedata as $coursedatum)
-            <div class="well">
+            <div class="well" onclick="window.location='{{route('specific.course',[$coursedatum->title])}}'">
                 <div id="name">{{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
                 <div id="passed">
                     @foreach($usercoursedata as $usercoursedatum)
                         @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
                             @include('inc.course.passed')
                         @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
-                            <!--@ include('inc.course.progress')-->
+                            @include('inc.course.progress')
                         @endif
                     @endforeach
                 </div>

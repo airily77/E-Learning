@@ -75,7 +75,7 @@ class UserData{
                 return $id;
             } else {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 1, $browser);
+                self::insertLoginLog($id, $ip, 0, $browser);
                 return false;
             }
         } catch (\Exception $exception) {
@@ -219,14 +219,20 @@ class UserData{
         try{
             if(is_null(DB::select('select user_id from user_testing where user_id = ? and exam_id = ?',[$userid,$examid])[0]->user_id)) return false;
             else return true;
-        }catch (\Exception $exception){}
+        }catch (\Exception $exception){
+            return false;
+        }finally{}
     }
     //TODO Only one same exam per user. We should correct this error at front-end. We shoulnd't even give him the option to do the exam or even see the exam.
     public static function insertUserTesting($userid,$examid,$useranwsers,$started){
         if(is_null(self::getUserCourses($userid))) return;
-        //if(self::checkDuplicateExamEntry($userid,$examid)) return;
+        if(self::checkDuplicateExamEntry($userid,$examid)) {
+            dd('bye',$useranwsers);
+            return;
+        }
         DB::beginTransaction();
         try{
+            $examid = intval($examid);
             $correctanwsers = json_encode(ExamData::checkExamForCorrectAnwsers($examid,$useranwsers));
             $useranwsersjson = json_encode($useranwsers);
             $score = ExamData::checkExamForPoints($examid,$useranwsers);
@@ -236,8 +242,21 @@ class UserData{
             VALUES (?,?,?,?,?,?,?,now(),?)',[$userid,$testingid,$examid,$useranwsersjson,$correctanwsers,$score,$started,$result]);
             DB::commit();
         }catch (\Exception $exception){
-            echo($exception);
+            dd($exception);
             DB::rollBack();
         }
+    }
+    public static function getUserExamsFromCourse($courseidortitle,$userid){
+        $exams = CourseData::examidsCourseIsConnectedTo($courseidortitle);
+        $results = array();
+        foreach($exams as $exam){
+            array_push($results,self::getScoreAndResultFromExam($exam->examid,$userid));
+        }
+        return $results;
+    }
+    public static function getScoreAndResultFromExam($examid,$userid){
+        try{
+            if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result;
+        }catch (\Exception $exception){}
     }
 }

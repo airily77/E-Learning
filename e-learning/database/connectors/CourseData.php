@@ -34,12 +34,22 @@ class CourseData{
     public static function getCourse($idortitle){
         try{
             if(is_numeric($idortitle)) return DB::select('select * from course where courseid = ?',[$idortitle])[0];
-            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle][0]);
-        }catch(\Exception $exception){}
+            else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle])[0];
+        }catch(\Exception $exception){
+            var_dump($exception);
+        }
     }
     public static function getClass($idortitle){
         if(is_numeric($idortitle)) return DB::select('select * from course_class where classid= ?',[$idortitle])[0];
         else if(is_string($idortitle)) return DB::select('select * from course_class where classname= ?',[$idortitle][0]);
+    }
+    public static function findUserFromCourse($coursetitle,$userid){
+        $usercourses=UserData::getUserCourses($userid);
+        $courseid = CourseData::getCourseId($coursetitle);
+        foreach ($usercourses as $course){
+            if($course->course_id==$courseid) return true;
+        }
+        return false;
     }
     /**
      * @param $classname Name of the class.
@@ -73,5 +83,24 @@ class CourseData{
             DB::update('update course set learnnum= learnnum + 1 where title = ?',[$title]);
             DB::commit();
         }catch (\Exception $exception){ DB::rollBack();}
+    }
+    public static function examidsCourseIsConnectedTo($idortitle){
+        if(is_string($idortitle)) $id = self::getCourseId($idortitle);
+        else $id = $idortitle;
+        try{
+            return DB::select('select examid from exam where course_id = ?',[$id]);
+        }catch (\Exception $exception){}
+    }
+    public static function getVideopath($title){
+        try{
+            $course = self::getCourse($title);
+            return $course->videopath;
+        }catch (\Exception $exception){}
+    }
+    public static function getCourseImagePath($title){
+        try{
+            $course = self::getCourse($title);
+            return $course->videoimg;
+        }catch (\Exception $exception){}
     }
 }

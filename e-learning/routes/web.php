@@ -18,14 +18,9 @@ Route::group(['middleware' =>[ 'web']], function () {
 });
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course')->name('course');
-});
-Route::get('/video', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('video', ['images'=>$results]);
-});
-
-Route::group(['middleware' => ['web','userdata']], function () {
-    Route::get('/course','CourseController@course')->name('course');
+    Route::get('/course/{coursetitle}','CourseController@specificCourse')->name('specific.course');
+    Route::get('/course/video/{coursetitle}','CourseController@video')->name('video');
     Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
+    Route::post('/exam/postExam','ExamController@postExam')->name('postExam');
 });
 Auth::routes();

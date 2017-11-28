@@ -1,14 +1,14 @@
 <style>
 
 
-    #passed {
+    #progress {
         padding: 4px;
         margin: -7px -7px;
         height: 30px;
         width: 100px;
         text-align: center;
-        color: #4caf50;
-        border: #4caf50;
+        color: orange;
+        border: yellow;
         border-style: solid;
         border-radius: 20px;
         background: transparent;
@@ -21,6 +21,6 @@
 </style>
 
 
-<div id="passed"><p>Passed!</p></div>
+<div id="progress"><p>In Progress</p></div>
 
 

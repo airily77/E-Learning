@@ -19,60 +19,37 @@
 </style>
 
 
-<title>Quiz</title>
+<title>Exam</title>
 @include('inc.course.banner2')
 
 <div class="container">
-    <h1 id="header">Course name</h1>
-    <div class="well">
+    <h1 id="header">{{$examdata->title}}</h1>
     <div id="cont" class="container">
-
-
-        <form action="" id="singleanswer">
-        <h4><strong>Where is Finland located?</strong></h4>
-
-            <input id="a1" type="radio" name="answer" value="Answer1">
-            <label for="a1">North america</label><br>
-
-            <input id="a2" type="radio" name="answer" value="Answer2">
-            <label for="a2">Asia</label><br>
-
-            <input id="a3" type="radio" name="answer" value="Answer3">
-            <label for="a3">Antarctica</label><br>
-
-            <input id="a4" type="radio" name="answer" value="Answer4">
-            <label for="a4">Europe</label><br>
-
+        <form action="{{ route('postExam',['questions'=>$examdata->questions,'examid'=>$examdata->examid,'started'=>$started])}}" method="post" id="answsers" name="anwsers">
+            @for($i = 0; $i < sizeof($examdata->questions);$i++)
+                <h4><strong>{{$examdata->questions[$i]}}</strong></h4>
+                @foreach($examdata->options[$i] as $option)
+                    <input type="radio" name={{$i}} value="{{$option}}">{{$option}}<br>
+                @endforeach
+            @endfor
+            <button type="submit">Submit Exam</button> <!--- //TODO create a better looking button here -->
         </form>
-
-        <form action="" id="multianswer">
-            <h4><strong>Which of these are Chinese cities?</strong></h4>
-
-            <input id="b1" type="checkbox" name="answer0" value="Answer1">
-            <label for="b1">Helsinki</label><br>
-
-            <input id="b2" type="checkbox" name="answer1" value="Answer2">
-            <label for="b2">Shanghai</label><br>
-
-            <input id="b3" type="checkbox" name="answer2" value="Answer3">
-            <label for="b3">Stockholm</label><br>
-
-            <input id="b4" type="checkbox" name="answer3" value="Answer4">
-            <label for="b4">Suzhou</label><br>
-
-
-
-        </form>
-
-        </div>
-
     </div>
 
 
 
 </div>
 
-<script>
 
+<script type="text/javascript">
+    var radios = document.getElementsByTagName('input');
+    for(i=0; i<radios.length; i++ ) {
+        radios[i].onclick = function(e) {
+        if(e.ctrlKey) {
+            this.checked = false;
+
+        }
+    }
+<script>
 
 </script>

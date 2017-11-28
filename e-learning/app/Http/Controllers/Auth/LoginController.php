@@ -38,7 +38,6 @@ class LoginController extends Controller{
      *
      * @return void
      */
-    //TODO When you are trying to log in it should create a log for failed logins as well. I can't find any failed logins in the database this could be an error.
     public function login(Request $request){
         $account = $request['account'];
         $password = $request['pw'];

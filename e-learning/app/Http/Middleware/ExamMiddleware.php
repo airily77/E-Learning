@@ -17,7 +17,6 @@ class ExamMiddleware{
         if( ! Auth::guard('users')->check()){
             return redirect()->intended('/');
         }else if (Auth::guard('users')->check()){
-            dd($request->input('coursetitle'),$request->input('examtitle'));
             return $next($request);
         }
     }

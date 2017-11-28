@@ -5,7 +5,7 @@
 
 
 INSERT INTO `course` (`title`, `description`, `videoimg`, `videopath`, `videotime`, `showimg`, `class_id`, `viewnum`, `learnnum`, `istesting`, `isshow`, `creationtime`, `updatetime`) VALUES
-('CS1', 'Basics of programming part 1. Object orianted programming', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02'),
+('CS1', 'Basics of programming part 1. Object orianted programming', '/img/courseimage.jpg', '/img/small.mp4', 12, '', 3, 2, 2, 0, 0, '2017-11-10 14:22:02', '2017-11-10 14:22:02'),
 ('MA1', 'Mathematics 101', '', '', 12, '0', 1, 1, 1, 0, 1, '2017-11-14 13:21:15', '2017-11-14 13:21:15'),
 ('CS2', 'Object oriented', ' ', '', 12, '', 3, 2, 2, 0, 0, '2017-11-15 10:00:33', '2017-11-15 10:00:33');
  
@@ -15,8 +15,10 @@ INSERT INTO `testing` (`course_id`, `donenum`, `examnum`, `creationtime`, `updat
 (3, 0, 0, '2017-11-15 15:24:35', '2017-11-15 15:24:35');
 
 INSERT INTO `exam` (`course_id`, `testing_id`, `class_id`, `title`, `questions`, `options`, `correctanwsers`, `creationtime`, `updatetime`, `medianscore`, `donenum`) VALUES
-(1, 1, 3, 'nuudelit', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"A\", \"B\", \"A\", \"B\"]', '2017-11-15 15:30:43', '2017-11-15 15:30:43', NULL, 0),
-(1, 1, 3, 'nuudelitpt2', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"A\", \"B\", \"A\", \"B\"]', '2017-11-15 15:32:31', '2017-11-15 15:32:31', NULL, 0);
+(1, 1, 3, 'nuudelit', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"on\", \"ei\", \"on\", \"ei\"]', '2017-11-15 15:30:43', '2017-11-15 15:30:43', NULL, 0),
+(1, 1, 3, 'nuudelitpt2', '[\"onko nuudelit hyvia\", \"onko tama meemi\", \"oletko meemi\", \"tobias\"]', '[[\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"], [\"on\", \"ei\"]]', '[\"on\", \"ei\", \"on\", \"ei\"]', '2017-11-15 15:32:31', '2017-11-15 15:32:31', NULL, 0),
+(1, 1, 3, 'CS1Exam', '[\"What kind of language is html\", \"what language is object-oriented from these choice\", \"What is the main objective of JavaScript\", \"What type of language is XML\"]', '[[\"static\", \"functional\", \"object-oriented\", \"markup\"], [\"C++\", \"JavaScript\", \"HTML\", \"XML\"], [\"Back-end\", \"Markup in the browser\", \"Scripts in the browser\", \"Data storage in the browser\"], [\"static\", \"functional\", \"object-oriented\", \"markup\"]]', '[\"static\", \"C++\", \"Scripts in the browser\", \"markup\"]', '2017-11-24 17:13:51', '2017-11-24 17:13:51', NULL, 0);
+
 
 INSERT INTO `role` (`rolename`, `creationtime`, `updatetime`) VALUES
 ('测试管理员', '2017-11-09 07:56:02', '2017-11-09 07:56:02'),
@@ -31,4 +33,5 @@ INSERT INTO `user` (`account`, `password`, `username`, `department`, `position`,
 ('pekka', '$2y$10$tOwgruYuPzWAhIN.btAWFO3zjIo0517VFEGf7fMC9/7zBeikCDnKK', NULL, NULL, NULL, 1, '2017-11-15 16:34:28', '98.0.1.1', 1, '2017-11-15 16:34:28', '2017-11-15 16:34:28');
 
 INSERT INTO `user_course` (`user_id`, `course_id`, `status`, `begintime`, `completetime`) VALUES
-(1, 1, 0, '2017-11-15 16:50:03', '2017/12/12');
+(1, 1, 0, '2017-11-15 16:50:03', '2017/12/12'),
+(1, 2, 1, '2017-11-21 16:05:39', '2017-11-21 08:05:39');

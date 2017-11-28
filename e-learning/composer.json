@@ -37,7 +37,8 @@
             "app/Extensions/ManagerGuard.php",
             "app/Extensions/ManagerDataProvider.php",
             "app/Extensions/Manager.php",
-            "app/Http/Middleware/UserMiddleware.php"
+            "app/Http/Middleware/UserMiddleware.php",
+            "database/connectors/ArticleData.php"
         ],
         "psr-4": {
             "App\\": "app/"
