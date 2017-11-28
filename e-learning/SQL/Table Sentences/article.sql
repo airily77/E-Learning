@@ -1,8 +1,8 @@
 create table article(
-	arcid int primary key not null auto_increment,
+	articleid int not null auto_increment,
 	title varchar(100) not null,
 	content longtext not null,
-	classid int not null references article_class(classid),
+	article_class varchar(50) null,
 	thumbimage varchar(100) null,
 	source varchar(200) null,
 	keyword varchar(100) null,
@@ -10,5 +10,6 @@ create table article(
 	status boolean not null,
 	clicknum int not null,
 	creationtime datetime not null,
-	updatetime null
+	updatetime null,
+	primary key(articleid)
 );

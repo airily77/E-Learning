@@ -75,7 +75,7 @@ class UserData{
                 return $id;
             } else {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 1, $browser);
+                self::insertLoginLog($id, $ip, 0, $browser);
                 return false;
             }
         } catch (\Exception $exception) {
