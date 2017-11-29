@@ -31,25 +31,25 @@ class ManagerData{
      * @param $creationip CreationIp of the manager you want to create.
      */
     //TODO Remeber to hash the password in the creation form. Because its a security risk to hash here.
-    public static function insertManager($account,$password,$status,$creationip){
+    public static function insertManager($account,$password,$status){
         DB::beginTransaction();
         try{
             DB::statement('set @disable_update_logintime  = 1');
             DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
-            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$password,$status,$creationip,$creationip]);
+            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$password,$status,request()->ip(),request()->ip()]);
             DB::statement('set @disable_update_logintime  = null');
             DB::commit();
         }catch (\Exception $ex) {
             DB::rollBack();
         }
     }
-    public static function insertManagerHash($account,$password,$status,$creationip){
+    public static function insertManagerHash($account,$password,$status){
         DB::beginTransaction();
         try{
             DB::statement('set @disable_update_logintime  = 1');
             $hashed = Hash::make($password);
             DB::insert('insert into manager (account,password,status,creationtime,updatetime,lastlogintime,creationip,lastloginip,loginnum)
-            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$hashed,$status,$creationip,$creationip]);
+            values(?,?,?,now(),now(),now(),?,?,loginnum + 1);',[$account,$hashed,$status,request()->ip(),request()->ip()]);
             DB::statement('set @disable_update_logintime  = null');
             DB::commit();
         }catch (\Exception $ex) {
@@ -155,15 +155,15 @@ class ManagerData{
      * @param $triedpassword Managers alleged password.
      * @return bool Returns whether login was successful or not.
      */
-    public static function login($manageraccount, $triedpassword,$ip,$browser){
+    public static function login($manageraccount, $triedpassword,$browser){
         try{
             $result=DB::select('select password,managerid from manager where account = ?',[$manageraccount])[0];
             $hashed = $result->password;
             if(Hash::check($triedpassword,$hashed)) {
-                self::insertLoginLog($result->managerid,$ip,true,$browser);
+                self::insertLoginLog($result->managerid,request()->ip(),true,$browser);
                 return true;
             } else {
-                self::insertLoginLog($result->managerid,$ip,false,$browser); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
+               self::insertLoginLog($result->managerid,request()->ip(),false,$browser); # change the ip. atm i dont know how to get the ip because im testing locally not running the server.
                 return false;
             }
         }catch (\Exception $ex){

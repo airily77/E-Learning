@@ -34,6 +34,14 @@ class ManagerDataProvider implements UserProvider {
     }
     public function validateCredentials(\Illuminate\Contracts\Auth\Authenticatable $user, array $credentials){
         if(empty($credentials['account'])&&empty($credentials['password'])) return;
-        return ManagerData::login($credentials['account'],$credentials['password'],request()->ip(),'firefox');
+        return ManagerData::login($credentials['account'],$credentials['password'],$this->getBrowser());
+    }
+    private function getBrowser(){
+        $provider = new WhichBrowser();
+        try {
+            $result = $provider->parse(request()->header('UserAgent'));
+        } catch (NoResultFoundException $ex){}
+        return $result->getBrowser()->getName();
+
     }
 }

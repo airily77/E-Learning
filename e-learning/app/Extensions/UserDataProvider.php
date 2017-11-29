@@ -9,6 +9,8 @@ namespace App\Extensions;
 use \Illuminate\Contracts\Auth\UserProvider;
 use App\User;
 use database\connectors\UserData;
+use UserAgentParser\Exception\NoResultFoundException;
+use UserAgentParser\Provider\WhichBrowser;
 class UserDataProvider implements UserProvider {
     public $model;
 
@@ -38,6 +40,14 @@ class UserDataProvider implements UserProvider {
     }
     public function validateCredentials(\Illuminate\Contracts\Auth\Authenticatable $user, array $credentials){
         if(empty($credentials['account'])&&empty($credentials['password'])) return;
-        return UserData::login($credentials['account'],$credentials['password'],request()->ip(),'firefox');
+        return UserData::login($credentials['account'],$credentials['password'],$this->getBrowser());
+    }
+    private function getBrowser(){
+        $provider = new WhichBrowser();
+        try {
+            $result = $provider->parse('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36');
+        } catch (NoResultFoundException $ex){}
+        return $result->getBrowser()->getName();
+
     }
 }

@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        UserData::insertUserHash('this','this',1,request()->ip());
+        ManagerData::insertManagerHash('this','this',1);
     }
 
     public static function TestTesting(){

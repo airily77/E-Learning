@@ -38,7 +38,6 @@ class LoginController extends Controller{
      *
      * @return void
      */
-    //TODO If a user and a manager have the exact same password and username it will automatically log into the user. Easy fix is make the name unique.
     public function login(Request $request){
         $account = $request['account'];
         $password = $request['pw'];

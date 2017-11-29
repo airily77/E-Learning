@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserData{
-    public static function insertUserHash($account, $password, $status, $ip){
+    public static function insertUserHash($account, $password, $status){
         DB::beginTransaction();
         try {
             $hashed = Hash::make($password);
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status, $ip]);
+            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status,request()->ip()]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
@@ -19,12 +19,12 @@ class UserData{
         }
     }
 
-    public static function insertUser($account, $password, $status, $ip)
+    public static function insertUser($account, $password, $status)
     {
         DB::beginTransaction();
         try {
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $password, $status, $ip]);
+            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $password, $status,request()->ip()]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
@@ -66,16 +66,16 @@ class UserData{
         }
     }
 
-    public static function login($accountname, $password, $ip, $browser){
+    public static function login($accountname, $password, $browser){
         try {
             $id = self::getUserId($accountname);
             if (self::checkPassword($id, $password)) {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 1, $browser);
+                self::insertLoginLog($id,1, $browser);
                 return $id;
             } else {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 0, $browser);
+                self::insertLoginLog($id, 0, $browser);
                 return false;
             }
         } catch (\Exception $exception) {
@@ -90,15 +90,15 @@ class UserData{
         }
     }
 
-    private static function insertLoginLog($id, $ip, $result, $browser)
+    private static function insertLoginLog($id, $result, $browser)
     {
         DB::beginTransaction();
         try {
             if ($result) {
-                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, $ip, $result, $browser]);
+                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, request()->ip(), $result, $browser]);
             } else {
                 DB::statement('set @disable_update_logintime_user = 1');
-                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, $ip, $result, $browser]);
+                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, request()->ip(), $result, $browser]);
                 DB::statement('set @disable_update_logintime_user = null');
             }
             DB::commit();
