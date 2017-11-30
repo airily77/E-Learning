@@ -86,3 +86,35 @@
 
     </div>
 </div>
+
+<div id="popup4" class="overlay">
+    <div class="popup">
+        <h2>You are not in this course!</h2>
+        <a class="close" href="#">&times;</a>
+
+    </div>
+</div>
+
+<div id="popup5" class="overlay">
+    <div class="popup">
+        <h2>You do not have permission to enter this exam</h2>
+        <a class="close" href="#">&times;</a>
+
+    </div>
+</div>
+
+<div id="popup6" class="overlay">
+    <div class="popup">
+        <h2>You got 69 points</h2><!--//TODO pistemäärä-->
+        <a class="close" href="#">&times;</a>
+
+    </div>
+</div>
+
+<div id="popup7" class="overlay">
+    <div class="popup">
+        <h2>Access denied</h2>
+        <a class="close" href="#">&times;</a>
+
+    </div>
+</div>

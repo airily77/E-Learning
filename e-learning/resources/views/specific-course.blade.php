@@ -49,6 +49,8 @@
                     @endif
                 </div>
             @endforeach
+            @include('inc.home.popup')
+
         </div>
 
 

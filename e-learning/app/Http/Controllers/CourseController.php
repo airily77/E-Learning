@@ -34,8 +34,7 @@ class CourseController extends Controller{
             $userexamresults = UserData::getUserExamsFromCourse( $coursetitle,$userid);
             return view('specific-course',['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults]);
         }else{
-            //TODO pop up you are not in this course
-            dd('you are not in this couse');
+            return redirect()->intended('course/#popup4');
         }
     }
     public function video($coursetitle){

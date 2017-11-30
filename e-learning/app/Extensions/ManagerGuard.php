@@ -8,7 +8,7 @@
 namespace App\Extensions;
 use App\Extensions\Manager;
 use \Illuminate\Contracts\Auth\Guard;
-class ManagerGuard implements Guard{
+abstract class ManagerGuard implements Guard{
     protected $provider;
     protected $manager;
     /**
