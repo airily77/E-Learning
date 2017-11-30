@@ -14,7 +14,7 @@ class Question{
     var $options;
     var $correctanwser;
 
-    public function __construct($question, $options, $correctanwser){
+   public function __construct($question, $options, $correctanwser){
         $this->question=$question;
         $this->options= $options;
         $this->correctanwser = $correctanwser;

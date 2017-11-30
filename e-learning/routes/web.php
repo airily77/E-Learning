@@ -10,24 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use database\connectors\ManagerData;
 
-Route::get('/', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('home', ['images'=>$results]);
+Route::group(['middleware' =>[ 'web']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::post('/login','Auth\LoginController@Login');
+    Route::post('/logout','Auth\LoginController@Logout');
 });
-
-Route::get('/course', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('course', ['images'=>$results]);
+Route::group(['middleware' => ['web','userdata']], function () {
+    Route::get('/course','CourseController@course')->name('course');
+    Route::get('/course/{coursetitle}','CourseController@specificCourse')->name('specific.course');
+    Route::get('/course/video/{coursetitle}','CourseController@video')->name('video');
+    Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
+    Route::post('/exam/postExam','ExamController@postExam')->name('postExam');
 });
-
-Route::get('/video', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('video', ['images'=>$results]);
-});
-
-Route::get('/quiz', function () {
-    $results = \database\connectors\ScrollimageData::getCurrentImages();
-    return view('quiz', ['images'=>$results]);
-});
+Auth::routes();

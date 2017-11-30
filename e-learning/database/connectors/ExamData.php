@@ -64,7 +64,9 @@ class ExamData{
         }
     }
     public static function getExamsFromCourse($courseidortitle){
-        if(is_string($courseidortitle)) $id = CourseData::getCourseId($courseidortitle);
+        if(is_string($courseidortitle)) {
+            $id = CourseData::getCourseId($courseidortitle);
+        }
         else $id = $courseidortitle;
         try{
             $results = DB::select('select * from exam where course_id = ?',[$id]);
@@ -79,7 +81,6 @@ class ExamData{
             return DB::select('select examid from exam where title = ?',[$title])[0]->examid;
         }catch(\Exception $exception){}
     }
-
     /**
      * @param $examidortitle
      * @param $useranwsers
@@ -95,7 +96,8 @@ class ExamData{
             $examid = $examidortitle;
         }
         try{
-            $correctanwsers = json_decode(DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers);
+            $correctanwser = DB::select('select correctanwsers from exam where examid = ?',[$examid])[0]->correctanwsers;
+            $correctanwsers = json_decode($correctanwser);
             $usercorrectanwsers = array();
             for( $i = 0; $i< sizeof($correctanwsers); $i++ ) {
                 if($correctanwsers[$i]==$useranwsers[$i]) {
@@ -103,7 +105,9 @@ class ExamData{
                 }
             }
             return $usercorrectanwsers;
-        }catch (\Exception $exception){}
+        }catch (\Exception $exception){
+            dd($exception);
+        }
     }
     public static function getTestingId($examid){
         try{

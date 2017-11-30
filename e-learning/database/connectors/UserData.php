@@ -5,15 +5,13 @@ namespace database\connectors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserData
-{
-    public static function insertUserHash($account, $password, $status, $ip)
-    {
+class UserData{
+    public static function insertUserHash($account, $password, $status){
         DB::beginTransaction();
         try {
             $hashed = Hash::make($password);
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status, $ip]);
+            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status,request()->ip()]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
@@ -21,12 +19,12 @@ class UserData
         }
     }
 
-    public static function insertUser($account, $password, $status, $ip)
+    public static function insertUser($account, $password, $status)
     {
         DB::beginTransaction();
         try {
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $password, $status, $ip]);
+            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $password, $status,request()->ip()]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
@@ -38,6 +36,21 @@ class UserData
     {
         try {
             return DB::select('SELECT * FROM user WHERE userid = ?', [$id])[0];
+        } catch (\Exception $exception) {
+        }
+    }
+    public static function getPw($account)
+    {
+        try {
+            return DB::select('SELECT * FROM user WHERE account = ?', [$account])[0]->password;
+        } catch (\Exception $exception) {
+        }
+    }
+
+    public static function getUserAccount($id)
+    {
+        try {
+            return DB::select('SELECT * FROM user WHERE userid = ?', [$id])[0]->account;
         } catch (\Exception $exception) {
         }
     }
@@ -53,16 +66,17 @@ class UserData
         }
     }
 
-    public static function login($accountname, $password, $ip, $browser)
-    {
+    public static function login($accountname, $password, $browser){
         try {
             $id = self::getUserId($accountname);
             if (self::checkPassword($id, $password)) {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 1, $browser);
+                self::insertLoginLog($id,1, $browser);
+                return $id;
             } else {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, $ip, 1, $browser);
+                self::insertLoginLog($id, 0, $browser);
+                return false;
             }
         } catch (\Exception $exception) {
         }
@@ -76,15 +90,15 @@ class UserData
         }
     }
 
-    private static function insertLoginLog($id, $ip, $result, $browser)
+    private static function insertLoginLog($id, $result, $browser)
     {
         DB::beginTransaction();
         try {
             if ($result) {
-                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, $ip, $result, $browser]);
+                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, request()->ip(), $result, $browser]);
             } else {
                 DB::statement('set @disable_update_logintime_user = 1');
-                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, $ip, $result, $browser]);
+                DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, request()->ip(), $result, $browser]);
                 DB::statement('set @disable_update_logintime_user = null');
             }
             DB::commit();
@@ -205,14 +219,20 @@ class UserData
         try{
             if(is_null(DB::select('select user_id from user_testing where user_id = ? and exam_id = ?',[$userid,$examid])[0]->user_id)) return false;
             else return true;
-        }catch (\Exception $exception){}
+        }catch (\Exception $exception){
+            return false;
+        }finally{}
     }
     //TODO Only one same exam per user. We should correct this error at front-end. We shoulnd't even give him the option to do the exam or even see the exam.
     public static function insertUserTesting($userid,$examid,$useranwsers,$started){
         if(is_null(self::getUserCourses($userid))) return;
-        //if(self::checkDuplicateExamEntry($userid,$examid)) return;
+        if(self::checkDuplicateExamEntry($userid,$examid)) {
+            dd('bye',$useranwsers);
+            return;
+        }
         DB::beginTransaction();
         try{
+            $examid = intval($examid);
             $correctanwsers = json_encode(ExamData::checkExamForCorrectAnwsers($examid,$useranwsers));
             $useranwsersjson = json_encode($useranwsers);
             $score = ExamData::checkExamForPoints($examid,$useranwsers);
@@ -222,9 +242,21 @@ class UserData
             VALUES (?,?,?,?,?,?,?,now(),?)',[$userid,$testingid,$examid,$useranwsersjson,$correctanwsers,$score,$started,$result]);
             DB::commit();
         }catch (\Exception $exception){
-            echo($exception);
+            dd($exception);
             DB::rollBack();
         }
     }
-
+    public static function getUserExamsFromCourse($courseidortitle,$userid){
+        $exams = CourseData::examidsCourseIsConnectedTo($courseidortitle);
+        $results = array();
+        foreach($exams as $exam){
+            array_push($results,self::getScoreAndResultFromExam($exam->examid,$userid));
+        }
+        return $results;
+    }
+    public static function getScoreAndResultFromExam($examid,$userid){
+        try{
+            if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result;
+        }catch (\Exception $exception){}
+    }
 }
