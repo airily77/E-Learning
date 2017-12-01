@@ -51,7 +51,7 @@ class ExamController extends Controller {
                 array_push($anwsers, $request->input($i));
             }
             UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()), $examid, $anwsers, $started);
-            //TODO popup paljon pisteitä sai
+            //TODO popup paljon pisteitä sai    
 
             return redirect()->intended(route('specific.course', [$coursetitle]));
         }else{
