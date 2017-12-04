@@ -24,7 +24,8 @@ class ExamController extends Controller {
             date_default_timezone_set('Asia/Shanghai');
             return view('exam',['examdata'=>$examdata,'started'=>date("Y-m-d H:i:s")]);
         }else{
-            //TODO popup you didn't qualify for this exam because (reason)
+            return redirect()->intended('course/#popup5');
+
             return redirect()->intended(route('specific.course',[$coursetitle]));
         }
     }
@@ -51,12 +52,10 @@ class ExamController extends Controller {
                 array_push($anwsers, $request->input($i));
             }
             UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()), $examid, $anwsers, $started);
-            //TODO popup paljon pisteitä sai    
-
-            return redirect()->intended(route('specific.course', [$coursetitle]));
+            //TODO popup paljon pisteitä sai
+            return redirect()->intended('course/#popup6');
         }else{
-            //TODO pop up (denied access)
-            dd('what are you doing my dude');
+            return redirect()->intended('course/#popup7');
         }
     }
 }

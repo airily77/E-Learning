@@ -5,5 +5,6 @@
 
 <div class="container">
     @include('inc.video.videoplayer')
+    @include('inc.home.popup')
 
 </div>

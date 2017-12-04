@@ -6,5 +6,5 @@
 
 <div class="container">
 @include('inc.course.courselist')
-
+    @include('inc.home.popup')
 </div>

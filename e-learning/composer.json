@@ -35,8 +35,6 @@
             "app/Http/Controllers/HomeController.php",
             "app/Http/Controllers/CourseController.php",
             "app/Extensions/UserDataProvider.php",
-            "app/Extensions/UserGuard.php",
-            "app/Extensions/ManagerGuard.php",
             "app/Extensions/ManagerDataProvider.php",
             "app/Extensions/Manager.php",
             "app/Http/Middleware/UserMiddleware.php",

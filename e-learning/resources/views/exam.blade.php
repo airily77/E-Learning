@@ -21,6 +21,7 @@
 
 <title>Exam</title>
 @include('inc.course.banner2')
+@include('inc.home.popup')
 
 <div class="container">
     <h1 id="header">{{$examdata->title}}</h1>

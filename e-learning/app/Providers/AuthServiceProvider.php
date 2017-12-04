@@ -34,8 +34,8 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Auth::provider('userprovider', function ($app, array $config) {
-            return new UserDataProvider($app->make('App\User'));
-        });
+                return new UserDataProvider($app->make('App\User'));
+            });
         $this->app->bind('App\Extensions\Manager',function($app){
            return new Manager;
         });
