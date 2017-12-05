@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        UserData::updateInformationByAccount('pekka','','',null);
+        UserData::addUserToCourse(2,'',0,date_create()->format('Y-m-d H:i:s'));
     }
 
     public static function TestTesting(){

@@ -39,16 +39,19 @@
         <div class="col-lg-3">
 
         <h3>Course Exams</h3>
-            @foreach($exams as $exam)
+            @for($i=0;$i<sizeof($exams);$i++)
+                @php $exam = $exams[$i] @endphp
                 <div id="exam" onclick="window.location='{{route('exam',[$coursedata->title,$exam->title])}}'">
                     <h4 id="exams">{{($exam->title)}}</h4>
-                    @if(($userexamresults)==0)
-                        @include('inc.course.progress')
-                    @else
+                    @if(empty($userexamresults[$i]))
+                        @include('inc.course.dothis')
+                    @elseif(($userexamresults[$i]->result)==1)
                         @include('inc.course.passed')
+                    @elseif(($userexamresults[$i]->result)==0)
+                        @include('inc.course.failed')
                     @endif
                 </div>
-            @endforeach
+            @endfor
             @include('inc.home.popup')
 
         </div>

@@ -105,7 +105,7 @@
 
 <div id="popup6" class="overlay">
     <div class="popup">
-        <h2>You got 69 points</h2><!--//TODO pistemäärä-->
+        <h2>You got {{request()->get('points')}} points</h2><!--//TODO pistemäärä-->
         <a class="close" href="#">&times;</a>
 
     </div>

@@ -286,6 +286,11 @@ class UserData{
             DB::rollBack();
         }
     }
+    public static function getPointsFromExam($userid,$examid){
+        try{
+            return DB::select('select points from user_testing where exam_id = ? and user_id = ?',[$examid,$userid])[0];
+        }catch (\Exception $exception){}
+    }
     public static function getUserExamsFromCourse($courseidortitle,$userid){
         $exams = CourseData::examidsCourseIsConnectedTo($courseidortitle);
         $results = array();
@@ -296,7 +301,7 @@ class UserData{
     }
     public static function getScoreAndResultFromExam($examid,$userid){
         try{
-            if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result;
+            if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result[0];
         }catch (\Exception $exception){}
     }
 }

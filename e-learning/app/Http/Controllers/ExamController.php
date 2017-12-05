@@ -53,7 +53,7 @@ class ExamController extends Controller {
             }
             UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()), $examid, $anwsers, $started);
             //TODO popup paljon pisteitä sai
-            return redirect()->intended('course/#popup6');
+            return route('course',['/#popup6','points'=>UserData::getPointsFromExam(UserData::getUserId(auth()->guard('users')->id()),$examid)]);
         }else{
             return redirect()->intended('course/#popup7');
         }
