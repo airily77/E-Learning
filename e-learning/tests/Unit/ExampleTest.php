@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        ManagerData::insertManagerHash('this','this',1);
+        UserData::updateInformationByAccount('pekka','','',null);
     }
 
     public static function TestTesting(){

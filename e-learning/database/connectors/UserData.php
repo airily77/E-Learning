@@ -4,6 +4,8 @@ namespace database\connectors;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\Null_;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class UserData{
     public static function insertUserHash($account, $password, $status){
@@ -115,6 +117,44 @@ class UserData{
         }
     }
 
+    public static function updatePosition($accountname,$position){
+        DB::beginTransaction();
+        try{
+            DB::update('update user set position= ? where account= ?',[$position,$accountname]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo $exception;
+            DB::rollBack();
+        }
+    }
+    public static function updateStatus($accountname,$status){
+        DB::beginTransaction();
+        try{
+            DB::update('update user set status = ? where account= ?',[$status,$accountname]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo $exception;
+            DB::rollBack();
+        }
+    }
+    public static function updateDepartment($accountname,$department){
+        DB::beginTransaction();
+        try{
+            DB::update('update user set department = ? where account= ?',[$department,$accountname]);
+            DB::commit();
+        }catch (\Exception $exception){
+            echo $exception;
+            DB::rollBack();
+        }
+    }
+    public static function updateInformationByAccount($accountname,$department,$position,$status){
+        if(!is_null($department) && !empty($department))
+            self::updateDepartment($accountname,$department);
+        if(!is_null($position) && !empty($position))
+            self::updatePosition($accountname,$position);
+        if(!is_null($status) && !empty($status))
+            self::updateStatus($accountname,$status);
+    }
     public static function updatePassword($id, $password, $newpassword)
     {
         DB::beginTransaction();
