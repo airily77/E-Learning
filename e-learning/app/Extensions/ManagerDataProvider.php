@@ -9,6 +9,8 @@ namespace App\Extensions;
 use \Illuminate\Contracts\Auth\UserProvider;
 use App\Extensions\Manager;
 use database\connectors\ManagerData;
+use UserAgentParser\Provider\WhichBrowser;
+
 class ManagerDataProvider implements UserProvider {
     private $model;
 
@@ -17,7 +19,10 @@ class ManagerDataProvider implements UserProvider {
     }
 
     public function retrieveById($identifier){
-        return ManagerData::getManager($identifier);
+        $manager = new Manager;
+        $manager->account = $identifier;
+        $manager->setPw(ManagerData::getPw($identifier));
+        return $manager;
     }
     public function retrieveByToken($identifier, $token){
     }
@@ -39,9 +44,9 @@ class ManagerDataProvider implements UserProvider {
     private function getBrowser(){
         $provider = new WhichBrowser();
         try {
-            $result = $provider->parse(request()->header('UserAgent'));
+            $result = $provider->parse(request()->header('User-Agent'));
+            return $result->getBrowser()->getName();
         } catch (NoResultFoundException $ex){}
-        return $result->getBrowser()->getName();
 
     }
 }

@@ -8,16 +8,14 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 class User implements AuthenticatableContract{
     use Notifiable;
     public $account;
-    public $password;
+    protected $password;
     public function setPw($pw){
         $this->password=$pw;
     }
 
     public function __construct2($account,$password){
-        if(is_string($account) && is_string($password)){
-            $this->account=$account;
-            $this->password=$password;
-        }
+        $this->account=$account;
+        $this->password=$password;
     }
     public function __construct(){}
 
@@ -29,7 +27,7 @@ class User implements AuthenticatableContract{
     }
 
     public function getAuthPassword(){
-        return $this->password;
+        return 'how about no';
     }
 
     public function getAuthIdentifier(){
