@@ -60,9 +60,9 @@ class LoginController extends Controller{
     private function loginUser($account,$password){
         $userdata = ['account' => $account, 'password' => $password];
         if (Auth::guard('users')->attempt($userdata)) {
-            $user = new User;
+            $user = new User($account,$password);
             $user->account = $account;
-            $user->password = $password;
+            $user->setPw($password);
             Auth::guard('users')->login($user);
             Auth::guard('users')->authenticate();
             if (Auth::guard('users')->check()) {

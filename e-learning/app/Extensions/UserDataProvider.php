@@ -22,7 +22,7 @@ class UserDataProvider implements UserProvider {
         $pw = UserData::getPw($identifier);
         $user = new User;
         $user->account = $identifier;
-        $user->password = $pw;
+        $user->setPw($pw);
         return $user;
     }
     public function retrieveByToken($identifier, $token){
