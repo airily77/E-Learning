@@ -45,9 +45,9 @@ class UserDataProvider implements UserProvider {
     private function getBrowser(){
         $provider = new WhichBrowser();
         try {
-            $result = $provider->parse('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36');
+            $result = $provider->parse(request()->header('User-Agent'));
+            return $result->getBrowser()->getName();
         } catch (NoResultFoundException $ex){}
-        return $result->getBrowser()->getName();
 
     }
 }

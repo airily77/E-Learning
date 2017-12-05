@@ -79,7 +79,7 @@ class LoginController extends Controller{
         if (Auth::guard('managers')->validate($userdata)) {
             $manager = new Manager;
             $manager->account = $account;
-            $manager->password = $allegedPw;
+            $manager->setPw($allegedPw);
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
                 return redirect()->intended('dosomethinghere');
