@@ -13,6 +13,7 @@
 
 Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/news', 'NewsController@index')->name('newspage');
     Route::post('/login','Auth\LoginController@Login');
     Route::post('/logout','Auth\LoginController@Logout');
 });
