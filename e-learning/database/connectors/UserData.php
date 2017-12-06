@@ -288,7 +288,7 @@ class UserData{
     }
     public static function getPointsFromExam($userid,$examid){
         try{
-            return DB::select('select points from user_testing where exam_id = ? and user_id = ?',[$examid,$userid])[0];
+            return DB::select('select score from user_testing where exam_id = ? and user_id = ?',[$examid,$userid])[0]->points;
         }catch (\Exception $exception){}
     }
     public static function getUserExamsFromCourse($courseidortitle,$userid){

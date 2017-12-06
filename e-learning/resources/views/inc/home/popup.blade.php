@@ -105,9 +105,10 @@
 
 <div id="popup6" class="overlay">
     <div class="popup">
-        <h2>You got {{request()->get('points')}} points</h2><!--//TODO pistemäärä-->
+        <!-- //TODO tämä ei näytä oikeata arvoa -->
+       <!-- <h2>You got //strval(session()->pull(auth()->guard('users')->id())) -->
+        <h2>faa</h2>
         <a class="close" href="#">&times;</a>
-
     </div>
 </div>
 

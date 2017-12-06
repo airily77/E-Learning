@@ -485,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
   `exam_id` int(11) NOT NULL,
   `useranswers` json NOT NULL,
   `correctanwsers` json NOT NULL,
-  `score` int(11) NOT NULL,
+  `score` double NOT NULL,
   `started` datetime NOT NULL,
   `completed` datetime NOT NULL,
   `result` tinyint(1) NOT NULL,
@@ -514,14 +514,16 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
 
     select exam.medianscore into exammedian from exam where examid = new.exam_id;
     if exammedian>0 THEN
-      update exam set exam.medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
+      call calculateExamMedian(new.exam_id,@median,new.score);
+      update exam set exam.medianscore = @median where examid = new.exam_id;
     ELSE
       update exam set exam.medianscore = new.score where examid = new.exam_id;
     END IF;
 
     select testing.medianpoints into testingmedian from testing where testingid = new.testing_id;
     if testingmedian>0 THEN
-      update testing set testing.medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
+      call calculateTestingMedian(new.testing_id,@mediantesting,new.score);
+      update testing set testing.medianpoints = @mediantesting where testingid = new.testing_id;
     ELSE
       update testing set testing.medianpoints = new.score where testingid = new.testing_id;
     END IF;
