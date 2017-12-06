@@ -22,7 +22,7 @@
 
         <div class="col-lg-10">
             <p>{{auth()->guard('managers')->id()}}</p>
-            <button onclick="window.location='//TODO Vie minut jonnekkin.'"> Keksi nimi </button>
+            <button onclick="window.location='/exam/creation'">Create a exam</button>
             <form action="{{route('logout')}}" method="post">
                 <button type="submit">Logout</button>
             </form>
