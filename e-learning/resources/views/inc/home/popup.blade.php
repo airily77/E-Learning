@@ -105,9 +105,9 @@
 
 <div id="popup6" class="overlay">
     <div class="popup">
-        <h2>You got 69 points</h2><!--//TODO pistemäärä-->
+        <!-- //TODO tämä ei näytä oikeata arvoa -->
+        <h2>You got {{ strval(\database\connectors\UserData::getLastExamScore(auth()->guard('users')->id())) }} points</h2>
         <a class="close" href="#">&times;</a>
-
     </div>
 </div>
 

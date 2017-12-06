@@ -506,7 +506,7 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
   DECLARE notfirsttime int(11);
   select user_id into notfirsttime from user_testing where user_testing.user_id = new.user_id and user_testing.exam_id = new.exam_id;
   if notfirsttime is not null THEN
-    SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate exam entry for current user';
+    SIGNAL sqlstate '02420' SET MESSAGE_TEXT = 'duplicate exam entry for current user';
   END IF;
   if new.result=1 and notfirsttime is null THEN
     update testing set donenum = donenum + 1 where testingid = new.testing_id;
@@ -514,14 +514,16 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
 
     select exam.medianscore into exammedian from exam where examid = new.exam_id;
     if exammedian>0 THEN
-      update exam set exam.medianscore = (exammedian+new.score)/2 where examid = new.exam_id;
+      call calculateExamMedian(new.exam_id,@median,new.score);
+      update exam set exam.medianscore = @median where examid = new.exam_id;
     ELSE
       update exam set exam.medianscore = new.score where examid = new.exam_id;
     END IF;
 
     select testing.medianpoints into testingmedian from testing where testingid = new.testing_id;
     if testingmedian>0 THEN
-      update testing set testing.medianpoints = (testingmedian+new.score)/2 where testingid = new.testing_id;
+      call calculateTestingMedian(new.testing_id,@mediantesting,new.score);
+      update testing set testing.medianpoints = @mediantesting where testingid = new.testing_id;
     ELSE
       update testing set testing.medianpoints = new.score where testingid = new.testing_id;
     END IF;
