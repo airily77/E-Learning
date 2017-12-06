@@ -10,7 +10,6 @@ use \Illuminate\Contracts\Auth\UserProvider;
 use App\Extensions\Manager;
 use database\connectors\ManagerData;
 use UserAgentParser\Provider\WhichBrowser;
-
 class ManagerDataProvider implements UserProvider {
     private $model;
 
