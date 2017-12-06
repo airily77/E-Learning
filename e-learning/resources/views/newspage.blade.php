@@ -25,6 +25,7 @@
 
     }
 
+
     .arrow-up {
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
@@ -45,6 +46,11 @@
 
         <p id="paragraph"></p>
 
+        <div id="Finish">
+
+            <button id="bt2" style="position: absolute; right: 10%; top: 23%"> Upload News </button> <!-- //TODO upload content-->  <!-- document.getElementById("paragraph").innerText; -->
+
+        </div>
     </div>
 
 
@@ -62,6 +68,8 @@
             var x = CKEDITOR.instances.editor.getData();
             document.getElementById("paragraph").innerHTML = x;
         }  </script>
+
+
 
 
 
