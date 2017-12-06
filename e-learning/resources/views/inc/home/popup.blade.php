@@ -106,8 +106,7 @@
 <div id="popup6" class="overlay">
     <div class="popup">
         <!-- //TODO tämä ei näytä oikeata arvoa -->
-       <!-- <h2>You got //strval(session()->pull(auth()->guard('users')->id())) -->
-        <h2>faa</h2>
+        <h2>You got {{ strval(\database\connectors\UserData::getLastExamScore(auth()->guard('users')->id())) }} points</h2>
         <a class="close" href="#">&times;</a>
     </div>
 </div>

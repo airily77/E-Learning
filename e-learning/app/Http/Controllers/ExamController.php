@@ -52,9 +52,6 @@ class ExamController extends Controller {
                 array_push($anwsers, $request->input($i));
             }
             $examid = intval($examid);
-            $points = ExamData::checkExamForPoints($examid,$anwsers);
-            session()->push(auth()->guard('users')->id(),$points);
-            session()->save();
             UserData::insertUserTesting(UserData::getUserId(auth()->guard('users')->id()), $examid, $anwsers, $started);
             //TODO popup paljon pisteitä sai
             return redirect()->intended('course/#popup6');

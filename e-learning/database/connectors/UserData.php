@@ -304,4 +304,12 @@ class UserData{
             if(!is_null($result = DB::select('select result,score from user_testing WHERE user_id = ? and exam_id = ?', [$userid,$examid]))) return $result[0];
         }catch (\Exception $exception){}
     }
+    public static function getLastExamScore($account){
+        $id = self::getUserId($account);
+        try{
+            return DB::select('select score from user_testing where user_id = ? ORDER BY completed DESC LIMIT 1',[$id])[0]->score;
+        }catch (\Exception $exception){
+            echo $exception;
+        }
+    }
 }

@@ -485,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `user_testing` (
   `exam_id` int(11) NOT NULL,
   `useranswers` json NOT NULL,
   `correctanwsers` json NOT NULL,
-  `score` double NOT NULL,
+  `score` int(11) NOT NULL,
   `started` datetime NOT NULL,
   `completed` datetime NOT NULL,
   `result` tinyint(1) NOT NULL,
@@ -506,7 +506,7 @@ CREATE TRIGGER `ins_user_testing` BEFORE INSERT ON `user_testing` FOR EACH ROW B
   DECLARE notfirsttime int(11);
   select user_id into notfirsttime from user_testing where user_testing.user_id = new.user_id and user_testing.exam_id = new.exam_id;
   if notfirsttime is not null THEN
-    SIGNAL sqlstate '02000' SET MESSAGE_TEXT = 'duplicate exam entry for current user';
+    SIGNAL sqlstate '02420' SET MESSAGE_TEXT = 'duplicate exam entry for current user';
   END IF;
   if new.result=1 and notfirsttime is null THEN
     update testing set donenum = donenum + 1 where testingid = new.testing_id;

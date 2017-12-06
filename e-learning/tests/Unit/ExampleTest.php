@@ -37,8 +37,8 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        UserData::insertUserHash('student','student',1);
-        UserData::addUserToCourse(4,'CS1',1,date_create()->format('Y-m-d H:i:s'));
+        echo 'last score = ';
+        echo UserData::getLastExamScore('peke');
     }
 
     public static function TestTesting(){
