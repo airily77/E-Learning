@@ -91,7 +91,11 @@ class ManagerData{
             return null;
         }
     }
-
+    public static function getPw($account){
+        try{
+            return DB::select('select password from manager where account = ?',[$account])[0]->password;
+        }catch(\Exception $exception){}
+    }
     /**
      * @param $id Id of the manager.
      * @param $password Unhashed password attempt.

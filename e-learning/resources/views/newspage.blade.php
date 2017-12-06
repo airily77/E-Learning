@@ -58,7 +58,6 @@
 
     <script>
         function toggleEditor() {
-
             @if (auth()->guard('managers')->check())
             var x = document.getElementById("richtext");
             if (x.style.display === "none") {

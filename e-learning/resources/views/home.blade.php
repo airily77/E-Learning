@@ -16,10 +16,12 @@
 
             <div class="col-md-1 col-lg-4">
 
-                @if(!auth()->guard('users')->check())
-                    @include('inc.home.login')
+                @if(auth()->guard('managers')->check())
+                    @include('inc.home.loggedmanager')
                 @elseif (auth()->guard('users')->check())
                     @include('inc.home.logged')
+                @elseif (!auth()->guard('users')->check())
+                    @include('inc.home.login')
                 @endif
                 @include('inc.home.popup')
             </div>

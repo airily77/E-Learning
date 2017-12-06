@@ -47,7 +47,7 @@ class ExampleTest extends TestCase{
         $option3 = array('Back-end','Markup in the browser','Scripts in the browser','Data storage in the browser');
         $option4 = array('static','functional','object-oriented','markup');
         $options = array($option1,$option2,$option3,$option4);
-        $correctanwser = array('A','A','C','C');
+        $correctanwser = array('static','C++','Scripts in the browser','markup');
         ExamData::insertExam(3,1,3,'CS2Exam',$questions,$options,$correctanwser);
         //$datetime = date_create()->format('Y-m-d H:i:s');
         //$result = UserData::checkDuplicateExamEntry(1,1);

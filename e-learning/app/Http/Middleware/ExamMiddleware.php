@@ -14,7 +14,7 @@ class ExamMiddleware{
      * @return mixed
      */
     public function handle($request, Closure $next){
-        if( ! Auth::guard('users')->check()){
+        if(!Auth::guard('users')->check()){
             return redirect()->intended('/');
         }else if (Auth::guard('users')->check()){
             return $next($request);
