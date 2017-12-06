@@ -15,6 +15,8 @@ Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/news', 'NewsController@index')->name('newspage');
     Route::post('/login','Auth\LoginController@Login');
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+
     Route::post('/logout','Auth\LoginController@Logout');
 });
 Route::group(['middleware' => ['web','userdata']], function () {
