@@ -22,9 +22,6 @@
     }
 
 
-    #home:active{
-        color: red;
-    }
 
     .link:hover{
         text-decoration: underline;
