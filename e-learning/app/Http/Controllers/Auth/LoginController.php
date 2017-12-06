@@ -82,15 +82,15 @@ class LoginController extends Controller{
             $manager->setPw($allegedPw);
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
-                return redirect()->intended('dosomethinghere');
-                //TODO redirect to manager course page that differences from normal course page.
+                return redirect()->intended('/');
             }
         } else {
             return redirect()->intended('/#popup3');
         }
     }
     public function logout(Request $request){
-        auth()->guard('users')->logout();
+        if(\auth()->guard('users')->check()) auth()->guard('users')->logout();
+        else if(\auth()->guard('managers')->check()) \auth()->guard('managers')->logout();
         return redirect()->intended('/');
     }
 }

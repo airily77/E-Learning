@@ -42,7 +42,9 @@ class Kernel extends HttpKernel
         'examdata' =>[
           'exam',
         ],
-
+        'managerdata'=>[
+            'manager',
+        ],
         'api' => [
             'throttle:60,1',
             'bindings',

@@ -13,7 +13,6 @@
 
 Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/news', 'NewsController@index')->name('newspage');
     Route::post('/login','Auth\LoginController@Login');
     Route::post('/logout','Auth\LoginController@Logout');
 });
@@ -23,5 +22,8 @@ Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course/video/{coursetitle}','CourseController@video')->name('video');
     Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
     Route::post('/exam/postExam','ExamController@postExam')->name('postExam');
+});
+Route::group(['middleware' => ['web','managerdata']], function () {
+    Route::get('/news', 'NewsController@index')->name('newspage');
 });
 Auth::routes();

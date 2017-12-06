@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 
 class NewsController extends Controller{
-
-public function index(){
-
-    return view('newspage');
-
-}
-
-
+    public function __construct(){
+        $this->middleware('manager');
+    }
+    public function index(){
+        return view('newspage');
+    }
 }

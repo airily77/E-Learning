@@ -14,6 +14,10 @@ class ManagerMiddleware {
      * @return mixed
      */
     public function handle($request, Closure $next){
-        return $next($request);
+        if(!Auth::guard('managers')->check()){
+            return redirect()->intended('/');
+        }else{
+            return $next($request);
+        }
     }
 }

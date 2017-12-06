@@ -37,8 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        echo 'last score = ';
-        echo UserData::getLastExamScore('peke');
+        ManagerData::insertManagerHash('this','this',1);
     }
 
     public static function TestTesting(){

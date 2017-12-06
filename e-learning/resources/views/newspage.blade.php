@@ -60,8 +60,7 @@
     <script>
         function textToDiv() {
             var x = CKEDITOR.instances.editor.getData();
-            document.getElementById("paragraph").innerHTML = x;
-        }  </script>
+            document.getElementById("paragraph").innerHTML = xs  </script>
 
 
 
