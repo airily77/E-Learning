@@ -1,27 +1,57 @@
 <style>
 
-    input[type=text], input[type=password] {
+    .well {
 
-        width: 200px;
-        padding: 1px 10px;
-        margin: 8px 0;
-        font: normal 80%/100% 'Verdana';
+        height: 63px;
+        width: 100%;
+
+    }
+
+    #name {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        bottom: 30px;
+        color: black;
+
+    }
+
+    #logoutbt {
+        display: flex;
+        justify-content: center;
+        margin: -86px 254px;
+        padding: 20px 0px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: none;
+        color: black;
     }
 
     button {
-        background-color: #6b9dbb;
-        color: white;
         padding: 5px;
         margin: 8px 0;
-        border: none;
         cursor: pointer;
         width: 30%;
+        background-color: #50b066;
+        font-weight: bold;
+        align-content: center;
     }
-    button:hover {
+
+    button:hover, #coursebt:hover {
         background: #2b2b2b;
     }
-    .container {
-        padding: 5px;
+
+    #coursebt {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0px;
+        border: solid 1px black;
+        font-size: larger;
+        border-radius: 5px;
+        background-color: #4caf50;
+        font-weight: bold;
+        padding: 40px 174px;
+        color: black;
     }
 
 </style>
@@ -31,13 +61,14 @@
     <div class="row">
 
 
-
         <div class="col-lg-10">
-            <p>{{auth()->guard('users')->id()}}</p>
-            <button onclick="window.location='{{ route("course") }}'"> course </button>
-            <form action="{{route('logout')}}" method="post">
-                <button type="submit">Logout</button>
-            </form>
+
+            <h2 id="name">Welcome, {{auth()->guard('users')->id()}}!</h2>
+                <form action="" method="post">
+                    <button id="logoutbt" onclick="{{route('logout')}}" type="submit">Logout</button>
+                </form>
+
         </div>
     </div>
 </div>
+<button id="coursebt" onclick="window.location='{{ route("course") }}'"> Course Center</button>

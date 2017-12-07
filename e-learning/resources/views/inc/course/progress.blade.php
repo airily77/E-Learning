@@ -1,17 +1,14 @@
 <style>
 
 
-    #progress {
+    #progress1 {
         padding: 4px;
-        margin: -7px -7px;
         height: 30px;
         width: 100px;
         text-align: center;
         color: orange;
-        border: yellow;
-        border-style: solid;
+        border: yellow solid 2px;
         border-radius: 20px;
-        background: transparent;
         font-size: 10px;
         font-weight: bold;
 
@@ -21,6 +18,6 @@
 </style>
 
 
-<div id="progress"><p   >In Progress</p></div>
+<div id="progress1"><p   >In Progress</p></div>
 
 
