@@ -31,7 +31,6 @@
                     <div id="name"
                          onclick="window.location='{{route('specific.course',[$coursedatum->title])}}'">  {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
                 </h4>
-
                 <div id="passed">
                    <!-- @foreach($usercoursedata as $usercoursedatum)
 
