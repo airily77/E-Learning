@@ -70,4 +70,4 @@
     </div>
 </div>
 <button id="create-exam" onclick="window.location='{{ route("examcreation") }}'"> Create a exam</button>
-<button id="create-user" onclick="window.location='{{ route("create-user") }}'"> Register a new user</button>
+<button id="create-user" onclick="window.location='{{ route("register-view") }}'"> Register a new user</button>
