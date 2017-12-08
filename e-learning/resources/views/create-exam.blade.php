@@ -36,14 +36,27 @@
                 <input type="text" placeholder="Enter the courses name" name="course">
 
                 <h3>Questions</h3>
-                @include('inc.manager.exam.question')
-                @include('inc.manager.exam.question')
-                @include('inc.manager.exam.question')
+                <div id="questions">
+                    @include('inc.manager.exam.question')
+                    @include('inc.manager.exam.question')
+                    @include('inc.manager.exam.question')
+                </div>
                 <button type="button" onclick="createQuestion()">+</button>
+                <h3>Options</h3>
+                <div id="options">
+                    @include('inc.manager.exam.question')
+                    @include('inc.manager.exam.question')
+                    @include('inc.manager.exam.question')
+                </div>
             </form>
         <script>
             function createQuestion() {
-                
+                var parent = document.getElementById('questions');
+                var question = document.createElement('input');
+                question.setAttribute('placeholder','Enter the question here');
+                question.setAttribute('type','text');
+                question.setAttribute('name','question');
+                parent.appendChild(question);
             }
         </script>
     </div>
