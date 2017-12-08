@@ -7,7 +7,7 @@
         color: black;
     }
 
-    #bt1, #bt2 {
+    #bt1, #bt2, #toggle {
         background-color: #4caf50;
         border: solid 2px black;
         border-radius: 10px;
@@ -24,6 +24,7 @@
         margin: 2% 0px;
 
     }
+
 
     .arrow-up {
         border-left: 20px solid transparent;
@@ -45,32 +46,28 @@
 
         <p id="paragraph"></p>
 
+        <div id="Finish">
+
+            <button id="bt2" style="position: absolute; right: 10%; top: 22%"> Upload News </button> <!-- //TODO upload content-->  <!-- document.getElementById("paragraph").innerText; -->
+
+        </div>
     </div>
 
-
-    <div id="bt">
-        <button id="bt1" onclick="textToDiv()"><div class="arrow-up"></div></button>
-        </div>
-
-
-
-    <textarea id="editor" cols="30" rows="100"></textarea>
+    <button id="toggle" onclick="toggleEditor()" style="position: absolute; right: 10%; top: 27% " >Edit news</button>
 
 
     <script>
-        function textToDiv() {
-            var x = CKEDITOR.instances.editor.getData();
-            document.getElementById("paragraph").innerHTML = xs
-        } </script>
+        function toggleEditor() {
+            @if (auth()->guard('managers')->check())
+            var x = document.getElementById("richtext");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            @endif
+        }
+    </script>
 
+    <div id="richtext" style="display: none">@include('inc.news.richtexteditor')</div>
 
-
-
-</div>
-
-
-<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('editor');
-    CKEDITOR.config.height="1000px";
-</script>
