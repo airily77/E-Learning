@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        ManagerData::insertManagerHash('this','this',1);
+        ArticleData::insertArticle('家庭作业很有趣','家庭作业是有趣的，有益的','学校','','','school','学校',1);
     }
 
     public static function TestTesting(){

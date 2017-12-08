@@ -19,7 +19,6 @@
 
 <div class="well">
     <div class="row">
-
         <div class="col-lg-10">
             <p>{{auth()->guard('managers')->id()}}</p>
             <button onclick="window.location='/exam/creation'">Create a exam</button>

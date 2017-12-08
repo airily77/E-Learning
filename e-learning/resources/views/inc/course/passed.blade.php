@@ -1,6 +1,4 @@
 <style>
-
-
     #passed1 {
         padding: 4px;
         height: 30px;
@@ -11,13 +9,8 @@
         border-radius: 20px;
         font-size: 10px;
         font-weight: bold;
-
     }
-
-
 </style>
 
 
 <div id="passed1"><p>Passed!</p></div>
-
-

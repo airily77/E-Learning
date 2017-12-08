@@ -12,7 +12,6 @@
         color: black;
         margin: -16px -10px;
     }
-
     #name:hover {
         text-decoration: underline;
         cursor: hand;
@@ -20,8 +19,6 @@
     img{
         float: right;
     }
-
-
 </style>
 
 <div id="left">
@@ -45,12 +42,10 @@
                                     <img src="{{$coursedatum->videoimg}}" alt="NO PHOTO" width="auto" height="35px">
                         @endif
                     @endforeach -->
+
                 </div>
             </div>
         @endforeach
 
     </div>
 </div>
-
-
-
