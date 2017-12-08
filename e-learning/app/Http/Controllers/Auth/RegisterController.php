@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller{
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -20,14 +19,12 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -35,7 +32,7 @@ class RegisterController extends Controller
      * @return void
      */
     public function __construct(){
-        $this->middleware('guest');
+        $this->middleware('managerdata');
     }
 
     /**
@@ -44,25 +41,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data){
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
+    public function registerUser(){
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data){
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+    }
+    public function registerView(){
+        return view('register');
     }
 }
