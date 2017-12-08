@@ -1,6 +1,4 @@
 <style>
-
-
     .banner {
         left: 0%;
         display: block;

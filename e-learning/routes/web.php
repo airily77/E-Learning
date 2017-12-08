@@ -13,9 +13,10 @@
 
 Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::post('/login','Auth\LoginController@Login')->name('login');
+    Route::post('/logout','Auth\LoginController@Logout')->name('logout');
     Route::post('/login','Auth\LoginController@Login');
     Route::get('/profile', 'ProfileController@index')->name('profile');
-
     Route::post('/logout','Auth\LoginController@Logout');
 });
 Route::group(['middleware' => ['web','userdata']], function () {
@@ -27,5 +28,8 @@ Route::group(['middleware' => ['web','userdata']], function () {
 });
 Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/news', 'NewsController@index')->name('newspage');
+    Route::get('/exam/creation','ManagerController@examCreation')->name('examcreation');
+    Route::get('/user/create','Auth\RegisterController@registerView')->name('create-user');
+
 });
 Auth::routes();
