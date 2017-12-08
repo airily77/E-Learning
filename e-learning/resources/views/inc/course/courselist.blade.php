@@ -2,10 +2,12 @@
     .container {
         padding: 15px;
     }
+
     #well {
         height: 50px;
         width: 200px;
     }
+
     #name {
         color: black;
         margin: -16px -10px;
@@ -31,19 +33,19 @@
                 </h4>
 
                 <div id="passed">
-                <!-- @foreach($usercoursedata as $usercoursedatum)
-                    @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
-                        @include('inc.course.passed')
-                    @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
-                        @include('inc.course.progress')
-                                <img src="{{$coursedatum->videoimg}}" alt="NO PHOTO" width="auto" height="35px">
+                   <!-- @foreach($usercoursedata as $usercoursedatum)
+
+                        @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
+                            @include('inc.course.passed')
+                        @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
+                            @include('inc.course.progress')
+                                    <img src="{{$coursedatum->videoimg}}" alt="NO PHOTO" width="auto" height="35px">
                         @endif
-                @endforeach -->
+                    @endforeach -->
+
                 </div>
             </div>
         @endforeach
 
     </div>
 </div>
-
-
