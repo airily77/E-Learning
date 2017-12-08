@@ -30,7 +30,6 @@ class ManagerData{
      * @param $status Status of the manager you want to create.
      * @param $creationip CreationIp of the manager you want to create.
      */
-    //TODO Remeber to hash the password in the creation form. Because its a security risk to hash here.
     public static function insertManager($account,$password,$status){
         DB::beginTransaction();
         try{
@@ -174,7 +173,6 @@ class ManagerData{
             return false;
         }
     }
-    //TODO change the ip. atm i dont know how to get the ip because im testing locally not running the server.
     //TODO Possible error incoming when trying to insert chinese characters into database.
     /**
      * When manager tries to login to his account, he triggers this method and sends data about the login to the server.

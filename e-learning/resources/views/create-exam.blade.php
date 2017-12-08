@@ -44,9 +44,9 @@
                 <button type="button" onclick="createQuestion()">+</button>
                 <h3>Options</h3>
                 <div id="options">
-                    @include('inc.manager.exam.question')
-                    @include('inc.manager.exam.question')
-                    @include('inc.manager.exam.question')
+                    @include('inc.manager.exam.option')
+                    @include('inc.manager.exam.option')
+                    @include('inc.manager.exam.option')
                 </div>
             </form>
         <script>
