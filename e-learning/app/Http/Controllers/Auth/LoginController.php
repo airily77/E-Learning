@@ -44,12 +44,18 @@ class LoginController extends Controller{
         $password = $request['pw'];
         if($this->checkUser($account)) {
             return $this->loginUser($account,$password);
-        }else if ($this->checkManager($account)){
-            return $this->loginManager($account,$password);
         }else{
             return redirect()->intended('/#popup2');
 
         }
+    }
+    public function managerLogin(Request $request){
+        $account = $request['account'];
+        $password = $request['pw'];
+        if($this->checkManager($account)){
+            return $this->loginManager($account,$password);
+        }else
+            return redirect()->intended('/#popup3');
     }
     private function checkUser($account){
         return !is_null(UserData::getUserId($account));
@@ -82,7 +88,7 @@ class LoginController extends Controller{
             $manager->setPw($allegedPw);
             Auth::guard('managers')->login($manager, true);
             if (Auth::guard('managers')->check()) {
-                return redirect()->intended('/');
+                return redirect()->intended('/management');
             }
         } else {
             return redirect()->intended('/#popup3');
