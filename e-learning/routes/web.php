@@ -15,6 +15,9 @@ Route::group(['middleware' =>[ 'web']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::post('/login','Auth\LoginController@Login')->name('login');
     Route::post('/logout','Auth\LoginController@Logout')->name('logout');
+    Route::post('/login','Auth\LoginController@Login');
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+    Route::post('/logout','Auth\LoginController@Logout');
 });
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course')->name('course');
