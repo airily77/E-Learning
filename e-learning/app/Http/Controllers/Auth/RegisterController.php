@@ -49,7 +49,7 @@ class RegisterController extends Controller{
         ]);
     }
     public function registerUser(Request $request){
-    
+
     }
     public function registerView(){
         return view('register');
