@@ -25,11 +25,12 @@
 
 
     <div class="col-md-1 col-lg-3">
-        @foreach($coursedata as $coursedatum)
+        @for($i = 0; $i<sizeof($coursedata);$i++)
+            @php $coursedatum = $coursedata[$i]@endphp
             <div class="well" id="well">
                 <h4>
-                    <div id="name"
-                         onclick="window.location='{{route('specific.course',[$coursedatum->title])}}'">  {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
+                    <div id="name" for="course">
+                        {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
                 </h4>
                 <div id="passed">
                    <!-- @foreach($usercoursedata as $usercoursedatum)
@@ -44,7 +45,9 @@
 
                 </div>
             </div>
-        @endforeach
-
+        @endfor 
+            <script type="text/javascript">
+            </script>
     </div>
 </div>
+<!-- include('specific-course',['exams'=>$specific[0]['exams'],'coursedata'=>$specific[0]['coursedata'],'userexamresults'=>$specific[0]['userexamresults']]) --!>
