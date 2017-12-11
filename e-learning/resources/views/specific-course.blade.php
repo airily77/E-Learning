@@ -26,7 +26,6 @@
 </style>
 
 
-@include('inc.course.banner2')
 <h1 id="header">{{$coursedata->title}}</h1>
 <h4 id="header">{{$coursedata->description}}</h4>
 
