@@ -6,6 +6,7 @@ use App\User;
 use database\connectors\CourseData;
 use database\connectors\ExamData;
 use \database\connectors\UserData;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller{
@@ -50,6 +51,13 @@ class CourseController extends Controller{
             $exams = ExamData::getExamsFromCourse($coursetitle);
             $userexamresults = UserData::getUserExamsFromCourse( $coursetitle,$userid);
             return ['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults];
+        }
+    }
+    public function oneCourse(Request $request){
+        if($request->ajax()){
+            $coursedata = $this->gatherSpecifiedCourseData($request->input('id'));
+            $view = view('specific-course',['coursedata'=>$coursedata['coursedata'],'exams'=>$coursedata['exams'],'userexamresults'=>$coursedata['userexamresults']]);
+            return response()->json($view->render());
         }
     }
     public function video($coursetitle){
