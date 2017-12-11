@@ -10,8 +10,16 @@ namespace App\Http\Controllers;
 
 
 class ManagerController extends Controller {
-
+    public function __construct(){
+        $this->middleware('manager');
+    }
     public function manager(){
         return view('management');
+    }
+    public function examCreation(){
+        return view('create-exam');
+    }
+    public function courseCreation(){
+        return view('create-course');
     }
 }

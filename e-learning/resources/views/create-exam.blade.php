@@ -37,17 +37,26 @@
 
                 <h3>Questions</h3>
                 <div id="questions">
-                    @include('inc.manager.exam.question')
-                    @include('inc.manager.exam.question')
-                    @include('inc.manager.exam.question')
+                    <input type="text" placeholder="Enter the question here" name="question">
+                    <input type="text" placeholder="Enter the question here" name="question">
+                    <input type="text" placeholder="Enter the question here" name="question">
                 </div>
                 <button type="button" onclick="createQuestion()">+</button>
-                <h3>Options</h3>
-                <div id="options">
-                    @include('inc.manager.exam.option')
-                    @include('inc.manager.exam.option')
-                    @include('inc.manager.exam.option')
-                </div>
+                <script>
+                    var parent = document.getElementById('questions');
+                    for(var i = 0;i<parent.childElementCount();i++){
+                        var optiondiv = document.createElement('div');
+                        optiondiv.setAttribute('name','options'+i);
+                        var h1 = document.createElement('h3');
+                        h1.innerHTML = "Options for question "+i;
+                        var option = document.createElement('input');
+                        for(var j = 0; 0 < 4;i++){
+                            option.setAttribute('placeholder','Enter the option here here');
+                            option.setAttribute('type','text');
+                            option.setAttribute('name','option');
+                        }
+                    }
+                </script>
             </form>
         <script>
             function createQuestion() {
