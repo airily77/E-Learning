@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware{
         'login',
         'logout',
         'exam/postExam',
+        'admin/login'
         'user/create/post',
         'course/content'
     ];

@@ -10,7 +10,8 @@ namespace App\Http\Controllers;
 
 
 class ManagerController extends Controller {
-    public function examCreation(){
-        return view('create-exam');
+
+    public function manager(){
+        return view('management');
     }
 }

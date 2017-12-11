@@ -44,18 +44,7 @@
         padding: 40px 174px;
         color: black;
     }
-    #create-user{
-        display: flex;
-        justify-content: center;
-        margin: 20px 0px;
-        border: solid 1px black;
-        font-size: larger;
-        border-radius: 5px;
-        background-color: #4caf50;
-        font-weight: bold;
-        padding: 40px 174px;
-        color: black;
-    }
+
 </style>
 
 <div class="well" id="upper">
@@ -69,5 +58,4 @@
         </div>
     </div>
 </div>
-<button id="create-exam" onclick="window.location='{{ route("examcreation") }}'"> Create a exam</button>
-<button id="create-user" onclick="window.location='{{ route("register-view") }}'"> Register a new user</button>
+<button id="create-exam" onclick="window.location='{{ route("management") }}'"> Manager page</button>
