@@ -37,7 +37,11 @@
 
 <title>News page</title><!-- //TODO Pull news header from DB-->
 
+<<<<<<< HEAD
 @include('inc.manager.banner')
+=======
+@include('inc.course.banner2')
+>>>>>>> 8b27577339f2b1175a5b2fc1a88b43e9e34f2034
 @include('inc.home.popup')
 <div class="container">
     <div class="well">
