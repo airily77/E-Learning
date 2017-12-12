@@ -23,6 +23,7 @@ class ManagerController extends Controller {
     public function courseCreation(){
         return view('create-course');
     }
+
     public function createExam(Request $request){
         dd($request->input());
     }

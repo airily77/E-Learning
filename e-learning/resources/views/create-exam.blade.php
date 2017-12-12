@@ -81,7 +81,7 @@
                             createComponentsForOptionDiv(0,questionnumber,optiondiv);
                         }else{
                             createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv);
-                        }
+                        }   
                     }
                     function createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv){
                         var option = document.createElement('input');
