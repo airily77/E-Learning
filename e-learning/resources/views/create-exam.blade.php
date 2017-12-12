@@ -69,30 +69,74 @@
                         parent.appendChild(optiondiv);
                         var addoptionbutton = document.createElement('button');
                         addoptionbutton.setAttribute('type','button');
-                        addoptionbutton.setAttribute('onclick','createOption(document.getElementById('+questionnumber+'))');
+                        addoptionbutton.setAttribute('onclick','addOption(document.getElementById('+questionnumber+'))');
                         addoptionbutton.innerHTML = "+";
                         optiondiv.appendChild(document.createElement('br'));
                         parent.appendChild(addoptionbutton);
                     }
-                    function createOption(optiondiv){
+                    function createOption(optiondiv,optionnumber,questionnumber){
+                        createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv);
+                    }
+                    function addOption(optiondiv){
                         var optionnumber = findOptionNumber(optiondiv);
-                        var questionnumber = optiondiv.getAttribute('id').replace( /^\D+/g, '');
+                        var questionnumber = getCurrentQuestionNum(optiondiv);
                         if(optionnumber == null){
+                            console.log('null');
                             createComponentsForOptionDiv(0,questionnumber,optiondiv);
                         }else{
                             createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv);
-                        }   
+                        }
                     }
                     function createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv){
                         var option = document.createElement('input');
                         option.setAttribute('placeholder', 'Enter the option here here');
                         option.setAttribute('type', 'text');
                         option.setAttribute('name', 'option'+optionnumber+'question'+questionnumber);
+                        var radioBtn = createRadioElement('radiobtn'+optionnumber+'question'+questionnumber,false);
                         optiondiv.appendChild(option);
+                        optiondiv.appendChild(radioBtn);
+                    }
+                    function getCurrentQuestionNum(optiondiv){
+                        var notparsed = optiondiv.getAttribute('name').replace( /[^\d.]/g,'');
+                        return parseInt(notparsed);
+                    }
+                    function createRadioElement( name, checked ) {
+                        var radioInput;
+                        try {
+                            var radioHtml = '<input type="radio" name="' + name + '"';
+                            if ( checked ) {
+                                radioHtml += ' checked="checked"';
+                            }
+                            radioHtml += '/>';
+                            radioInput = document.createElement(radioHtml);
+                        } catch( err ) {
+                            radioInput = document.createElement('input');
+                            radioInput.setAttribute('type', 'radio');
+                            radioInput.setAttribute('name', name);
+                            if ( checked ) {
+                                radioInput.setAttribute('checked', 'checked');
+                            }
+                        }
+
+                        return radioInput;
                     }
                     function findOptionNumber(optiondiv){
                         for(var i = optiondiv.childNodes.length-1; i > 0;i--){
                             const lastelement = optiondiv.childNodes.item(i);
+                            if(lastelement.nodeName=="INPUT"){
+                                if(parseInt(lastelement.getAttribute('name').match(/\d+/)[0])==1){
+                                    return 1;
+                                }else{
+                                    return parseInt(lastelement.getAttribute('name').match(/\d+/)[0])+1;
+                                }
+                            }
+                        }
+                    }
+                    function getLatestQuestionNum(){
+                        var questions = document.getElementById('questions');
+                        var length = questions.childNodes.length-1;
+                        for(var i = length;i>0;i--){
+                            var lastelement = questions.childNodes.item(i);
                             if(lastelement.nodeName=="INPUT"){
                                 return parseInt(lastelement.getAttribute('name').match(/\d+/)[0])+1;
                             }
