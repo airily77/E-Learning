@@ -1,4 +1,12 @@
 create table manager_role(
-	managerid int not null references manager(managerid),
-	roleid int not null references role(roleid)
-);
+	manager_id INT not null,
+	role_id INT not null,
+	INDEX manager_ind (manager_id),
+    FOREIGN KEY (manager_id)
+        REFERENCES manager(managerid)
+        ON DELETE CASCADE,
+    INDEX role_ind (role_id),
+    FOREIGN KEY (role_id)
+        REFERENCES role(roleid)
+        ON DELETE CASCADE
+)ENGINE=InnoDB;

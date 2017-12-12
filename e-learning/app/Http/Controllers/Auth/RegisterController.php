@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use database\connectors\UserData;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller{
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -20,23 +22,20 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
+    public function __construct(){
+        $this->middleware('managerdata');
     }
 
     /**
@@ -45,27 +44,30 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data){
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+    //TODO add user to course
+    public function registerUser(Request $request){
+        $password=$request->input('password');
+        $pw2=$request->input('password2');
+        if($password==$pw2){
+            $account = $request->input('account');
+            $username = $request->input('username');
+            $department = $request->input('department');
+            $status = $request->input('status');
+            $position = $request->input('position');
+            UserData::insertUser($account,$password,$status,$username,$department,$position);
+            return view('management');
+            //TODO alert successful
+        }else{
+            return view('register');
+        }
+    }
+    public function registerView(){
+        return view('register');
     }
 }
