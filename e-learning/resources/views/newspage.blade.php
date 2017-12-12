@@ -71,3 +71,4 @@
 
     <div id="richtext" style="display: none">@include('inc.news.richtexteditor')</div>
 
+</div>

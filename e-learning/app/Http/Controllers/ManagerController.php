@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 
 class ManagerController extends Controller {
     public function __construct(){
@@ -21,5 +22,9 @@ class ManagerController extends Controller {
     }
     public function courseCreation(){
         return view('create-course');
+    }
+
+    public function createExam(Request $request){
+        dd($request->input());
     }
 }

@@ -73,3 +73,4 @@
             </script>
     </div>
 </div>
+<!-- include('specific-course',['exams'=>$specific[0]['exams'],'coursedata'=>$specific[0]['coursedata'],'userexamresults'=>$specific[0]['userexamresults']]) --!>
