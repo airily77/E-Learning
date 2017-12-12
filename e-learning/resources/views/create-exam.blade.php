@@ -69,32 +69,26 @@
                         parent.appendChild(optiondiv);
                         var addoptionbutton = document.createElement('button');
                         addoptionbutton.setAttribute('type','button');
-                        console.log("questionumber"+questionnumber);
                         addoptionbutton.setAttribute('onclick','createOption(document.getElementById('+questionnumber+'))');
                         addoptionbutton.innerHTML = "+";
                         optiondiv.appendChild(document.createElement('br'));
                         parent.appendChild(addoptionbutton);
                     }
                     function createOption(optiondiv){
-                        console.log('create');
                         var optionnumber = findOptionNumber(optiondiv);
                         var questionnumber = optiondiv.getAttribute('id').replace( /^\D+/g, '');
-                        console.log("optiondiv length " + optiondiv.childNodes.length);
-                        console.log('option div '+ optiondiv);
-                        console.log(optionnumber);
                         if(optionnumber == null){
-                            var option = document.createElement('input');
-                            option.setAttribute('placeholder', 'Enter the option here here');
-                            option.setAttribute('type', 'text');
-                            option.setAttribute('name', 'option'+0+'question'+questionnumber);
-                            optiondiv.appendChild(option);
+                            createComponentsForOptionDiv(0,questionnumber,optiondiv);
                         }else{
-                            var option = document.createElement('input');
-                            option.setAttribute('placeholder', 'Enter the option here here');
-                            option.setAttribute('type', 'text');
-                            option.setAttribute('name', 'option'+optionnumber+'question'+questionnumber);
-                            optiondiv.appendChild(option);
+                            createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv);
                         }
+                    }
+                    function createComponentsForOptionDiv(optionnumber,questionnumber,optiondiv){
+                        var option = document.createElement('input');
+                        option.setAttribute('placeholder', 'Enter the option here here');
+                        option.setAttribute('type', 'text');
+                        option.setAttribute('name', 'option'+optionnumber+'question'+questionnumber);
+                        optiondiv.appendChild(option);
                     }
                     function findOptionNumber(optiondiv){
                         for(var i = optiondiv.childNodes.length-1; i > 0;i--){
@@ -112,7 +106,6 @@
         <script>
             function createQuestion() {
                 var questionnumber = findQuestionNumber();
-                console.log('questionnumber ='+questionnumber);
                 var parent = document.getElementById('questions');
                 var question = document.createElement('input');
                 question.setAttribute('placeholder', 'Enter the question here');
