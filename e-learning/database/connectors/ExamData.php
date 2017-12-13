@@ -73,13 +73,19 @@ class ExamData{
     }
     public static function getExams(){
         try{
-            $results = DB::select('select * from exam;');
-            foreach ($results as $result){
-                self::decodeJsonIn($result);
-            }
-            var_dump($results);
+            $results = DB::select('select title,questions,options,correctanwsers,creationtime,updatetime,medianscore,donenum from exam;');
+            return $results;
         }catch (\Exception $exception){
             echo($exception);
+        }
+    }
+    public static function removeExam($title){
+        DB::beginTransaction();
+        try{
+            DB::delete('delete from exam where title = ?',[$title]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
         }
     }
     public static function getExamsFromCourse($courseidortitle){

@@ -64,4 +64,13 @@ class ManagerController extends Controller {
         UserData::deleteUser($id);
         return redirect()->intended('/user/panel');
     }
+    public function examPanel(){
+        $exams = ExamData::getExams();
+        return view('inc.manager.exam-panel',['exams'=>$exams]);
+    }
+    public function removeExam(Request $request){
+        $title =$request->input('title');
+        ExamData::removeExam($title);
+        return redirect()->intended('/exam/panel');
+    }
 }
