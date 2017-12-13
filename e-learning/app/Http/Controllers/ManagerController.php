@@ -78,6 +78,21 @@ class ManagerController extends Controller {
         UserData::deleteUser($id);
         return redirect()->intended('/user/panel');
     }
+    public function coursePanel(){
+        $courses = CourseData::getCourses();
+        for($i = 0; $i < sizeof($courses);$i++){
+            $course = $courses[$i];
+            $classid = $course->class_id;
+            $course->class_id = CourseData::getClass($classid)->classname;
+            $courses[$i] = $course;
+        }
+        return view('inc.manager.course-panel',['courses'=>$courses]);
+    }
+    public function removeCourse(Request $request){
+        $title = $request->input('title');
+        CourseData::removeCourse($title);
+        return redirect()->intended('/panel/course');
+    }
     public function examPanel(){
         $exams = ExamData::getExams();
         return view('inc.manager.exam-panel',['exams'=>$exams]);

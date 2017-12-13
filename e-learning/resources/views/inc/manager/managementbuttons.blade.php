@@ -30,7 +30,7 @@
 </style>
 <div class="col-lg-2">
 <div><h3 onclick="window.location='{{route('user-panel')}}'" id="row1">User manager</h3></div>
-<div><h3 id="row2">Course manager</h3></div>
+<div><h3 onclick="window.location='{{route('course-panel')}}'"id="row2">Course manager</h3></div>
 <div><h3 onclick="window.location='{{route('exam-panel')}}'" id="row3">Exam manager</h3></div>
 <div><h3 id="row4">Picture manager</h3></div>
 <div><h3 id="row5">News manager</h3></div>

@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware{
         'create/exam/post',
         'create/course/post',
         'user/remove',
-        'exam/remove'
+        'exam/remove',
+        'remove/course'
     ];
 }
