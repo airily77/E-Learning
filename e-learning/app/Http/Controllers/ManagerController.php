@@ -37,7 +37,8 @@ class ManagerController extends Controller {
                 array_push($questions,$data['question'.$i]);
                 $index = $i + 1;
                 if(isset($data['radiobtnquestion'.$index])){
-                    array_push($correctanwsers,$data['radiobtnquestion'.$index]);
+                    $correctanswerid =$data['radiobtnquestion'.$index];
+                    array_push($correctanwsers,$data['option'.$correctanswerid.'question'.$index]);
                 }
                 $optionsforquestion = array();
                 for($j = 0; $j < sizeof($data);$j++) {
