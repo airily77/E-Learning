@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use database\connectors\ExamData;
 use Illuminate\Http\Request;
 use database\connectors\UserData;
+use database\connectors\CourseData;
 
 class ManagerController extends Controller {
     public function __construct(){
@@ -25,7 +26,20 @@ class ManagerController extends Controller {
     public function courseCreation(){
         return view('create-course');
     }
-
+    public function createCourse(Request $request){
+        $data = $request->input();
+        $title = $data['title'];
+        $class = $data['class'];
+        $description = $data['description'];
+        $videoimg = $data['videoimg'];
+        $videopath = $data['videopath'];
+        $videotime = $data['videotime'];
+        $showimg= $data['showimg'];
+        $isshow = $data['isshow'];
+        $istesting = $data['istesting'];
+        CourseData::insertCourse($title,$description,$videoimg,$videopath,$videotime,$showimg,$class,$istesting,$isshow);
+        return redirect()->intended('/management');
+    }
     public function createExam(Request $request){
         $data = $request->input();
         $title = $data['title'];
