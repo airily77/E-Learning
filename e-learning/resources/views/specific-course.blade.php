@@ -1,43 +1,40 @@
 <!-- Extends HTML structure from layouts/app.blade -->
 @extends('layouts.app')
+@include('inc.home.popup')
 <title>{{$coursedata->title}}</title>
 
 <style>
 
+    #video {
+        float: right;
+        margin-top: -250px;
+        margin-right: 150px;
+    }
 
-    .col-lg-5{
+    #header {
         text-align: center;
-        align-content: 
+        color: black;
+    }
+
+    #exams:hover {
+        text-decoration-line: underline;
+    }
+
+    #exams{
+        padding-top: 10px;
     }
 
 
-    #header{
-    text-align: center;
-    color: black;
-}
-
- #exams:hover{
-     text-decoration-line: underline;
- }
-
-
-
-
 </style>
+<div class="col-lg-9 col-md-6">
+    <div class="well">
+        <h1 id="header">{{$coursedata->title}}</h1>
+        <h4 id="header">{{$coursedata->description}}</h4>
 
 
-<h1 id="header">{{$coursedata->title}}</h1>
-<h4 id="header">{{$coursedata->description}}</h4>
+        <div class="container">
 
-<div class="container">
-<div class="well">
-<div class="container">
-
-
-
-        <div class="col-lg-3">
-
-        <h3>Course Exams</h3>
+            <h3>Course Exams</h3>
             @for($i=0;$i<sizeof($exams);$i++)
                 @php $exam = $exams[$i] @endphp
                 <div id="exam" onclick="window.location='{{route('exam',[$coursedata->title,$exam->title])}}'">
@@ -51,17 +48,18 @@
                     @endif
                 </div>
             @endfor
-            @include('inc.home.popup')
+
 
         </div>
 
 
-    <div id="video" class="col-lg-5">
-        <h3>Course Video</h3>
-        <a onclick="window.location='{{route('video',$coursedata->title)}}'"><div class="link"></div><img src="{{$coursedata->videoimg}}" width="500" height="auto" style="border:3px solid black"></a>
+        <div id="video" class="col-lg-4">
+            <h3>Course Video</h3>
+            <a onclick="window.location='{{route('video',$coursedata->title)}}'">
+                <div class="link"></div>
+                <img src="{{$coursedata->videoimg}}" width="300" height="auto" style="border:3px solid black"></a>
 
 
+        </div>
     </div>
-    </div>
-</div>
 </div>

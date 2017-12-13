@@ -32,18 +32,15 @@
                         {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
                 </h4>
                 <div id="passed">
-                <!-- @foreach($usercoursedata as $usercoursedatum)
-                    @if($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==1)
-                        @include('inc.course.passed')
-                    @elseif($usercoursedatum->course_id==$coursedatum->courseid && $usercoursedatum->status==0)
-                        @include('inc.course.progress')
-                        < img src="{{$coursedatum->videoimg}}" alt="NO PHOTO" width="auto" height="35px">
-                @endif
-                @endforeach -->
+
                 </div>
             </div>
         @endfor
-            <meta id="token" name="token" content="{ { csrf_token() } }">
+    </div>
+</div>
+
+
+<meta id="token" name="token" content="{ { csrf_token() } }">
             <div id="more-info"></div>
             <script>
                 $(document).ready(function(){
@@ -71,6 +68,5 @@
                     });
                 });
             </script>
-    </div>
-</div>
+
 <!-- include('specific-course',['exams'=>$specific[0]['exams'],'coursedata'=>$specific[0]['coursedata'],'userexamresults'=>$specific[0]['userexamresults']]) --!>
