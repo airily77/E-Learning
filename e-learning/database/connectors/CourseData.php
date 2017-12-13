@@ -34,7 +34,7 @@ class CourseData{
             if(is_numeric($idortitle)) return DB::select('select * from course where courseid = ?',[$idortitle])[0];
             else if(is_string($idortitle)) return DB::select('select * from course where title = ?',[$idortitle])[0];
         }catch(\Exception $exception){
-            var_dump($exception);
+            dd($exception);
         }
     }
     public static function getClass($idortitle){

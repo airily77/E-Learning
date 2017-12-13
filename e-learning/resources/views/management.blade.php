@@ -42,8 +42,6 @@
     }
 
 </style>
-
-@include('inc.home.banner')
 <div class="col-lg-2">
 
 

@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\DB;
 use database\connectors\Question;
 
 class ExamData{
-    public static function insertExam($courseid, $testingid, $classid, $title, $questions, $options, $correctanwsers){
+    public static function insertExam($coursetitle,$title, $questions, $options, $correctanwsers){
         $generated = self::generateJson($questions,$options,$correctanwsers);
         if(is_null($generated))return;
         DB::beginTransaction();
         try{
+            $courseid = CourseData::getCourseId($coursetitle);
+            $classid = self::getClassIdByCoursetitle($coursetitle);
+            $testingid = self::getTestingIdByCourseId(CourseData::getCourseId($coursetitle));
             DB::insert('insert into exam (course_id, testing_id, class_id, title, questions, options, correctanwsers, creationtime, updatetime,donenum) 
             VALUES (?,?,?,?,?,?,?,now(),now(),0)',[$courseid,$testingid,$classid,$title,$generated->question,$generated->options,$generated->correctanwser]);
             DB::commit();
@@ -25,8 +28,24 @@ class ExamData{
             DB::rollBack();
         }
     }
+    private static function getClassIdByCoursetitle($title){
+        $course = CourseData::getCourse($title);
+        return $course->class_id;
+    }
+    private static function getTestingIdByCourseId($courseid){
+        return self::getTesting($courseid)->testingid;
+    }
+    public static function getTesting($courseid){
+        try{
+            return DB::select('select * from testing where course_id = ?',[$courseid])[0];
+        }catch (\Exception $exception){
+        }
+    }
     private static function generateJson($questions,$options,$correctanwsers){
-        if(!(sizeof($questions)==sizeof($correctanwsers))) return; //TODO This line could cause some errors in the future if someone changes of the question and correct system works.
+        if(!(sizeof($questions)==sizeof($correctanwsers))) {
+            dd('this ',sizeof($questions),sizeof($correctanwsers));
+            return;
+        } //TODO This line could cause some errors in the future if someone changes of the question and correct system works.
         $questionsjson= json_encode($questions);
         $optionsjson = json_encode($options);
         $correctanwsersjson = json_encode($correctanwsers);
