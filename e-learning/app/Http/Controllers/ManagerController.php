@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use database\connectors\ExamData;
+use database\connectors\ScrollimageData;
 use Illuminate\Http\Request;
 use database\connectors\UserData;
 use database\connectors\CourseData;
@@ -125,5 +126,25 @@ class ManagerController extends Controller {
         $title = $request->input('title');
         ArticleData::removeArticle($title);
         return redirect()->intended('/news/panel');
+    }
+    public function imagePanel(){
+        $images = ScrollimageData::getImages();
+        return view('inc.manager.image-panel',['images'=>$images]);
+    }
+    public function createImageview(){
+        return view('create-image');
+    }
+    public function createImage(Request $request){
+        $data = $request->input();
+        $imagepath = $data['imagepath'];
+        $title = $data['title'];
+        $isshow = $data['isshow'];
+        ScrollimageData::insertImage($imagepath,$title,$isshow);
+        return redirect()->intended('/scrollimage/panel');
+    }
+    public function removeImage(Request $request){
+        $title = $request->input('title');
+        ScrollimageData::removeImage($title);
+        return redirect()->intended('/scrollimage/panel');
     }
 }
