@@ -20,7 +20,11 @@ class UserData{
             DB::rollBack();
         }
     }
-
+    public static function getUsers(){
+        try{
+            return DB::select('select account,username,department,position,lastloginip,loginnum,createtime,updatetime from user;');
+        }catch (\Exception $exception){}
+    }
     public static function insertUserRequired($account, $password, $status)
     {
         DB::beginTransaction();
@@ -181,14 +185,13 @@ class UserData{
         }
     }
 
-    public static function deleteUser($id, $password){
+    public static function deleteUser($id){
         DB::beginTransaction();
         try {
-            if (self::checkPassword($id, $password)) {
-                DB::delete('DELETE FROM user WHERE userid = ?', [$id]);
-                DB::commit();
-            }
+            DB::delete('DELETE FROM user WHERE userid = ?', [$id]);
+            DB::commit();
         } catch (\Exception $exception) {
+            dd($exception);
             DB::rollBack();
         }
     }

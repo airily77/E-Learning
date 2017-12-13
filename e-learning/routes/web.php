@@ -32,6 +32,8 @@ Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/exam/creation','ManagerController@examCreation')->name('examcreation');
     Route::post('create/exam/post','ManagerController@createExam')->name('create-exam-post');
     Route::get('/create/course','ManagerController@courseCreation')->name('coursecreation');
+    Route::get('/user/panel','ManagerController@userPanel')->name('user-panel');
+    Route::post('/user/remove','ManagerController@removeUser')->name('remove-user');
     Route::get('/user/create','Auth\RegisterController@registerView')->name('register-view');
     Route::post('/user/create/post','Auth\RegisterController@registerUser')->name('create-user');
 });

@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use database\connectors\ExamData;
 use Illuminate\Http\Request;
+use database\connectors\UserData;
 
 class ManagerController extends Controller {
     public function __construct(){
@@ -52,5 +53,15 @@ class ManagerController extends Controller {
         }
         ExamData::insertExam($course,$title,$questions,$options,$correctanwsers);
         return view('management');
+    }
+    public function userPanel(){
+        $users = UserData::getUsers();
+        return view('inc.manager.user-panel',['users'=>$users]);
+    }
+    public function removeUser(Request $request){
+        $account = $request->input('account');
+        $id = UserData::getUserId($account);
+        UserData::deleteUser($id);
+        return redirect()->intended('/user/panel');
     }
 }
