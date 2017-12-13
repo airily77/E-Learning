@@ -24,6 +24,11 @@ class CourseData{
             DB::rollBack();
         }
     }
+    public static function getCourses(){
+        try{
+            return DB::select('select title,description,videopath,videoimg,videotime,showimg,learnnum,viewnum,istesting,isshow,creationtime,updatetime,class_id from course');
+        }catch (\Exception $exception){}
+    }
     public static function getCourseId($title){
         try{
             return DB::select('select courseid from course where title = ?',[$title])[0]->courseid;
@@ -100,5 +105,15 @@ class CourseData{
             $course = self::getCourse($title);
             return $course->videoimg;
         }catch (\Exception $exception){}
+    }
+    public static function removeCourse($title){
+        DB::beginTransaction();
+        try{
+            DB::delete('delete from course where title = ?',[$title]);
+            DB::commit();
+        }catch (\Exception $exception){
+            dd($exception,'?');
+            DB::rollBack();
+        }
     }
 }

@@ -61,7 +61,7 @@ class RegisterController extends Controller{
             $status = $request->input('status');
             $position = $request->input('position');
             UserData::insertUser($account,$password,$status,$username,$department,$position);
-            return view('management');
+            return redirect()->intended('/user/panel');
             //TODO alert successful
         }else{
             return view('register');

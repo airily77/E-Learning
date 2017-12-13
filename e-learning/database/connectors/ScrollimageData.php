@@ -22,6 +22,21 @@ class ScrollimageData{
             DB::rollBack();
         }
     }
+    public static function removeImage($title){
+        DB::beginTransaction();
+        try{
+            DB::delete('delete from scrollimage where title = ?',[$title]);
+            DB::commit();
+        }catch (\Exception $exception){
+            dd($exception);
+            DB::rollBack();
+        }
+    }
+    public static function getImages(){
+        try{
+            return DB::select('select img_name,img_type,img_size,title,isshow,creationtime,updatetime from scrollimage');
+        }catch (\Exception $exception){}
+    }
     public static function updateIsShow($isshow,$title){
         DB::beginTransaction();
         try{

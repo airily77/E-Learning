@@ -29,11 +29,26 @@
     <div class="col-sm-3"></div>
     <div class="col-sm-9" id="center">
         <h1>Create a Course</h1>
-            <form action="" method="post">
+            <form action="{{route('create-course-post')}}" method="post">
                 <h3>Title</h3>
-                <input type="text" placeholder="Enter the title" name="title">
-                <h3>Course name</h3>
-                <input type="text" placeholder="Enter the courses name" name="course">
+                <input type="text" placeholder="Enter the title (Courses name)" name="title" required>
+                <h3>Class name</h3>
+                <input type="text" placeholder="Enter the courses class" name="class" required>
+                <h3>Description</h3>
+                <input type="text" placeholder="Enter the courses description" name="description" required>
+                <h3>Video Imgage</h3>
+                <input type="text" placeholder="Enter the video image" name="videoimg" required>
+                <h3>Video Path</h3>
+                <input type="text" placeholder="Enter the path to the video" name="videopath" required>
+                <h3>Video Time</h3>
+                <input type="text" placeholder="Enter the video time" name="videotime" required>
+                <h3>Show Image</h3>
+                <input type="text" placeholder="Enter show image" name="showimg" required>
+                <h3>Is Testing</h3>
+                <input type="text" placeholder="Enter 1 if testing exists,0 if testing doesn't exist" name="istesting" required>
+                <h3>Is Show</h3>
+                <input type="text" placeholder="Enter the courses name" name="isshow" required>
+                <button type="submit">Submit</button>
             </form>
     </div>
 </div>

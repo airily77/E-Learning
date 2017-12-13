@@ -2,4 +2,13 @@
 @extends('layouts.app')
 <title>Management</title>
 @include('inc.manager.banner')
-@include('inc.manager.managerpage')
+<style>
+
+
+    .col-lg-10 {
+
+        color:;
+
+    }
+</style>
+@include('inc.manager.managementbuttons')

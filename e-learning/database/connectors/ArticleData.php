@@ -22,6 +22,18 @@ class ArticleData{
             DB::rollBack();
         }
     }
+    public static function removeArticle($title){
+        DB::beginTransaction();
+        try{
+            DB::delete('delete from article where title = ? ',[$title]);
+            DB::commit();
+        }catch (\Exception $exception){}
+    }
+    public static function getArticles(){
+        try{
+            return DB::select('select title,content,source,keyword,tags,status,clicknum,creationtime,updatetime from article');
+        }catch (\Exception $exception){}
+    }
     public static function getActiveArticles(){
         try{
             $results = DB::select('select * from article where status > 0');
