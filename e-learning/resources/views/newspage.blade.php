@@ -37,7 +37,7 @@
 
 <title>News page</title><!-- //TODO Pull news header from DB-->
 
-@include('inc.course.banner2')
+@include('inc.manager.banner')
 @include('inc.home.popup')
 <div class="container">
     <div class="well">
@@ -71,3 +71,4 @@
 
     <div id="richtext" style="display: none">@include('inc.news.richtexteditor')</div>
 
+</div>

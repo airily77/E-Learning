@@ -29,6 +29,7 @@
         background: #2b2b2b;
     }
 </style>
+@include('inc.manager.banner')
 <div class="row" >
     <div class="col-sm-3"></div>
     <div class="col-sm-9" id="center">

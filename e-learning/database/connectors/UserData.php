@@ -8,12 +8,12 @@ use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\Nullable;
 
 class UserData{
-    public static function insertUserHash($account, $password, $status){
+    public static function insertUser($account, $password, $status,$username,$department,$position){
         DB::beginTransaction();
         try {
             $hashed = Hash::make($password);
-            DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status,request()->ip()]);
+            DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime,username,department,position)
+            VALUES (?,?,?,now(),?,1,now(),now(),?,?,?)', [$account, $hashed, $status,request()->ip(),$username,$department,$position]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
@@ -21,12 +21,13 @@ class UserData{
         }
     }
 
-    public static function insertUser($account, $password, $status)
+    public static function insertUserRequired($account, $password, $status)
     {
         DB::beginTransaction();
         try {
+            $hashed = Hash::make($password);
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime)
-            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $password, $status,request()->ip()]);
+            VALUES (?,?,?,now(),?,1,now(),now())', [$account, $hashed, $status,request()->ip()]);
             DB::commit();
         } catch (\Exception $exception) {
             echo($exception);
