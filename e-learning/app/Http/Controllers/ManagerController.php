@@ -12,6 +12,7 @@ use database\connectors\ExamData;
 use Illuminate\Http\Request;
 use database\connectors\UserData;
 use database\connectors\CourseData;
+use database\connectors\ArticleData;
 
 class ManagerController extends Controller {
     public function __construct(){
@@ -101,5 +102,28 @@ class ManagerController extends Controller {
         $title =$request->input('title');
         ExamData::removeExam($title);
         return redirect()->intended('/exam/panel');
+    }
+    public function newsPanel(){
+        $news = ArticleData::getArticles();
+        return view('inc.manager.news-panel',['news'=>$news]);
+    }
+    public function createArcView(){
+        return view('create-news');
+    }
+    public function createArticle(Request $request){
+        $data = $request->input();
+        $title = $data['title'];
+        $content = $data['content'];
+        $source = $data['source'];
+        $keyword = $data['keyword'];
+        $tags = $data['tags'];
+        $status = $data['status'];
+        ArticleData::insertArticle($title,$content,'','',$source,$keyword,$tags,$status);
+        return redirect()->intended('/news/panel');
+    }
+    public function removeArticle(Request $request){
+        $title = $request->input('title');
+        ArticleData::removeArticle($title);
+        return redirect()->intended('/news/panel');
     }
 }

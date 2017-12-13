@@ -28,6 +28,10 @@ Route::group(['middleware' => ['web','userdata']], function () {
 });
 Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/news', 'NewsController@index')->name('newspage');
+    Route::get('/news/panel','ManagerController@newsPanel')->name('news-panel');
+    Route::get('/news/create','ManagerController@createArcView')->name('createarc-view');
+    Route::post('/news/create/post','ManagerController@createArticle')->name('create-arc-post');
+    Route::post('/news/remove','ManagerController@removeArticle')->name('remove-arc');
     Route::get('/management','ManagerController@manager')->name('management');
     Route::get('/exam/panel','ManagerController@examPanel')->name('exam-panel');
     Route::get('/exam/creation','ManagerController@examCreation')->name('examcreation');
