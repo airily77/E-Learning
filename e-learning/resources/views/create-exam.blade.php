@@ -49,6 +49,7 @@
             <button type="button" onclick="createQuestion()">+</button>
             <div id="options">
                 <script>
+                    //TODO at least one radio has to be selected for each question
                     var parent = document.getElementById('options');
                     var questions = document.getElementById('questions');
                     var count = questions.childElementCount;
@@ -92,7 +93,7 @@
                         option.setAttribute('placeholder', 'Enter the option here here');
                         option.setAttribute('type', 'text');
                         option.setAttribute('name', 'option'+optionnumber+'question'+questionnumber);
-                        var radioBtn = createRadioElement('radiobtn'+optionnumber+'question'+questionnumber,false);
+                        var radioBtn = createRadioElement('radiobtnquestion'+questionnumber,false,optionnumber);
                         optiondiv.appendChild(option);
                         optiondiv.appendChild(radioBtn);
                     }
@@ -100,7 +101,7 @@
                         var notparsed = optiondiv.getAttribute('name').replace( /[^\d.]/g,'');
                         return parseInt(notparsed);
                     }
-                    function createRadioElement( name, checked ) {
+                    function createRadioElement( name, checked ,optionnumber) {
                         var radioInput;
                         try {
                             var radioHtml = '<input type="radio" name="' + name + '"';
@@ -113,6 +114,7 @@
                             radioInput = document.createElement('input');
                             radioInput.setAttribute('type', 'radio');
                             radioInput.setAttribute('name', name);
+                            radioInput.setAttribute('value',optionnumber);
                             if ( checked ) {
                                 radioInput.setAttribute('checked', 'checked');
                             }
