@@ -37,7 +37,7 @@ class ExampleTest extends TestCase{
         echo(request()->session()->pull('browser'));
     }*/
     public function testBasicExample(){
-        ArticleData::insertArticle('家庭作业很有趣','家庭作业是有趣的，有益的','学校','','','school','学校',1);
+        UserData::updateInformationByAccount('pekeas','new',null,null,null);
     }
 
     public static function TestTesting(){

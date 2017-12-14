@@ -36,6 +36,7 @@
             "app/Http/Controllers/HomeController.php",
             "app/Http/Controllers/CourseController.php",
             "app/Http/Controllers/ManagerController.php",
+            "app/Http/Controllers/UserController.php",
             "app/Extensions/UserDataProvider.php",
             "app/Extensions/ManagerDataProvider.php",
             "app/Extensions/Manager.php",

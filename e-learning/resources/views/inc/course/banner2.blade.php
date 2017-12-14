@@ -44,7 +44,7 @@
 
     <div class="col-lg-2"><a href="/course"><div class="link">Course Center</div></a></div>
 
-    <div class="col-lg-2"><a href="/video"><div class="link">Video</div></a></div>
+    <div class="col-lg-2"><a href="/user/settings"><div class="link">Settings</div></a></div>
 
     <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
 

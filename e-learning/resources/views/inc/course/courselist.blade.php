@@ -30,7 +30,7 @@
     <div class="col-md-1 col-lg-3">
         @for($i = 0; $i<sizeof($coursedata);$i++)
             @php $coursedatum = $coursedata[$i]@endphp
-            <div class="well" id="{{$coursedatum->title}}" name="clickable" value="{{$i}}">
+            <div class="well">
                 <h4>
                     <div class="title" id="{{$coursedatum->title}}">
                         {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>

@@ -37,7 +37,7 @@
 
     .col-lg-10 {
 
-        color:Black;
+        color: Black;
 
     }
 
@@ -49,37 +49,39 @@
         <div class="well">
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
-                    <tr>
-                        <th>Account</th>
-                        <th>Username</th>
-                        <th>Department</th>
-                        <th>Position</th>
-                        <th>Lastloginip</th>
-                        <th>Loginnum</th>
-                        <th>create time</th>
-                        <th>update time</th>
-                        <td><button onclick="window.location='{{route('register-view')}}'">Add</button></td>
-                    </tr>
+                <tr>
+                    <th>Account</th>
+                    <th>Username</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Lastloginip</th>
+                    <th>Loginnum</th>
+                    <th>create time</th>
+                    <th>update time</th>
+                    <td>
+                        <button onclick="window.location='{{route('register-view')}}'">Add</button>
+                    </td>
+                </tr>
                 </thead>
                 @foreach($users as $user)
-                        <tfoot>
-                            <tr>
-                                <form action="{{route('remove-user')}}" method="post">
-                                    <input type="hidden" id="account" name="account" value="{{$user->account}}">
-                                    @foreach($user as $piece)
-                                        @if(empty($piece))
-                                            <th>Null</th>
-                                        @else
-                                            <th>{{$piece}}</th>
-                                        @endif
-                                    @endforeach
-                                    <td><button type="submit">Remove</button></td>
-                                </form>
-                            </tr>
-                        </tfoot>
+                    <tfoot>
+                    <tr>
+                        @foreach($user as $piece)
+                            @if(empty($piece))
+                                <th>Null</th>
+                            @else
+                                <th>{{$piece}}</th>
+                            @endif
+                        @endforeach
+                        <form action="{{route('remove-user')}}" method="post">
+                            <input type="hidden" id="account" name="account" value="{{$user->account}}">
+                            <td><button type="submit">Remove</button></td>
+                        </form>
+                    </tr>
+                    </tfoot>
                 @endforeach
             </table>
-            </div>
         </div>
     </div>
+</div>
 </div>

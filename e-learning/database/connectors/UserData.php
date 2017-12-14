@@ -152,13 +152,24 @@ class UserData{
             DB::rollBack();
         }
     }
-    public static function updateInformationByAccount($accountname,$department,$position,$status){
+    public static function updateInformationByAccount($accountname,$username,$department,$position,$status){
         if(!is_null($department) && !empty($department))
             self::updateDepartment($accountname,$department);
+        if(!is_null($accountname) && !empty($username))
+            self::updateUsername($username,$accountname);
         if(!is_null($position) && !empty($position))
             self::updatePosition($accountname,$position);
         if(!is_null($status) && !empty($status))
             self::updateStatus($accountname,$status);
+    }
+    public static function updateUsername($username,$accountname){
+        DB::beginTransaction();
+        try{
+            DB::update('update user set username = ? where account =?',[$username,$accountname]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
     }
     public static function updatePassword($id, $password, $newpassword)
     {

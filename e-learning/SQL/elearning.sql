@@ -6,6 +6,10 @@
   SET default_storage_engine=INNODB;
   CREATE DATABASE IF NOT EXISTS `elearning` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
   USE `elearning`;
+  --CREATE USER 'useraccount'@'localhost' IDENTIFIED BY 'password';
+  --REVOKE ALL PRIVILEGES ON *.* FROM 'useraccount'@'localhost'; REVOKE GRANT OPTION ON *.* FROM 'useraccount'@'localhost'; 
+  --GRANT SELECT, INSERT,DELETE, UPDATE, INDEX, ALTER, EVENT, TRIGGER ON *.* TO 'useraccount'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
@@ -268,7 +272,14 @@ CREATE TABLE IF NOT EXISTS `manager` (
   `loginnum` int(11) NOT NULL,
   PRIMARY KEY (`managerid`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `manager`
+--
+
+INSERT INTO `manager` (`managerid`, `account`, `password`, `status`, `creationtime`, `updatetime`, `creationip`, `lastlogintime`, `lastloginip`, `loginnum`) VALUES
+(1, 'this', '$2y$10$gVqc.TAucOMUL5lkevJ22OhUe4TBTjnb8.YE12co9rBy50GYTMWd6', 1, '2017-12-06 16:25:14', '2017-12-06 16:25:14', '127.0.0.1', '2017-12-14 15:46:41', '127.0.0.1', 37);
 
 --
 -- Triggers `manager`
@@ -298,9 +309,10 @@ CREATE TABLE IF NOT EXISTS `manager_loginlog` (
   `browser` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`logid`),
   KEY `manager_ind` (`manager_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Dumping data for table `manager_loginlog`
 -- Triggers `manager_loginlog`
 --
 DROP TRIGGER IF EXISTS `update_logintime`;
@@ -327,6 +339,13 @@ CREATE TABLE IF NOT EXISTS `manager_role` (
   KEY `role_ind` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `manager_role`
+--
+
+INSERT INTO `manager_role` (`manager_id`, `role_id`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -340,8 +359,15 @@ CREATE TABLE IF NOT EXISTS `role` (
   `creationtime` datetime NOT NULL,
   `updatetime` datetime NOT NULL,
   PRIMARY KEY (`roleid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`roleid`, `rolename`, `creationtime`, `updatetime`) VALUES
+(1, '测试管理员', '2017-11-09 07:56:02', '2017-11-09 07:56:02'),
+(2, '综合管理员', '2017-11-09 10:26:03', '2017-11-09 10:26:03');
 -- --------------------------------------------------------
 
 --
