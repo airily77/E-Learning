@@ -64,7 +64,7 @@
                         <tfoot>
                             <tr>
                                 <form action="{{route('remove-image')}}" method="post">
-                                    <input type="hidden" name="title" value="{{$image->title}}">
+                                    <input type="hidden"    name="title" value="{{$image->title}}">
                                     @foreach($image as $piece)
                                         @if(empty($piece))
                                             <th>Null</th>

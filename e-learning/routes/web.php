@@ -24,7 +24,7 @@ Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course/video/{coursetitle}','CourseController@video')->name('video');
     Route::get('/exam/{coursetitle}/{examtitle}','ExamController@index')->name('exam');
     Route::post('/exam/postExam','ExamController@postExam')->name('postExam');
-    Route::post('/course/content','CourseController@oneCourse')->name('getcourse');
+    Route::post('/course/content/{data}','CourseController@oneCourse')->name('getcourse');
 });
 Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/management','ManagerController@manager')->name('management');
