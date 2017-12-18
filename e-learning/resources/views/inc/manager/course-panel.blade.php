@@ -84,6 +84,7 @@
                         </tfoot>
                 @endforeach
             </table>
+            @include('inc.manager.usertocourse')
             </div>
         </div>
     </div>

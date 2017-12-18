@@ -26,7 +26,10 @@ Route::group(['middleware' => ['web','userdata']], function () {
     Route::post('/exam/postExam','ExamController@postExam')->name('postExam');
     Route::post('/course/content/{data}','CourseController@oneCourse')->name('getcourse');
     Route::get('/user/settings','UserController@userSettings')->name('user-settings');
-    Route::post('user/settings/post','UserController@updateSettings')->name('user-settings-post');
+    Route::post('user/information/post','UserController@updateSettings')->name('user-settings-post');
+    Route::get('/user/information','UserController@informationView')->name('user-information');
+    Route::get('/user/changepassword','UserController@changePasswordView')->name('user-changepassword');
+    Route::post('/user/changepassword/post','UserController@changePassword')->name('user-changepassword-post');
 });
 Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/management','ManagerController@manager')->name('management');
@@ -51,6 +54,7 @@ Route::group(['middleware' => ['web','managerdata']], function () {
     Route::post('/user/remove','ManagerController@removeUser')->name('remove-user');
     Route::get('/user/create','Auth\RegisterController@registerView')->name('register-view');
     Route::post('/user/create/post','Auth\RegisterController@registerUser')->name('create-user');
+    Route::post('/user/tocourse','ManagerController@userToCourse')->name('usertocourse');
 
     Route::get('/scrollimage/panel','ManagerController@imagePanel')->name('image-panel');
     Route::get('/scrollimage/create/view','ManagerController@createImageview')->name('create-image-view');

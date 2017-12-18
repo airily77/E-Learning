@@ -442,6 +442,7 @@ CREATE TRIGGER `ins_loginlog_user` AFTER INSERT ON `user` FOR EACH ROW begin
 $$
 DELIMITER ;
 
+
 -- --------------------------------------------------------
 
 --
@@ -498,7 +499,15 @@ CREATE TABLE IF NOT EXISTS `user_loginlog` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
-
+DROP TRIGGER IF EXISTS `update_logintime_user`;
+DELIMITER $$
+CREATE TRIGGER `update_logintime_user` AFTER INSERT ON `user_loginlog` FOR EACH ROW BEGIN
+  IF @disable_update_logintime_user IS NULL THEN
+  update user set lastlogintime = NEW.logintime,lastloginip = new.loginip, loginnum = loginnum + 1 where userid = new.user_id;
+END IF;
+END
+$$
+DELIMITER ;
 --
 -- Table structure for table `user_testing`
 --

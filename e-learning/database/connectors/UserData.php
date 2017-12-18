@@ -12,11 +12,12 @@ class UserData{
         DB::beginTransaction();
         try {
             $hashed = Hash::make($password);
+            DB::statement('set @disable_update_logintime_user = 1');
             DB::insert('INSERT INTO user (account,password,status,lastlogintime,lastloginip,loginnum,createtime,updatetime,username,department,position)
             VALUES (?,?,?,now(),?,1,now(),now(),?,?,?)', [$account, $hashed, $status,request()->ip(),$username,$department,$position]);
+            DB::statement('set @disable_update_logintime_user  = null');
             DB::commit();
         } catch (\Exception $exception) {
-            echo($exception);
             DB::rollBack();
         }
     }
@@ -78,11 +79,11 @@ class UserData{
             $id = self::getUserId($accountname);
             if (self::checkPassword($id, $password)) {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id,1, $browser);
+                self::insertLoginLog($id,true, $browser);
                 return $id;
             } else {
                 $id = self::getUserId($accountname);
-                self::insertLoginLog($id, 0, $browser);
+                self::insertLoginLog($id, false, $browser);
                 return false;
             }
         } catch (\Exception $exception) {
@@ -97,8 +98,7 @@ class UserData{
         }
     }
 
-    private static function insertLoginLog($id, $result, $browser)
-    {
+    private static function insertLoginLog($id, $result, $browser){
         DB::beginTransaction();
         try {
             if ($result) {
@@ -110,7 +110,8 @@ class UserData{
             }
             DB::commit();
         } catch (\Exception $exception) {
-            echo($exception);
+            dd($exception);
+            DB::rollBack();
         }
     }
 

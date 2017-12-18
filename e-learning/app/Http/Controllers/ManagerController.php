@@ -147,4 +147,12 @@ class ManagerController extends Controller {
         ScrollimageData::removeImage($title);
         return redirect()->intended('/scrollimage/panel');
     }
+    public function userToCourse(Request $request){
+        $account = $request->input('account');
+        $coursetitle = $request->input('coursetitle');
+        $completetime = $request->input('completetime');
+        $userid = UserData::getUserId($account);
+        UserData::addUserToCourse($userid,$coursetitle,1,$completetime);
+        return redirect()->intended($request->session()->previousUrl());
+    }
 }

@@ -27,6 +27,8 @@ class VerifyCsrfToken extends Middleware{
         'news/remove',
         'scrollimage/create/post',
         'scrollimage/remove',
-        'user/settings/post'
+        'user/settings/post',
+        'user/changepassword/post',
+        'user/tocourse'
     ];
 }
