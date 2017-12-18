@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\DB;
 use database\connectors\Question;
 
 class ExamData{
+    public static function getCourseByExam($examid){
+        $courseid = self::getExam($examid)->course_id;
+        return CourseData::getCourse($courseid);
+    }
     public static function insertExam($coursetitle,$title, $questions, $options, $correctanwsers){
         $generated = self::generateJson($questions,$options,$correctanwsers);
         if(is_null($generated))return;

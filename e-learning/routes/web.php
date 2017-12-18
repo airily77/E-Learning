@@ -57,6 +57,7 @@ Route::group(['middleware' => ['web','managerdata']], function () {
     Route::post('/user/tocourse','ManagerController@userToCourse')->name('usertocourse');
     Route::post('/user/modify','ManagerController@modifyUser')->name('modify-user');
     Route::post('/user/remove/course','ManagerController@removeUserCourse')->name('remove-user-course');
+    Route::post('/user/remove/exam','ManagerController@removeUserExam')->name('remove-user-exam');
 
     Route::get('/scrollimage/panel','ManagerController@imagePanel')->name('image-panel');
     Route::get('/scrollimage/create/view','ManagerController@createImageview')->name('create-image-view');

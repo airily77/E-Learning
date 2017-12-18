@@ -161,11 +161,19 @@ class ManagerController extends Controller {
         $userid = UserData::getUserId($account);
         $user = UserData::getUser($userid);
         $usercourses = UserData::getUserCourses($userid);
-        return view('inc.manager.modifyuser',['user'=>$user,'usercourses'=>$usercourses]);
+        $userexams = UserData::getExamsFromUser($userid);
+        return view('inc.manager.modifyuser',['user'=>$user,'usercourses'=>$usercourses,'userexams'=>$userexams]);
     }
     public function removeUserCourse(Request $request){
         $courseid = CourseData::getCourseId($request->input('coursetitle'));
         $userid = UserData::getUserId($request->input('account'));
         UserData::dropUserFromCourse($userid,$courseid);
+        return redirect()->intended($request->session()->previousUrl());
+    }
+    public function removeUserExam(Request $request){
+        $examid = $request->input('examid');
+        $account = $request->input('account');
+        UserData::removeExamResult($examid,$account);
+        return redirect()->intended($request->session()->previousUrl());
     }
 }

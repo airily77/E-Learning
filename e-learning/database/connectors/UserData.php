@@ -4,6 +4,7 @@ namespace database\connectors;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mockery\Exception;
 use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\Nullable;
 
@@ -270,6 +271,22 @@ class UserData{
         try {
             return DB::select('SELECT * FROM user_course WHERE user_id = ?', [$userid]);
         } catch (\Exception $exception) {
+        }
+    }
+    public static function getExamsFromUser($userid){
+        try{
+            return DB::select('select * from user_testing where user_id = ?',[$userid]);
+        }catch (\Exception $exception){}
+    }
+    public static function removeExamResult($examid,$account){
+        DB::beginTransaction();
+        try{
+            $userid = self::getUserId($account);
+            DB::delete('delete from user_testing where exam_id = ? and user_id =?',[$examid,$userid]);
+            DB::commit();
+        }catch (\Exception $exception){
+            dd($exception);
+            DB::rollBack();
         }
     }
     public static function checkDuplicateExamEntry($userid,$examid){

@@ -82,6 +82,37 @@
                     </tbody>
                 @endforeach
             </table>
+            <h3>Exams {{$user->username}} has attended</h3>
+            <table id="example" class="table table-striped table-bordered" style="column-fill: auto" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Exam title</th>
+                    <th>Course title</th>
+                    <th>User Answers</th>
+                    <th>Score</th>
+                    <th>Started</th>
+                    <th>Result</th>
+                    <th></th>
+                </tr>
+                </thead>
+                @foreach($userexams as $userexam)
+                    <tbody>
+                    <th>{{\database\connectors\ExamData::getExam($userexam->exam_id)->title}}</th>
+                    <th>{{\database\connectors\ExamData::getCourseByExam($userexam->exam_id)->title}}</th>
+                    <th>{{$userexam->useranswers}}</th>
+                    <th>{{$userexam->score}}</th>
+                    <th>{{$userexam->started}}</th>
+                    <th>{{$userexam->result}}</th>
+                    <form action="{{route('remove-user-exam')}}" method="post">
+                        <th>
+                            <input type="hidden" name="examid" value="{{$userexam->exam_id}}">
+                            <input type="hidden" name="account" value="{{$user->account}}">
+                            <button type="submit" class="removeGroup">Remove user exam result</button>
+                        </th>
+                    </form>
+                    </tbody>
+                @endforeach
+            </table>
         </div>
     </div>
 </div>
