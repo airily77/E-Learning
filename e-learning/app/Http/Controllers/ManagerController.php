@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use database\connectors\ExamData;
 use database\connectors\ScrollimageData;
 use Illuminate\Http\Request;
@@ -154,5 +155,17 @@ class ManagerController extends Controller {
         $userid = UserData::getUserId($account);
         UserData::addUserToCourse($userid,$coursetitle,1,$completetime);
         return redirect()->intended($request->session()->previousUrl());
+    }
+    public function modifyUser(Request $request){
+        $account =$request->input('account');
+        $userid = UserData::getUserId($account);
+        $user = UserData::getUser($userid);
+        $usercourses = UserData::getUserCourses($userid);
+        return view('inc.manager.modifyuser',['user'=>$user,'usercourses'=>$usercourses]);
+    }
+    public function removeUserCourse(Request $request){
+        $courseid = CourseData::getCourseId($request->input('coursetitle'));
+        $userid = UserData::getUserId($request->input('account'));
+        UserData::dropUserFromCourse($userid,$courseid);
     }
 }

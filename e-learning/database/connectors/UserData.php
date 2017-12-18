@@ -108,6 +108,7 @@ class UserData{
                 DB::insert('INSERT INTO user_loginlog (user_id, logintime, loginip, result,browser) VALUES (?,now(),?,?,?)', [$id, request()->ip(), $result, $browser]);
                 DB::statement('set @disable_update_logintime_user = null');
             }
+            
             DB::commit();
         } catch (\Exception $exception) {
             dd($exception);

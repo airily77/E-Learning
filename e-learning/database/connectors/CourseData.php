@@ -24,6 +24,11 @@ class CourseData{
             DB::rollBack();
         }
     }
+    public static function getCourseTitle($id){
+        try{
+            return DB::select('select title from course where courseid =?',[$id])[0]->title;
+        }catch (\Exception $exception){}
+    }
     public static function getCourses(){
         try{
             return DB::select('select title,description,videopath,videoimg,videotime,showimg,learnnum,viewnum,istesting,isshow,creationtime,updatetime,class_id from course');

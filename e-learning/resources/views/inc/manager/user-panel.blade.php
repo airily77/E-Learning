@@ -58,6 +58,7 @@
                     <th>Loginnum</th>
                     <th>create time</th>
                     <th>update time</th>
+                    <th></th>
                     <td>
                         <button onclick="window.location='{{route('register-view')}}'">Add</button>
                     </td>
@@ -73,6 +74,10 @@
                                 <th>{{$piece}}</th>
                             @endif
                         @endforeach
+                        <form action="{{route('modify-user')}}" method="post">
+                            <input type="hidden" id="account" name="account" value="{{$user->account}}">
+                            <td><button type="submit">Modify</button></td>
+                        </form>
                         <form action="{{route('remove-user')}}" method="post">
                             <input type="hidden" id="account" name="account" value="{{$user->account}}">
                             <td><button type="submit">Remove</button></td>
