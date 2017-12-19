@@ -4,11 +4,5 @@
 @include('inc.manager.banner')
 <style>
 
-
-    .col-lg-10 {
-
-        color:;
-
-    }
 </style>
 @include('inc.manager.managementbuttons')
