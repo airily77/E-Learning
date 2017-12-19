@@ -201,4 +201,9 @@ class ManagerController extends Controller {
         UserData::updateInformationByAccount($account, $username, $department, $position, $status);
         return redirect()->intended('/user/panel');
     }
+    public function modifyExam($title){
+        $id=ExamData::getExamId($title);
+        $exam = ExamData::getExam(  $id);
+        return view('inc.manager.modifyexam',['exam'=>$exam]);
+    }
 }
