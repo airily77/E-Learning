@@ -32,6 +32,9 @@ class VerifyCsrfToken extends Middleware{
         'user/tocourse',
         'user/modify',
         'user/remove/course',
-        'user/remove/exam'
+        'user/remove/exam',
+        'user/modify/post',
+        '/user/information/post',
+        'news/modify/post'
     ];
 }

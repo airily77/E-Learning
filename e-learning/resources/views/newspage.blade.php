@@ -43,7 +43,6 @@
     <div class="well">
         <h2 id="newstitle">{{$article->title}}</h2><!-- /TODO news Title -->
         <div id="content">
-
             {{$article->content}}
         </div>
     </div>

@@ -33,24 +33,25 @@
 <div class="container">
     <div class="well">
         <h1>Create a Article</h1>
-        <form action="{{route('create-arc-post')}}" method="post">
+        <form action="{{route('modify-arc-post')}}" method="post">
+            <input hidden value="{{$article->articleid}}" name="articleid">
             <h3>Title</h3>
-            <input type="text" placeholder="Enter the title" name="title" required>
+            <input type="text" value="{{$article->title}}" name="title" required>
             <h3>Content</h3>
-            <textarea id="editor" cols="30" rows="100" name="content" required></textarea>
+            <textarea id="editor" cols="30" rows="100" name="content" required>{{$article->content}}</textarea>
             <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
             <script>
                 CKEDITOR.replace('editor');
                 CKEDITOR.config.height="1000px";
             </script>
             <h3>Source</h3>
-            <input type="text" placeholder="Enter the source" name="source">
+            <input type="text" value="{{$article->source}}" name="source">
             <h3>Keyword</h3>
-            <input type="text" placeholder="Enter the keyword" name="keyword" required>
+            <input type="text" value="{{$article->keyword}}" name="keyword" required>
             <h3>Tags</h3>
-            <input type="text" placeholder="Enter the tags" name="tags" required>
+            <input type="text" value="{{$article->tags}}"name="tags" required>
             <h3>Status</h3>
-            <input type="text" placeholder="Enter the status" name="status" required>
+            <input type="text" value="{{$article->status}}" name="status" required>
             <br>
             <button type="submit" id="submit">Submit</button>
         </form>

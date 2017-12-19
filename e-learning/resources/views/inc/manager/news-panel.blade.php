@@ -37,7 +37,7 @@
 
     .col-lg-10 {
 
-        color:Black;
+        color: Black;
 
     }
 
@@ -49,38 +49,44 @@
         <div class="well">
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Source</th>
-                        <th>Keyword</th>
-                        <th>Tags</th>
-                        <th>Status</th>
-                        <th>Clicknum</th>
-                        <th>Creationtime</th>
-                        <th>Updatetime</th>
-                        <td><button onclick="window.location='{{route('createarc-view')}}'">Add</button></td>
-                    </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Source</th>
+                    <th>Keyword</th>
+                    <th>Tags</th>
+                    <th>Status</th>
+                    <th>Clicknum</th>
+                    <th>Creationtime</th>
+                    <th>Updatetime</th>
+                    <th></th>
+                    <td>
+                        <button onclick="window.location='{{route('createarc-view')}}'">Add</button>
+                    </td>
+                </tr>
                 </thead>
                 @foreach($news as $new)
-                        <tfoot>
-                            <tr>
-                                <form action="{{route('remove-arc')}}" method="post">
-                                    <input type="hidden" id="title" name="title" value= "{{$new->title}}">
-                                    @foreach($new as $piece)
-                                        @if(empty($piece))
-                                            <th>Null</th>
-                                        @else
-                                            <th>{{$piece}}</th>
-                                        @endif
-                                    @endforeach
-                                    <td><button type="submit">Remove</button></td>
-                                </form>
-                            </tr>
-                        </tfoot>
+                    <tfoot>
+                    <tr>
+                        @foreach($new as $piece)
+                            @if(empty($piece))
+                                <th>Null</th>
+                            @else
+                                <th>{{$piece}}</th>
+                            @endif
+                        @endforeach
+                        <td><button onclick="window.location='{{route('modify-news',['title'=>$new->title])}}'">Modify</button></td>
+                        <form action="{{route('remove-arc')}}" method="post">
+                            <input type="hidden" id="title" name="title" value="{{$new->title}}">
+                            <td>
+                                <button type="submit">Remove</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tfoot>
                 @endforeach
             </table>
-            </div>
         </div>
     </div>
+</div>
 </div>

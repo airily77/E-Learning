@@ -171,6 +171,7 @@ class UserData{
             DB::update('update user set username = ? where account =?',[$username,$accountname]);
             DB::commit();
         }catch (\Exception $exception){
+            dd($exception);
             DB::rollBack();
         }
     }
