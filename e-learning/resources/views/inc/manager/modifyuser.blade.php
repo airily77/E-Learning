@@ -42,9 +42,9 @@
     <div class="col-sm-9" id="center">
         <h1>Modify User</h1>
         <div>
-            <form action=>
+            <form action="{{route('modify-user-post')}}" method="post">
                 <h3>User Account Name</h3>
-                <input type="text" placeholder="{{$user->account}}" name="account" id='account'>
+                <input type="text" value="{{$user->account}}" name="account" id='account' readonly>
                 <h3>User Name</h3>
                 <input type="text" placeholder="{{$user->username}}" name="username" id="username">
                 <h3>Department</h3>

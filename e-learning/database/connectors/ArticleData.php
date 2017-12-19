@@ -42,6 +42,74 @@ class ArticleData{
             echo($exception);
         }
     }
+    public static function updateArticle($id,$newtitle,$content,$source,$keyword,$tags,$status){
+        if(!is_null($newtitle) && !empty($newtitle))
+            self::updateTitle($id, $newtitle);
+        if(!is_null($content) && !empty($content))
+            self::updateContent($id,$content);
+        if(!is_null($source) && !empty($source))
+            self::updateSource($id,$source);
+        if(!is_null($keyword) && !empty($keyword))
+            self::updateKeyword($id,$keyword);
+        if(!is_null($tags) && !empty($tags))
+            self::updateTags($id,$tags);
+        if(!is_null($status) && !empty($status))
+            self::updateStatus($id,$status);
+    }
+    private static function updateSource($id,$source){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set source = ? where articleid = ?',[$source,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    private static function updateKeyword($id,$keyword){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set keyword = ? where articleid = ?',[$keyword,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    private static function updateTags($id,$tags){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set tags = ? where articleid = ?',[$tags,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    private static function updateStatus($id,$status){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set status = ? where articleid = ?',[$status,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    private static function updateContent($id,$content){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set content = ? where articleid = ?',[$content,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
+    private static function updateTitle($id,$newtitle){
+        DB::beginTransaction();
+        try{
+            DB::update('update article set title = ? where articleid = ?',[$newtitle,$id]);
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
+    }
     public static function insertArticleAttachments($articleidortitle,$savepath,$savename,$filename,$filesize,$ext){
         DB::beginTransaction();
         try{

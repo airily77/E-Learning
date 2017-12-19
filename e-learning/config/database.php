@@ -35,7 +35,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
+            'port' => env('DB_PORT', '3308'),
             'database' => env('DB_DATABASE', 'elearning'),
             'username' => env('DB_USERNAME', 'useraccount'),
             'password' => env('DB_PASSWORD', 'password'),
