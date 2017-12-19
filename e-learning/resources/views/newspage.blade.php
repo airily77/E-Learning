@@ -35,40 +35,16 @@
 
 </style>
 
-<title>News page</title><!-- //TODO Pull news header from DB-->
+<title>{{$article->title}}</title><!-- //TODO Pull news header from DB-->
 
-@include('inc.manager.banner')
+@include('inc.course.banner2')
 @include('inc.home.popup')
 <div class="container">
     <div class="well">
+        <h2 id="newstitle">{{$article->title}}</h2><!-- /TODO news Title -->
+        <div id="content">
 
-        <h2 id="newstitle">News Title</h2><!-- /TODO news Title -->
-
-        <p id="paragraph"></p>
-
-        <div id="Finish">
-
-            <button id="bt2" style="position: absolute; right: 10%; top: 22%"> Upload News </button> <!-- //TODO upload content-->  <!-- document.getElementById("paragraph").innerText; -->
-
+            {{$article->content}}
         </div>
     </div>
-
-    <button id="toggle" onclick="toggleEditor()" style="position: absolute; right: 10%; top: 27% " >Edit news</button>
-
-
-    <script>
-        function toggleEditor() {
-            @if (auth()->guard('managers')->check())
-            var x = document.getElementById("richtext");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-            @endif
-        }
-    </script>
-
-    <div id="richtext" style="display: none">@include('inc.news.richtexteditor')</div>
-
 </div>

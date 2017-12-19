@@ -14,9 +14,9 @@
 <div id="news" id="news">
     <div class="well">
         <div id="newsheader"><h3>News</h3></div>
-        @foreach($news as $new)
-            <span class="news">
-                <h4>{{$new->title}}</h4>
+        @foreach($news as $article)
+            <span class="news" onclick="window.location='{{route('newspage',['id'=>$article->articleid])}}'">
+                <h4>{{$article->title}}</h4>
             </span>
         @endforeach
     </div>
