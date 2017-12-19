@@ -74,4 +74,12 @@ class ArticleData{
         if (is_string($titleorid)) return self::getArticleId($titleorid);
         if (is_numeric($titleorid)) return $titleorid;
     }
+    public static function getArticle($id){
+        try{
+            $results = DB::select('select * from article where articleid = ?',[$id])[0];
+            return $results;
+        }catch (\Exception $exception){
+            dd($exception);
+        }
+    }
 }

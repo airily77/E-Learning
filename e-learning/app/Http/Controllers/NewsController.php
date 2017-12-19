@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use database\connectors\ArticleData;
+
 class NewsController extends Controller{
-    public function __construct(){
-        $this->middleware('manager');
-    }
-    public function index(){
-        return view('newspage');
+    public function index($id){
+        return view('newspage',['article'=>ArticleData::getArticle($id)]);
     }
 }

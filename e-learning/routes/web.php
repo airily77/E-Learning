@@ -17,6 +17,7 @@ Route::group(['middleware' =>[ 'web']], function () {
     Route::post('/logout','Auth\LoginController@Logout')->name('logout');
     Route::get('/admin', 'AdminController@index')->name('admin');
     Route::post('/admin/login','Auth\LoginController@managerLogin')->name('managerLogin');
+    Route::get('/article/{id}', 'NewsController@index')->name('newspage');
 });
 Route::group(['middleware' => ['web','userdata']], function () {
     Route::get('/course','CourseController@course')->name('course');
@@ -34,7 +35,6 @@ Route::group(['middleware' => ['web','userdata']], function () {
 Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/management','ManagerController@manager')->name('management');
 
-    Route::get('/news', 'NewsController@index')->name('newspage');
     Route::get('/news/panel','ManagerController@newsPanel')->name('news-panel');
     Route::get('/news/create','ManagerController@createArcView')->name('createarc-view');
     Route::post('/news/create/post','ManagerController@createArticle')->name('create-arc-post');
