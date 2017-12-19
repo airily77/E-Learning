@@ -5,10 +5,14 @@
 
 <style>
 
+
+
     #video {
-        float: right;
         margin-top: -250px;
-        margin-right: 150px;
+        margin-left:  150px;
+        text-align: center;
+
+
     }
 
     #header {
@@ -53,12 +57,16 @@
         </div>
 
 
-        <div id="video" class="col-lg-4">
+        <div id="video">
             <h3>Course Video</h3>
-            <a onclick="window.location='{{route('video',$coursedata->title)}}'">
-                <div class="link"></div>
-                <img src="{{$coursedata->videoimg}}" width="300" height="auto" style="border:3px solid black"></a>
 
+            <video id="my-video" class="video-js" controls preload="auto" width="500" height="auto" poster="{{$imagepath}}" data-setup="{}">
+                <source src="{{$videopath}}" type='video/mp4'>
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
 
         </div>
     </div>

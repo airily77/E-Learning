@@ -33,11 +33,14 @@ class CourseController extends Controller{
         $coursedata = null;
         $userid = UserData::getUserId(auth()->guard('users')->id());
         $userincourse = CourseData::findUserFromCourse($coursetitle,$userid);
+
         if($userincourse){
             $coursedata  = CourseData::getCourse($coursetitle);
             $exams = ExamData::getExamsFromCourse($coursetitle);
+            $videopath = CourseData::getVideopath($coursetitle);
+            $imagepath = CourseData::getCourseImagePath($coursetitle);
             $userexamresults = UserData::getUserExamsFromCourse( $coursetitle,$userid);
-            return view('specific-course',['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults]);
+            return view('specific-course',['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults, 'videopath'=>$videopath,'imagepath'=>$imagepath]);
         }else{
             return redirect()->intended('course/#popup4');
         }
@@ -49,14 +52,18 @@ class CourseController extends Controller{
         if($userincourse){
             $coursedata  = CourseData::getCourse($coursetitle);
             $exams = ExamData::getExamsFromCourse($coursetitle);
+            $videopath = CourseData::getVideopath($coursetitle);
+            $imagepath = CourseData::getCourseImagePath($coursetitle);
             $userexamresults = UserData::getUserExamsFromCourse( $coursetitle,$userid);
-            return ['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults];
+            return ['coursedata'=>$coursedata,'exams'=>$exams,'userexamresults'=>$userexamresults, 'videopath'=>$videopath,'imagepath'=>$imagepath];
         }
     }
-    public function oneCourse(Request $request){
+    public function oneCourse(Request $request , $coursetitle){
         if($request->ajax()){
             $coursedata = $this->gatherSpecifiedCourseData($request->input('id'));
-            $view = view('specific-course',['coursedata'=>$coursedata['coursedata'],'exams'=>$coursedata['exams'],'userexamresults'=>$coursedata['userexamresults']]);
+            $videopath = CourseData::getVideopath($coursetitle);
+            $imagepath = CourseData::getCourseImagePath($coursetitle);
+            $view = view('specific-course',['coursedata'=>$coursedata['coursedata'],'exams'=>$coursedata['exams'], 'videopath'=>$videopath,'imagepath'=>$imagepath,'userexamresults'=>$coursedata['userexamresults']]);
             return response()->json($view->render());
         }
     }
