@@ -17,7 +17,11 @@
         background-color: gainsboro;
         margin-left: -15px;
         padding: 10px;
+    }
 
+    #row1:hover, #row2:hover, #row3:hover, #row4:hover, #row5:hover{
+        background-color: grey;
+        cursor: hand;
     }
 
     #row5 {

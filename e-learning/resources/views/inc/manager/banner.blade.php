@@ -1,6 +1,5 @@
 <style>
     #banner2 {
-        left: 10%;
         display: block;
         margin: 0px 0px;
         width: 100%;
@@ -11,14 +10,13 @@
         background: #50b066;
     }
 
-    .col-lg-2:hover {
+    #bt:hover {
         text-decoration: underline;
-        color: #5e5e5e;
         cursor: hand;
     }
 
-    .col-lg-2{
-        margin:25px 20px;
+    #bt{
+        margin:25px 100px;
     }
 
 
@@ -40,15 +38,12 @@
 <div id="banner2">
 
 
-    <div class="col-lg-2"><a href="/"><div class="link">Home</div></a></div>
+    <div class="col-lg-2" id="bt"><a href="/"><div class="link">Home</div></a></div>
 
-    <div class="col-lg-2"><a href="/management"><div class="link">Management</div></a></div>
+    <div class="col-lg-2"id="bt"><a href="/management"><div class="link">Management</div></a></div>
 
-    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
+    <div class="col-lg-2"id="bt"><a href="/"><div class="link">Example</div></a></div>
 
-    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
-
-    <div class="col-lg-2"><a href="/"><div class="link">Example</div></a></div>
 
 </div>
 

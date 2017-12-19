@@ -5,19 +5,19 @@
 
     #well {
         height: 50px;
-        width: 200px;
+        width: 170px;
     }
 
-    #name {
+    .title {
         color: black;
         margin: -16px -10px;
     }
 
-    #name:hover {
+    .title:hover {
         text-decoration: underline;
         cursor: hand;
     }
-    #clickable{
+    clickable{
         color:black;
     }
     img {
@@ -30,7 +30,7 @@
     <div class="col-md-1 col-lg-3">
         @for($i = 0; $i<sizeof($coursedata);$i++)
             @php $coursedatum = $coursedata[$i]@endphp
-            <div class="well">
+            <div class="well" id="well">
                 <h4>
                     <div class="title" id="{{$coursedatum->title}}">
                         {{\database\connectors\CourseData::getClass($coursedatum->class_id)->classname}}</div>
