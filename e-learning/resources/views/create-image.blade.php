@@ -36,11 +36,11 @@
         <h1>Create a Exam</h1>
         <form action="{{route('create-image-post')}}" method="post">
             <h3>ImagePath</h3>
-            <input type="text" placeholder="Enter the image path" name="imagepath">
+            <input type="text" placeholder="Enter the image path" name="imagepath" required>
             <h3>Title</h3>
-            <input type="text" placeholder="Enter the title" name="title">
+            <input type="text" placeholder="Enter the title" name="title" required>
             <h3>Is Show</h3>
-            <input type="text" placeholder="Enter the is show" name="isshow">
+            <input type="text" placeholder="Enter the is show" name="isshow" required>
             <button type="submit" id="submit">Submit</button>
         </form>
     </div>

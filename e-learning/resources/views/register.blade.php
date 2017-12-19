@@ -37,19 +37,19 @@
         <div>
             <form action="{{route('create-user')}} " method="post">
                 <h3>User Account Name</h3>
-                <input type="text" placeholder="Enter the User Account Name" name="account" id='account'>
+                <input type="text" placeholder="Enter the User Account Name" name="account" id='account' required>
                 <h3>User Name</h3>
-                <input type="text" placeholder="Enter the User Name" name="username" id="username">
+                <input type="text" placeholder="Enter the User Name" name="username" id="username" required>
                 <h3>Password</h3>
-                <input type="password" placeholder="Enter the Users Password" name="password" id="password">
+                <input type="password" placeholder="Enter the Users Password" name="password" id="password" required>
                 <h3>Password again</h3>
-                <input type="password" placeholder="Enter the Users Password again" name="password2" id="password2">
+                <input type="password" placeholder="Enter the Users Password again " name="password2" id="password2" required>
                 <h3>Department</h3>
-                <input type="text" placeholder="Enter the Department" name="department" id="department">
+                <input type="text" placeholder="Enter the Department (can be empty)" name="department" id="department">
                 <h3>Position</h3>
-                <input type="text" placeholder="Enter the Position" name="position" id="position">
+                <input type="text" placeholder="Enter the Position (can be empty)" name="position" id="position">
                 <h3>Status</h3>
-                <input type="text" placeholder="Enter the Status (Number)" name="status" id="status">
+                <input type="text" placeholder="Enter the Status (Number)" name="status" id="status" required>
                 <br>
                 <a href="{{session()->previousUrl()}}">Back</a>
                 <button type="submit">Submit</button>

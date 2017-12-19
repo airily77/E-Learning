@@ -44,7 +44,7 @@
                 CKEDITOR.config.height="1000px";
             </script>
             <h3>Source</h3>
-            <input type="text" placeholder="Enter the source" name="source">
+            <input type="text" placeholder="Enter the source (can be empty)" name="source">
             <h3>Keyword</h3>
             <input type="text" placeholder="Enter the keyword" name="keyword" required>
             <h3>Tags</h3>

@@ -43,11 +43,11 @@
                 <h3>Video Time</h3>
                 <input type="text" placeholder="Enter the video time" name="videotime" required>
                 <h3>Show Image</h3>
-                <input type="text" placeholder="Enter show image" name="showimg" required>
+                <input type="text" placeholder="Enter show image yes or no 1 or 0" name="showimg" required>
                 <h3>Is Testing</h3>
                 <input type="text" placeholder="Enter 1 if testing exists,0 if testing doesn't exist" name="istesting" required>
                 <h3>Is Show</h3>
-                <input type="text" placeholder="Enter the courses name" name="isshow" required>
+                <input type="text" placeholder="Enter 1 if testing exists,0 if testing doesn't exist" name="isshow" required>
                 <button type="submit">Submit</button>
             </form>
     </div>
