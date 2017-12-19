@@ -176,4 +176,29 @@ class ManagerController extends Controller {
         UserData::removeExamResult($examid,$account);
         return redirect()->intended($request->session()->previousUrl());
     }
+    public function modifyNews($title){
+        $articleid = ArticleData::getArticleId($title);
+        return view('inc.manager.modifynews',['article'=>ArticleData::getArticle($articleid)]);
+    }
+    public function modifyNewsPost(Request $request){
+        $data = $request->input();
+        $title = $data['title'];
+        $content = $data['content'];
+        $source = $data['source'];
+        $keyword = $data['keyword'];
+        $tags = $data['tags'];
+        $status = $data['status'];
+        $id = $data['articleid'];
+        ArticleData::updateArticle($id,$title,$content,$source,$keyword,$tags,$status);
+        return redirect()->intended('/news/panel');
+    }
+    public function modifyUserPost(Request $request){
+        $username = $request->input('username');
+        $department = $request->input('department');
+        $position = $request->input('position');
+        $status = $request->input('status');
+        $account = $request->input('account');
+        UserData::updateInformationByAccount($account, $username, $department, $position, $status);
+        return redirect()->intended('/user/panel');
+    }
 }

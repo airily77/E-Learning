@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web','managerdata']], function () {
     Route::get('/news/panel','ManagerController@newsPanel')->name('news-panel');
     Route::get('/news/create','ManagerController@createArcView')->name('createarc-view');
     Route::post('/news/create/post','ManagerController@createArticle')->name('create-arc-post');
+    Route::get('/news/modify/{title}','ManagerController@modifyNews')->name('modify-news');
+    Route::post('/news/modify/post','ManagerController@modifyNewsPost')->name('modify-arc-post');
     Route::post('/news/remove','ManagerController@removeArticle')->name('remove-arc');
 
     Route::get('/exam/panel','ManagerController@examPanel')->name('exam-panel');
@@ -56,6 +58,7 @@ Route::group(['middleware' => ['web','managerdata']], function () {
     Route::post('/user/create/post','Auth\RegisterController@registerUser')->name('create-user');
     Route::post('/user/tocourse','ManagerController@userToCourse')->name('usertocourse');
     Route::post('/user/modify','ManagerController@modifyUser')->name('modify-user');
+    Route::post('/user/modify/post','ManagerController@modifyUserPost')->name('modify-user-post');
     Route::post('/user/remove/course','ManagerController@removeUserCourse')->name('remove-user-course');
     Route::post('/user/remove/exam','ManagerController@removeUserExam')->name('remove-user-exam');
 
