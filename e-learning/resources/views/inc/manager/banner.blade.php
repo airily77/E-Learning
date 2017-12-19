@@ -41,9 +41,5 @@
     <div class="col-lg-2" id="bt"><a href="/"><div class="link">Home</div></a></div>
 
     <div class="col-lg-2"id="bt"><a href="/management"><div class="link">Management</div></a></div>
-
-    <div class="col-lg-2"id="bt"><a href="/"><div class="link">Example</div></a></div>
-
-
 </div>
 
