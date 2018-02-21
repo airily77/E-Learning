@@ -37,7 +37,7 @@
 
     .col-lg-10 {
 
-        color:Black;
+        color: Black;
 
     }
 
@@ -49,37 +49,43 @@
         <div class="well">
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Questions</th>
-                        <th>Options</th>
-                        <th>CorrectAnswers</th>
-                        <th>Creationtime</th>
-                        <th>Updatetime</th>
-                        <th>Medianscore</th>
-                        <th>Donenum</th>
-                        <td><button onclick="window.location='{{route('examcreation')}}'">Add</button></td>
-                    </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Questions</th>
+                    <th>Options</th>
+                    <th>CorrectAnswers</th>
+                    <th>Creationtime</th>
+                    <th>Updatetime</th>
+                    <th>Medianscore</th>
+                    <th>Donenum</th>
+                    <th></th>
+                    <td>
+                        <button onclick="window.location='{{route('examcreation')}}'">Add</button>
+                    </td>
+                </tr>
                 </thead>
                 @foreach($exams as $exam)
-                        <tfoot>
-                            <tr>
-                                <form action="{{route('remove-exam')}}" method="post">
-                                    <input type="hidden" id="title" name="title" value= "{{$exam->title}}">
-                                    @foreach($exam as $piece)
-                                        @if(empty($piece))
-                                            <th>Null</th>
-                                        @else
-                                            <th>{{$piece}}</th>
-                                        @endif
-                                    @endforeach
-                                    <td><button type="submit">Remove</button></td>
-                                </form>
-                            </tr>
-                        </tfoot>
+                    <tfoot>
+                    <tr>
+                        @foreach($exam as $piece)
+                            @if(empty($piece))
+                                <th>Null</th>
+                            @else
+                                <th>{{$piece}}</th>
+                            @endif
+                        @endforeach
+                            <td><button onclick="window.location='{{route('modify-exam',['title'=>$exam->title])}}'">Modify</button></td>
+                        <form action="{{route('remove-exam')}}" method="post">
+                            <input type="hidden" id="title" name="title" value="{{$exam->title}}">
+                            <td>
+                                <button type="submit">Remove</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tfoot>
                 @endforeach
             </table>
-            </div>
         </div>
     </div>
+</div>
 </div>

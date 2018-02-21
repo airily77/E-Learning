@@ -44,6 +44,7 @@ Route::group(['middleware' => ['web','managerdata']], function () {
 
     Route::get('/exam/panel','ManagerController@examPanel')->name('exam-panel');
     Route::get('/exam/creation','ManagerController@examCreation')->name('examcreation');
+    Route::get('/modify/exam/{title}','ManagerController@modifyExam')->name('modify-exam');
     Route::post('create/exam/post','ManagerController@createExam')->name('create-exam-post');
     Route::post('/exam/remove','ManagerController@removeExam')->name('remove-exam');
 
